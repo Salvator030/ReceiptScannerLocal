@@ -1,51 +1,52 @@
-Cafe Meerblick
-Sandweg |
+ALDI
+Woltersdorfer Stra√üe 1, 15566 Sch√∂neiche
 
-17392 Ostseestadt
-Steuernummer: 6463678
-Filiale ID: 1001
+√ñffnungszeiten:
+Mo-Sa: 07:00 - 20:00
+EE FEIN UND MILD 5 3,99 ‚Ç¨ 1
+M. TO GO BECH 14,99 ‚Ç¨ 2
+ANZAHL ARTIKEL ?
+ZU ZAHLEN 18,98 ‚Ç¨
 
-Produkt Preis
-Standard Artikel
+K-U-N-D-E-N-B_ E-L
 
-1006 9,95 Ä B
-Standard Artikel <
+Terminal-ID : 54406313
+TA-Nr 335181 BNr 8095
+Kartenzahlung
+kontakt los
+girocard
 
-1008 99,99 Ä B
-Standard Artikel
+EUR 18,98
 
-1009 ZB
-Standard Artikel 2
+TE
 
-1007 11,20 Ä B
+Karte ?
+FMV-AID
+4000000359101002800
+VU-Nr 0009600034
+AIDPara 0100000002
 
-** ZU Sehen. 142, 69 Ä
-bar 142, Ç69 £
+Genehmigungs-Nr 260923
+Datum 27.09.23 19:05 Uhr
 
-MwSt BRUTTO NETTO
-B 13, 00% 2, Ä 142, 63 Ä Ä AE: A) ©
+Zahlung erfolgt
 
-Vielen DIE
+BITTE BELEG AUFBEWAHREN
 
-IT
+18,98 ‚Ç¨
+NETTO MWST-BETRAG BRUTTO
 
-DER ArTderden Date ind durch eine TSE vor
-Manipulationen gesch¸tzt.
+3,73 0,26 3,
+12,60 2.39 14,99
 
-(Zertifizierung Nr. BSI-K-1R-0373)
+Vielen Dank f√ºr den Einkauf
 
-Transaktionsnumnmer :
+ALDI SE & Co. KG Werneuchen 07 Seefeld
+Jetzt sammeln: Miraculous Sammelkarten,
+Unser Prospekt auf WhatsApp
+Jetzt scannen und kostemlos anmelden!
 
-Signaturz‰hler: 21
-Beginn: 26.02.2021, 14:04
-Ende: 26.02.2021, 14:04
-Seriennumer des elektronischen Aufzeichnungssysten: 1
-Signatur:
+Set
+USt. TD: DE 158 668 627
 
-gDB5bg1W53FV9EE THWP3hVEHMOSQABURCHRHACHALHFAd2AAK10880e0k
-7n/vePATS imWP+5hcwWZOKVHGaDg7aZ 1 xbvTgEaS TGcoaPGZHE F95pGUu0
-MJp98MZaXQ/AYbpH
-
-Kasse Kassierer Bon Datum Zeit
-1001 1001 7 26.02. 2 14:04
-
+0034 101 002283 0722 27/09/2023 19:05:28
