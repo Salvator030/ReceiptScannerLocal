@@ -1,0 +1,49 @@
+* * Kundenbeleg * +
+Blume2006 SE
+
+Filiale 1140
+
+Marzanner Promenade 1 4
+12679 Berlin
+
+Danke ftir Ihren Einkauf!
+
+Datum ; 01.08.2024
+Uhrzeit: 14:04:13 Uhr
+Beleg-Nr. 1867
+Trace-Nr. 119815
+Kartenzah lung
+
+Kontakt los
+
+SEPA Lastschrift
+
+Online
+
+CDGM
+
+Kur2~BL2Z HHH
+Kto. HHH 9 |
+Karte 2 gliltig bis 12/27
+IBAN DES? TOR aH RHE? 90 |
+G-ID DE1622200000020245
+M-ID G52952391867240801 1404
+Terminal-ID ' 65295239
+Betrag EUR 11,28
+
+Transaktion erfoalgreich
+
+Bitte Beleg aufbewahren
+
+Die Belastung erfolgt zum nachstmig]ichen
+Bankarbeitstag.
+
+Weitere Informationen zu SEPA-Lastschrift:
+https: //www. payone, com/
+SEPA-Lastschrift
+
+Informationen zur
+Datenverarbeitung durch
+PAYONE
+
+www. payone.com/dsgva
