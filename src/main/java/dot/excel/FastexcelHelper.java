@@ -22,25 +22,31 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.util.Date;
+
 import dot.receipt.Receipt;
 
 public class FastexcelHelper {
 
-    public Map<Integer, List<String>> readExcel(String fileLocation) throws IOException {
+    public Map<Integer, List<String>> readExcel(String fileLocation) {
         Map<Integer, List<String>> data = new HashMap<>();
+        try {
+            try (FileInputStream file = new FileInputStream(fileLocation);
+                    ReadableWorkbook wb = new ReadableWorkbook(file)) {
+                Sheet sheet = wb.getFirstSheet();
+                try (Stream<Row> rows = sheet.openStream()) {
+                    rows.forEach(r -> {
+                        data.put(r.getRowNum(), new ArrayList<>());
 
-        try (FileInputStream file = new FileInputStream(fileLocation);
-                ReadableWorkbook wb = new ReadableWorkbook(file)) {
-            Sheet sheet = wb.getFirstSheet();
-            try (Stream<Row> rows = sheet.openStream()) {
-                rows.forEach(r -> {
-                    data.put(r.getRowNum(), new ArrayList<>());
-
-                    for (Cell cell : r) {
-                        data.get(r.getRowNum()).add(cell.getRawValue());
-                    }
-                });
+                        for (Cell cell : r) {
+                            data.get(r.getRowNum()).add(cell.getRawValue());
+                        }
+                    });
+                }
             }
+
+        } catch (Exception e) {
+            System.err.println(e);
         }
         return data;
     }
@@ -56,106 +62,78 @@ public class FastexcelHelper {
         ws.value(0, 2, "Summe");
     }
 
-    // Crete the tabel Body when the excelFile not exist
-    private void createTableBody(Worksheet ws, Receipt receipt) {
-
-        ws.range(2, 0, 2, 2).style().wrapText(true).set();
-        DateFormat dataFormat = new SimpleDateFormat("dd.MM.yyyy");
-        ws.value(2, 0, dataFormat.format(receipt.getDate()));
-        ws.value(2, 1, receipt.getShopName());
-        ws.value(2, 2, receipt.getSumm());
-        ws.range(4, 0, 4, 1).style().fontSize(14).bold().set();
-        ws.value(4, 0, "Gesammt:");
-        ws.value(4, 1, receipt.getSumm());
-
+    private void createSummRow(Worksheet ws, int rowNumber, double summ) {
+        ws.range(rowNumber, 0, rowNumber, 2).style().fontSize(14).bold().set();
+        ws.value(rowNumber, 0, "Gesammt:");
+        ws.value(rowNumber, 2, summ);
     }
 
-    // Crete the tabel Body when the excelFile exist.
-    // The file is rewritten. Previous entries are transferred,
-    // the new receipt is added and the total is recalculated
-    private void createTableBody(Worksheet ws, Map<Integer, List<String>> data, Receipt receipt) {
+    private double getTotalSumm(List<Receipt> receipts) {
+        double summ = 0;
+        for (Receipt r : receipts) {
+            summ += r.getSumm();
+        }
+        return summ;
+    }
+
+    private List<Receipt> parseDataToReceiptList(Map<Integer, List<String>> data)
+            throws NumberFormatException, ParseException {
         Integer[] keySet = data.keySet().toArray(new Integer[0]);
-        int lastRecepitIndex = keySet[keySet.length - 2]-1;
-        double summ = 0.0d;
+        int lastRecepitIndex = keySet.length - 2;
+        List<Receipt> receiptsList = new ArrayList<>();
+        for (int i = 1; i <= lastRecepitIndex; i++) {
 
-        // Write Previus entries
-        for (int i = 2; i <= lastRecepitIndex; i++) {
-            ws.range(keySet[i], 0, keySet[i], 2).style().wrapText(true).set();
-            ws.value(keySet[i], 0, data.get(keySet[i-1]).get(0));
-            ws.value(keySet[i], 1, data.get(keySet[i-1]).get(1));
-            ws.value(keySet[i], 2, data.get(keySet[i-1]).get(2));
-            summ += Double.parseDouble(data.get(keySet[i-1]).get(2));
+            receiptsList.add(new Receipt(new SimpleDateFormat("dd.MM.yyyy").parse(data.get(keySet[i]).get(0)),
+                    data.get(keySet[i]).get(1), Double.parseDouble(data.get(keySet[i]).get(2))));
         }
 
-        // Write current Receipt
-        lastRecepitIndex += 1;
-        ws.range(lastRecepitIndex, 0, lastRecepitIndex , 2).style().wrapText(true).set();
+        return receiptsList;
+    }
+
+    private void createTableBody(Worksheet ws, List<Receipt> receiptsList)
+            throws NumberFormatException, ParseException {
+
         DateFormat dataFormat = new SimpleDateFormat("dd.MM.yyyy");
-        ws.value(lastRecepitIndex, 0, dataFormat.format(receipt.getDate()));
-        ws.value(lastRecepitIndex, 1, receipt.getShopName());
-        ws.value(lastRecepitIndex, 2, receipt.getSumm());
-   
-        //Write total
-        summ += receipt.getSumm();
-        lastRecepitIndex += 2;
-        ws.range(lastRecepitIndex, 0, lastRecepitIndex, 2).style().fontSize(14).bold().set();
-        ws.value(lastRecepitIndex, 0, "Gesammt:");
-        ws.value(lastRecepitIndex, 2, summ);
-
+        int rowNumber = 2;
+        for (Receipt r : receiptsList) {
+            ws.range(rowNumber, 0, rowNumber, 2).style().wrapText(true).set();
+            ws.value(rowNumber, 0, dataFormat.format(r.getDate()));
+            ws.value(rowNumber, 1, r.getShopName());
+            ws.value(rowNumber, 2, r.getSumm());
+            ++rowNumber;
+        }
+        ++rowNumber;
+        createSummRow(ws, rowNumber, getTotalSumm(receiptsList));
     }
 
-    private void createNewExcel(String fileLocation, Receipt receipt) throws IOException {
-        try (OutputStream os = Files.newOutputStream(Paths.get(fileLocation));
-                Workbook wb = new Workbook(os, "MyApplication", "1.0")) {
-            Worksheet ws = wb.newWorksheet("Sheet 1");
-            createTableHead(ws);
-            createTableBody(ws, receipt);
-
-        }
+    private String monthAndYearToString(Date date) {
+        DateFormat dataFormat = new SimpleDateFormat("MM-yyyy");
+        return dataFormat.format(date);
     }
 
-    private void editExcel(String fileLocation, Receipt receipt) throws IOException {
-        Map<Integer, List<String>> data = readExcel(fileLocation);
-        try (OutputStream os = Files.newOutputStream(Paths.get(fileLocation));
-                Workbook wb = new Workbook(os, "MyApplication", "1.0")) {
-            Worksheet ws = wb.newWorksheet("Sheet 1");
+    private String createFileName(String monthAndYear){
+        return "Abrechnung-"+ monthAndYear;
+    }
 
-            createTableHead(ws);
-            createTableBody(ws, data, receipt);
-        }
-
+    private String getFileLocation(String fileName){
+        File currDir = new File(".");
+        String path = currDir.getAbsolutePath();
+        return path.substring(0, path.length() - 1) + fileName + ".xlsx";
     }
 
     public void writeExcel(String fileName, Receipt receipt) throws IOException, NumberFormatException, ParseException {
-        File currDir = new File(".");
-        String path = currDir.getAbsolutePath();
-        String fileLocation = path.substring(0, path.length() - 1) + fileName + ".xlsx";
+       
+        String fileLocation = fileName != null ? getFileLocation(fileName) : getFileLocation(createFileName(monthAndYearToString(receipt.getDate())));
+        Map<Integer, List<String>> data = readExcel(fileLocation);
+        List<Receipt> receipts = parseDataToReceiptList(data);
+        receipts.add(receipt);
 
-        if (new File(fileLocation).exists()) {
-            editExcel(fileLocation, receipt);
+        try (OutputStream os = Files.newOutputStream(Paths.get(fileLocation));
+                Workbook wb = new Workbook(os, "MyApplication", "1.0")) {
+            Worksheet ws = wb.newWorksheet("Sheet 1");
+            createTableHead(ws);
+            createTableBody(ws, receipts);
 
-        } else {
-            createNewExcel(fileLocation, receipt);
         }
-
     }
 }
-
-// private List<Receipt> parseDataToReceiptList(Map<Integer, List<String>> data)
-// throws NumberFormatException, ParseException {
-// List<Receipt> receiptList = new ArrayList<>();
-// int mapSize = data.size();
-// for (int i = 1; i < mapSize; i++) {
-// List<String> row = data.get(i);
-// receiptList.add(new Receipt(new
-// SimpleDateFormat("dd.MM.yyyy").parse(row.get(0)), row.get(1),
-// Double.parseDouble(row.get(2))));
-// }
-// return receiptList;
-// }
-
-// private double getSummFromData(Map<Integer, List<String>> data) {
-// Integer[] keySet = data.keySet().toArray(new Integer[0]);
-// return Double.parseDouble(data.get(keySet[keySet.length - 1]).get(1));
-
-// }

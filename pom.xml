@@ -13,6 +13,7 @@
         <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -36,11 +37,39 @@
             <artifactId>fastexcel-reader</artifactId>
             <version>0.18.1</version>
         </dependency>
-                <dependency>
+        <dependency>
             <groupId>org.dhatim</groupId>
             <artifactId>fastexcel</artifactId>
             <version>0.18.1</version>
+
         </dependency>
-           </dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>23.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>HelloFX</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
