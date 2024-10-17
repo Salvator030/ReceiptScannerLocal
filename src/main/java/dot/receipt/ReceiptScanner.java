@@ -1,8 +1,6 @@
 package dot.receipt;
 
 import dot.ocrScanner.Tess;
-import dot.receipt.ItemScanner;
-
 import java.io.File;
 
 public class ReceiptScanner {
@@ -21,14 +19,14 @@ public class ReceiptScanner {
         image = new File(path);
     }
 
-    public String scannReceipt() {
+    public Receipt scannReceipt() {
         String result = tess.tess4jNormal(image);
-        String output;
-        output = result != null
-                ? "name: " + itemScanner.getStoreName(result) + "\nSumm: " + itemScanner.getTotalSumm(result)
-                        + "\nDate: " + itemScanner.getDate(result)
-                : "null";
-        return output;
+        Receipt receipt = result != null
+                ? new Receipt(itemScanner.getDate(result), itemScanner.getStoreName(result),
+                        itemScanner.getTotalSumm(result))
+                : null;
+
+        return receipt;
     }
 
 }
