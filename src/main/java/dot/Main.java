@@ -1,9 +1,9 @@
 package dot;
 
-import dot.ocrScanner.Tess;
-import dot.receipt.Receipt;
-import dot.receipt.ReceiptScanner;
-import dot.excel.FastexcelHelper;
+import dot.business.ocrScanner.Tess;
+import dot.business.receipt.Receipt;
+import dot.business.receipt.ReceiptScanner;
+import dot.business.excel.FastexcelHelper;
 
 public class Main {
 

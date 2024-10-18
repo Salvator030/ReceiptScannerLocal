@@ -1,4 +1,4 @@
-package dot.excel;
+package dot.business.excel;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
-import dot.receipt.Receipt;
+import dot.business.receipt.Receipt;
 
 public class FastexcelHelper {
 

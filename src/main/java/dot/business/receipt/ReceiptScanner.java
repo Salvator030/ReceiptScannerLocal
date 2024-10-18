@@ -1,6 +1,6 @@
-package dot.receipt;
+package dot.business.receipt;
 
-import dot.ocrScanner.Tess;
+import dot.business.ocrScanner.Tess;
 import java.io.File;
 
 public class ReceiptScanner {

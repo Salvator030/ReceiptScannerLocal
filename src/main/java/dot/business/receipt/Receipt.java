@@ -1,4 +1,4 @@
-package dot.receipt;
+package dot.business.receipt;
 
 import java.util.Date;
 

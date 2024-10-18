@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import dot.receipt.ExampleReceiptStrings;
-
+ import dot.business.receipt.ItemScanner;;
 
  class ItemScanner_Test {
- private final ItemScanner itemScanner = new ItemScanner();
+ private  ItemScanner itemScanner = new ItemScanner();
 
     @Test
     public  void test_getStoreName_withExampleReceiptStrings() {

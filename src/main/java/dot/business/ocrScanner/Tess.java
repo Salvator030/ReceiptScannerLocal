@@ -1,7 +1,7 @@
-package dot.ocrScanner;
+package dot.business.ocrScanner;
 
 import java.io.File;
-import dot.handler.FileHelper;
+import dot.business.handler.FileHelper;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 

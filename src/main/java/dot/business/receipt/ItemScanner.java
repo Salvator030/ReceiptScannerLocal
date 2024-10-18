@@ -1,4 +1,4 @@
-package dot.receipt;
+package dot.business.receipt;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
- class ItemScanner {
+ public class ItemScanner {
 
     public  String getStoreName(String result) {
         String[] resultArray = result.split("\n");
