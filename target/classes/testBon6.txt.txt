@@ -1,0 +1,37 @@
+
+TEDI GmbH & Co. KG
+Marzahner Promenade 33
+12679 Berlin
+Filiale 5969
+
+Kasse 1
+2060700229 Pflanzgefaess in 3.00
+6972700256 Light.Ladeka.Fla 2.00
+8735100241  Giesskanne 5 L g 3.55
+Kaufsumme: 8.55
+BAR 10.00
+Rückgeld: 1.45
+MWST% Netto + MWST = Brutto
+Mws 19% 7.18 1.37 8.55
+
+TSE-Transaktion: 440026
+TSE-Start: 2023-07-14T13:22:25
+TEE-Stop: -2023-07-14T13:22:50
+TSE-Signaturcount: 916736
+Seriennummer: ftaA8eolMrOEQZJVXOMPiEQ
+
+TSE-Seriennummer: = 4710366d33beacf1c8c33f446c7a
+1199110036361bd12d0dad81be5fa3d
+03
+TSE Signatur: XRB4iYTHOuVNyuzEcgQOH2BAHimwWTSP
+TCMPxBaODUKj9o0qSp/ReDNQs2FVTLC
+klFvMLNVc3rC0nTMUKazqyhYL+xZD8r
+9wC0xW371aAyhHKcTbTg6lhIC0A1wQs
+4JJ0
+
+Filiale|  BonNr|  Bednr|   Datum |Uhrzeit
+F 5969 | 506688| 023444| 14.07.23|  13:22
+Bonstart:            14.07.23    13:22 
+Bonende:             14.07.23    13:22 
+Steuernummer: 316/ 75953/0703
+---------------
