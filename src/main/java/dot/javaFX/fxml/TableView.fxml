@@ -1,0 +1,43 @@
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import fxmltableview.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.VBox?>
+<Pane xmlns="http://javafx.com/javafx/23.0.1"
+   xmlns:fx="http://javafx.com/fxml/1" fx:id="tableViewContainer" fx:controller="dot.javaFX.controller.TableViewController">
+   <TableView disable="true" maxWidth="800.0"
+      minWidth="269.0" prefHeight="114.0" prefWidth="269.0" VBox.vgrow="ALWAYS">
+      <columns>
+         <TableColumn maxWidth="25.0" minWidth="25.0" prefWidth="25.0" text="Nr.">
+            <cellValueFactory>
+               <PropertyValueFactory property="number" />
+            </cellValueFactory>
+         </TableColumn>
+         <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
+            prefWidth="100.0" text="Datum">
+            <cellValueFactory>
+               <PropertyValueFactory property="date" />
+            </cellValueFactory>
+         </TableColumn>
+         <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
+            prefWidth="177.0" text="Geschäft">
+            <cellValueFactory>
+               <PropertyValueFactory property="shopName" />
+            </cellValueFactory>
+         </TableColumn>
+         <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
+            prefWidth="144.0" text="Verwendung">
+            <cellValueFactory>
+               <PropertyValueFactory property="purpose" />
+            </cellValueFactory>
+         </TableColumn>
+         <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
+            prefWidth="84.0" text="Summe">
+            <cellValueFactory>
+               <PropertyValueFactory property="summ" />
+            </cellValueFactory>
+         </TableColumn>
+      </columns>
+   </TableView>
+</Pane>
