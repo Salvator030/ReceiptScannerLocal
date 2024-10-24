@@ -15,8 +15,8 @@ public class ReceiptScanner {
         image = null;
     }
 
-    public void setReceiptImage(String path) {
-        image = new File(path);
+    public void setReceiptImage(File file) {
+        image = file;
     }
 
     public Receipt scannReceipt() {

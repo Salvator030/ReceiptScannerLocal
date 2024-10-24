@@ -1,0 +1,75 @@
+package dot.javaFX.objects;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import dot.business.receipt.Receipt;
+
+public class ReceiptsValuesTableRow {
+
+    private String number;
+    private String date;
+    private String shopName;
+    private String purpose;
+    private String summ;
+
+    public ReceiptsValuesTableRow(int number, Date date, String shopName, String purpose, Double summ) {
+        this.number = Integer.toString(number);
+        DateFormat formater = new SimpleDateFormat("dd.MM.yyyy");
+        this.date = formater.format(date);
+        this.shopName = shopName;
+        this.purpose = purpose;
+        this.summ = summ.toString();
+    }
+
+    public ReceiptsValuesTableRow(int number, Receipt receipt, String purpose) {
+        this.number = Integer.toString(number);
+        DateFormat formater = new SimpleDateFormat("dd.MM.yyyy");
+        this.date = formater.format(receipt.getDate());
+        this.shopName = receipt.getShopName();
+        this.purpose = purpose;
+        this.summ = Double.toHexString(receipt.getSumm());
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public String getSumm() {
+        return summ;
+    }
+
+    public void setSumm(String summ) {
+        this.summ = summ;
+    }
+
+}

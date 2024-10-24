@@ -32,11 +32,11 @@ public class ExampleReceiptStrings {
     "Kurz-BLZ RER\n" + 
     "Kto. HR2I01\n" + 
     "Karte 2 gültig bis 12/27\n" + 
-    "IBAN DEB21 08290 1\n" + 
+    "IBAN DEB21082901\n" + 
     "G-ID DE16Z7700000020245\n" + 
     "M-ID G529523915867240801 1404\n" + 
     "Terminal-ID \\ 65295239\n" + 
-    "Betrag EUR 11428\n" + 
+    "Betrag EUR 11,28\n" + 
     "\n" + 
     "Transaktion erfalgreich\n" + 
     "\n" + 

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.collections.*?> 
+<?import fxmltableview.*?>
+<?import javafx.scene.control.cell.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1"
+   xmlns:fx="http://javafx.com/fxml/1" fx:controller="dot.javaFX.controller.KassenbonMainController">
+   <children>
+      <fx:include source="MenuBar.fxml" />
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+         minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0"
+         VBox.vgrow="ALWAYS">
+         <children>
+            <VBox alignment="CENTER" layoutX="33.0" layoutY="21.0" prefHeight="334.0"
+               prefWidth="563.0">
+               <children>
+                  <!-- FileChooser -->
+                  <Button fx:id="selectReceiptBtn" alignment="CENTER" mnemonicParsing="false"
+                     onAction="#handelSelectReceiptBtn" prefHeight="25.0" prefWidth="137.0"
+                     text="Kassenbon wählen">
+                     <VBox.margin>
+                        <Insets bottom="8.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Text fx:id="filePathText" disable="true" style="-fx-border-style: solid;">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Text>
+                  <Button fx:id="scannReceiptBtn" mnemonicParsing="false"
+                     onAction="#handelScannReceiptBtn" text="Kassenbon scannen">
+                     <VBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </VBox.margin>
+                  </Button>
+                  <!-- Table -->
+                  <TableView fx:id="receiptValuesTable" disable="true" maxWidth="800.0"
+                     minWidth="269.0" prefHeight="114.0" prefWidth="269.0" VBox.vgrow="ALWAYS">
+                     <columns>
+                        <TableColumn maxWidth="25.0" minWidth="25.0" prefWidth="25.0" text="Nr.">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="number" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
+                           prefWidth="100.0" text="Datum">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="date" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
+                           prefWidth="177.0" text="Geschäft">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="shopName" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
+                           prefWidth="144.0" text="Verwendung">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="purpose" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
+                           prefWidth="84.0" text="Summe">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="summ" />
+                           </cellValueFactory>
+                        </TableColumn>
+                     </columns>
+                  </TableView>
+                  <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#handleSaveBtn"
+                     text="Speichern">
+                     <VBox.margin>
+                        <Insets top="8.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="16.0" right="16.0" />
+               </padding>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </VBox.margin>
+      </AnchorPane>
+   </children>
+</VBox>

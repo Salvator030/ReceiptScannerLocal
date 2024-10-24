@@ -9,7 +9,7 @@ public class Tess {
 
   
     private static String outPutImagePath = "src/main/resources/test.JPG";
-    private static String tessdataPath = "src/main/resources/tessdata";
+    private static final String tessdataPath = "src/main/resources/tessdata";
     private  Tesseract tesseract;
 
    public Tess(){

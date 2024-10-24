@@ -3,6 +3,5 @@ dot\business\receipt\ReceiptScanner.class
 dot\business\ocrScanner\Tess.class
 dot\business\excel\FastexcelHelper.class
 dot\business\receipt\Receipt.class
-dot\javaFX\controller\MainController.class
 dot\business\handler\FileHelper.class
 dot\business\receipt\ItemScanner.class
