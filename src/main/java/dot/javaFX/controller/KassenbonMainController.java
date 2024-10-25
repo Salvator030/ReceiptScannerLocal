@@ -34,7 +34,7 @@ public class KassenbonMainController {
      Text filePathText = null;
      
      @FXML
-     Pane tableViewContainer;
+     Pane tableViewContainer = null;
      TableViewController tableViewController;
   
      public void setStage(Stage stage) {
@@ -50,7 +50,7 @@ public class KassenbonMainController {
           try{
           FXMLLoader tableViewLoader = new FXMLLoader(getClass().getResource("../fxml/TableView.fxml"));
           Pane tableViewNode = tableViewLoader.load();
-          TableViewController tableViewController = tableViewLoader.getController();
+          tableViewController = tableViewLoader.getController();
           tableViewContainer.getChildren().add(tableViewNode);
      }catch(IOException e){  e.printStackTrace();}
      }
