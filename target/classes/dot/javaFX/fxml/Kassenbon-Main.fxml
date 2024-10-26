@@ -47,7 +47,7 @@
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1"
    xmlns:fx="http://javafx.com/fxml/1" fx:controller="dot.javaFX.controller.KassenbonMainController">
    <children>
-      <fx:include source="MenuBar.fxml"/>
+      <fx:include source="MenuBar.fxml" />
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
          minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0"
          VBox.vgrow="ALWAYS">
@@ -56,26 +56,17 @@
                prefWidth="563.0">
                <children>
                   <!-- FileChooser -->
-                  <Button fx:id="selectReceiptBtn" alignment="CENTER" mnemonicParsing="false"
-                     onAction="#handelSelectReceiptBtn" prefHeight="25.0" prefWidth="137.0"
-                     text="Kassenbon wählen">
-                     <VBox.margin>
-                        <Insets bottom="8.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Text fx:id="filePathText" disable="true" style="-fx-border-style: solid;">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Text>
+                  <VBox fx:id="fileChooserContainer" />
+                  
                   <Button fx:id="scannReceiptBtn" mnemonicParsing="false"
                      onAction="#handelScannReceiptBtn" text="Kassenbon scannen">
                      <VBox.margin>
                         <Insets bottom="8.0" top="8.0" />
                      </VBox.margin>
                   </Button>
-                  <VBox fx:id="tableViewContainer"/>
-               
+                  <!-- TableViwe-->
+                  <VBox fx:id="tableViewContainer" />
+
                   <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#handleSaveBtn"
                      text="Speichern">
                      <VBox.margin>
