@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -29,12 +30,15 @@ public class KassenbonMainController {
      private File receiptFile;
      private List<Receipt> receipts = new ArrayList<>();
      private ReceiptScanner receiptScanner = new ReceiptScanner();
+     Pane tableViewNode;
 
      @FXML
      Text filePathText = null;
-     
-     @FXML
-     Pane tableViewContainer = null;
+
+
+    @FXML
+    VBox tableViewContainer = null;
+    
      TableViewController tableViewController;
   
      public void setStage(Stage stage) {
@@ -49,7 +53,7 @@ public class KassenbonMainController {
      private void initialize(){
           try{
           FXMLLoader tableViewLoader = new FXMLLoader(getClass().getResource("../fxml/TableView.fxml"));
-          Pane tableViewNode = tableViewLoader.load();
+          tableViewNode = tableViewLoader.load();
           tableViewController = tableViewLoader.getController();
           tableViewContainer.getChildren().add(tableViewNode);
      }catch(IOException e){  e.printStackTrace();}
@@ -75,7 +79,7 @@ public class KassenbonMainController {
           receiptScanner.setReceiptImage(receiptFile);
           Receipt receipt = receiptScanner.scannReceipt();
           receipts.add(receipt);
-          tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size() , receipt, "null"));
+          tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size() , receipt, "null"));      
      }
 
      @FXML

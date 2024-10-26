@@ -4,9 +4,9 @@
 <?import fxmltableview.*?>
 <?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.VBox?>
-<Pane xmlns="http://javafx.com/javafx/23.0.1"
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
    xmlns:fx="http://javafx.com/fxml/1" fx:id="tableViewContainer" fx:controller="dot.javaFX.controller.TableViewController">
-   <TableView disable="true" maxWidth="800.0"
+   <TableView maxWidth="800.0"
       minWidth="269.0" prefHeight="114.0" prefWidth="269.0" VBox.vgrow="ALWAYS" fx:id="receiptValuesTable">
       <columns>
          <TableColumn maxWidth="25.0" minWidth="25.0" prefWidth="25.0" text="Nr.">
@@ -40,4 +40,4 @@
          </TableColumn>
       </columns>
    </TableView>
-</Pane>
+</VBox>
