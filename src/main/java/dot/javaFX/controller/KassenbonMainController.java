@@ -1,6 +1,7 @@
 package dot.javaFX.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,9 +14,12 @@ import dot.javaFX.objects.ReceiptsValuesTableRow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -26,15 +30,17 @@ public class KassenbonMainController {
      private File receiptFile;
      private List<Receipt> receipts = new ArrayList<>();
      private ReceiptScanner receiptScanner = new ReceiptScanner();
+     Pane tableViewNode;
 
      @FXML
      Text filePathText = null;
 
-     @FXML
-     TableView<ReceiptsValuesTableRow> receiptValuesTable = null;
 
-     ObservableList<ReceiptsValuesTableRow> observableArrayList = FXCollections.observableArrayList();
-
+    @FXML
+    VBox tableViewContainer = null;
+    
+     TableViewController tableViewController;
+  
      public void setStage(Stage stage) {
           this.stage = stage;
      }
@@ -43,10 +49,20 @@ public class KassenbonMainController {
           this.receiptFile = file;
      }
 
+     @FXML
+     private void initialize(){
+          try{
+          FXMLLoader tableViewLoader = new FXMLLoader(getClass().getResource("../fxml/TableView.fxml"));
+          tableViewNode = tableViewLoader.load();
+          tableViewController = tableViewLoader.getController();
+          tableViewContainer.getChildren().add(tableViewNode);
+     }catch(IOException e){  e.printStackTrace();}
+     }
+
      private File getFileFromFileChooser() {
           FileChooser fileChooser = new FileChooser();
           FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.jpg, *.png, *.tif",
-                    new ArrayList<String>(Arrays.asList("*.jpg", "*.png", "*.tif")));
+          new ArrayList<String>(Arrays.asList("*.jpg", "*.png", "*.tif")));
           fileChooser.getExtensionFilters().add(extFilter);
           return fileChooser.showOpenDialog(stage);
      }
@@ -63,9 +79,7 @@ public class KassenbonMainController {
           receiptScanner.setReceiptImage(receiptFile);
           Receipt receipt = receiptScanner.scannReceipt();
           receipts.add(receipt);
-          observableArrayList.add(new ReceiptsValuesTableRow(receipts.size(), receipt, "test"));
-          receiptValuesTable.setItems(observableArrayList);
-
+          tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size() , receipt, "null"));      
      }
 
      @FXML
