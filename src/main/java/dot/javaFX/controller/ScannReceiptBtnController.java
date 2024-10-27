@@ -45,7 +45,10 @@ public class ScannReceiptBtnController {
             protected void succeeded() {
                 progressIndicator.setVisible(false); //progress indicator set not visible
                 scannReceiptBtn.setVisible(true);
-            }
+                mainController.toggleScannReceiptBtnViewDisable();
+                mainController.toggleTableViewDisable();
+                mainController.clearFilePathText();
+               }
         };
 
         Thread thread1 = new Thread(task1);  //assign Task into thread
