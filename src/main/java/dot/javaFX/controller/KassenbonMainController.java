@@ -1,4 +1,5 @@
 package dot.javaFX.controller;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,26 +9,33 @@ import dot.business.receipt.ReceiptScanner;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.layout.StackPane;
 
 public class KassenbonMainController {
 
      private Stage stage;
      private File receiptFile;
      private List<Receipt> receipts = new ArrayList<>();
-     private ReceiptScanner receiptScanner = new ReceiptScanner();
+
      private VBox tableViewNode;
      private VBox fileChooserNode;
+     private StackPane scannBtnNode;
 
      @FXML
-     VBox tableViewContainer = null;
+     private VBox tableViewContainer = null;
 
      @FXML
-     VBox fileChooserContainer = null;
+     private VBox fileChooserContainer = null;
 
-     TableViewController tableViewController;
-     FileChooserViewControler fileChooserViewController;
+     @FXML
+     private  StackPane scannReceiptBtnContainer = null;
+
+     private TableViewController tableViewController;
+     private FileChooserViewControler fileChooserViewController;
+     private ScannReceiptBtnController scannReceiptBtnController;
 
      public void setStage(Stage stage) {
           this.stage = stage;
@@ -35,6 +43,14 @@ public class KassenbonMainController {
 
      public void setReceiptFile(File file) {
           this.receiptFile = file;
+     }
+
+     public File getReceiptFile() {
+          return receiptFile;
+     }
+
+     public void addReceiptInList(Receipt receipt) {
+          receipts.add(receipt);
      }
 
      private void initTableViewConroller() {
@@ -64,17 +80,29 @@ public class KassenbonMainController {
           }
      }
 
+     private void initScannReceiptBtnController() {
+          try {
+               FXMLLoader scannReceiptBtnViewLoader = new FXMLLoader(
+                         getClass().getResource("../fxml/ScanReceiptBtnView.fxml"));
+               scannBtnNode = scannReceiptBtnViewLoader.load();
+               scannReceiptBtnController = scannReceiptBtnViewLoader.getController();
+               scannReceiptBtnContainer.getChildren().add(scannBtnNode);
+               scannReceiptBtnController.setMainController(this);
+
+          } catch (IOException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+          }
+     }
+
      @FXML
      private void initialize() {
           initTableViewConroller();
           initFileChooserContorller();
+          initScannReceiptBtnController();
      }
 
-     @FXML
-     public void handelScannReceiptBtn() {
-          receiptScanner.setReceiptImage(receiptFile);
-          Receipt receipt = receiptScanner.scannReceipt();
-          receipts.add(receipt);
+     public void addReceiptInTable(Receipt receipt) {
           tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
      }
 
