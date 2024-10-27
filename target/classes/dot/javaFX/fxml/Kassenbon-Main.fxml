@@ -60,7 +60,11 @@
                   <!-- FileChooser -->
                   <VBox fx:id="fileChooserContainer" />
                   
-                  <StackPane fx:id="scannReceiptBtnContainer" />
+                  <StackPane fx:id="scannReceiptBtnContainer" >
+                     <VBox.margin>
+                        <Insets top="8.0" bottom="8.0" />
+                     </VBox.margin>
+                  </StackPane>
                   <!-- TableViwe-->
                   <VBox fx:id="tableViewContainer" />
 
@@ -70,6 +74,7 @@
                         <Insets top="8.0" />
                      </VBox.margin>
                   </Button>
+                 
                </children>
                <padding>
                   <Insets left="16.0" right="16.0" />
