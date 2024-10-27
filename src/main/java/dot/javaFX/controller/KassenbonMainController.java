@@ -59,6 +59,7 @@ public class KassenbonMainController {
                tableViewNode = tableViewLoader.load();
                tableViewController = tableViewLoader.getController();
                tableViewContainer.getChildren().add(tableViewNode);
+               tableViewNode.setDisable(true);
           } catch (IOException e) {
                e.printStackTrace();
           }
@@ -87,6 +88,7 @@ public class KassenbonMainController {
                scannBtnNode = scannReceiptBtnViewLoader.load();
                scannReceiptBtnController = scannReceiptBtnViewLoader.getController();
                scannReceiptBtnContainer.getChildren().add(scannBtnNode);
+               scannBtnNode.setDisable(true);
                scannReceiptBtnController.setMainController(this);
 
           } catch (IOException e) {
@@ -102,6 +104,19 @@ public class KassenbonMainController {
           initScannReceiptBtnController();
      }
 
+     public void toggleScannReceiptBtnViewDisable(){
+          scannBtnNode.setDisable(!scannBtnNode.isDisable());
+     }
+
+     public void toggleTableViewDisable(){
+          tableViewNode.setDisable(!tableViewNode.isDisable());
+     }
+
+     public void clearFilePathText(){
+          fileChooserViewController.clearFilePathText();
+     }
+
+     
      public void addReceiptInTable(Receipt receipt) {
           tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
      }
