@@ -24,7 +24,11 @@ public class FileChooserViewControler {
     }
 
     @FXML
-    Text filePathText = null;
+    private Text filePathText = null;
+
+    public void clearFilePathText(){
+        filePathText.setText("");
+    }
 
     private File getFileFromFileChooser() {
         FileChooser fileChooser = new FileChooser();
@@ -39,5 +43,6 @@ public class FileChooserViewControler {
         File file = getFileFromFileChooser();
         mainController.setReceiptFile(file);
         filePathText.setText(file.getAbsolutePath());
+        mainController.toggleScannReceiptBtnViewDisable();
     }
 }
