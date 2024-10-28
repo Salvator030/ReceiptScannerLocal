@@ -20,7 +20,7 @@ public class ReceiptsValuesTableRow {
         this.date = formater.format(date);
         this.shopName = shopName;
         this.purpose = purpose;
-        this.summ = summ.toString();
+        this.summ = "" +summ;
     }
 
     public ReceiptsValuesTableRow(int number, Receipt receipt, String purpose) {
@@ -29,7 +29,7 @@ public class ReceiptsValuesTableRow {
         this.date = formater.format(receipt.getDate());
         this.shopName = receipt.getShopName();
         this.purpose = purpose;
-        this.summ = Double.toHexString(receipt.getSumm());
+        this.summ = Double.toString(receipt.getSumm());
     }
 
     public String getNumber() {
@@ -37,6 +37,7 @@ public class ReceiptsValuesTableRow {
     }
 
     public void setNumber(String number) {
+        System.out.println(number);
         this.number = number;
     }
 
