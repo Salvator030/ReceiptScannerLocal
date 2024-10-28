@@ -59,7 +59,7 @@
                <children>
                   <!-- FileChooser -->
                   <VBox fx:id="fileChooserContainer" />
-
+                  <!-- ScannReceiptBtn -->
                   <StackPane fx:id="scannReceiptBtnContainer">
                      <VBox.margin>
                         <Insets top="8.0" bottom="8.0" />
@@ -71,14 +71,13 @@
                         <Insets top="8.0" bottom="8.0" />
                      </VBox.margin>
                   </VBox>
-
-                  <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#handleSaveBtn"
-                     text="Speichern" disable="true">
+                  <!-- SaveBtn -->
+                  <VBox fx:id="saveBtnContainer">
                      <VBox.margin>
                         <Insets top="8.0" bottom="8.0" />
                      </VBox.margin>
-                  </Button>
-
+                  </VBox>
+               
                </children>
                <padding>
                   <Insets left="16.0" right="16.0" />

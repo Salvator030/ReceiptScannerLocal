@@ -48,6 +48,7 @@ public class ScannReceiptBtnController {
                 mainController.toggleScannReceiptBtnViewDisable();
                 mainController.toggleTableViewDisable();
                 mainController.clearFilePathText();
+                mainController.toggleSaveBtnDisable();
                }
         };
 

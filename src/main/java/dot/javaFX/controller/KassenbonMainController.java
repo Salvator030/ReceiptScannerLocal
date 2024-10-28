@@ -23,6 +23,7 @@ public class KassenbonMainController {
      private VBox tableViewNode;
      private VBox fileChooserNode;
      private StackPane scannBtnNode;
+     private VBox saveBtnNode;
 
      @FXML
      private VBox tableViewContainer = null;
@@ -31,11 +32,15 @@ public class KassenbonMainController {
      private VBox fileChooserContainer = null;
 
      @FXML
-     private  StackPane scannReceiptBtnContainer = null;
+     private StackPane scannReceiptBtnContainer = null;
+
+     @FXML
+     private VBox saveBtnContainer = null;
 
      private TableViewController tableViewController;
      private FileChooserViewControler fileChooserViewController;
      private ScannReceiptBtnController scannReceiptBtnController;
+     private SaveBtnController saveBtnController;
 
      public void setStage(Stage stage) {
           this.stage = stage;
@@ -51,18 +56,6 @@ public class KassenbonMainController {
 
      public void addReceiptInList(Receipt receipt) {
           receipts.add(receipt);
-     }
-
-     private void initTableViewConroller() {
-          try {
-               FXMLLoader tableViewLoader = new FXMLLoader(getClass().getResource("../fxml/TableView.fxml"));
-               tableViewNode = tableViewLoader.load();
-               tableViewController = tableViewLoader.getController();
-               tableViewContainer.getChildren().add(tableViewNode);
-               tableViewNode.setDisable(true);
-          } catch (IOException e) {
-               e.printStackTrace();
-          }
      }
 
      private void initFileChooserContorller() {
@@ -97,33 +90,55 @@ public class KassenbonMainController {
           }
      }
 
+     private void initTableViewConroller() {
+          try {
+               FXMLLoader tableViewLoader = new FXMLLoader(getClass().getResource("../fxml/TableView.fxml"));
+               tableViewNode = tableViewLoader.load();
+               tableViewController = tableViewLoader.getController();
+               tableViewContainer.getChildren().add(tableViewNode);
+               tableViewNode.setDisable(true);
+          } catch (IOException e) {
+               e.printStackTrace();
+          }
+     }
+
+     private void initSaveBtnView() {
+          try {
+               FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/SaveBtn.fxml"));
+               saveBtnNode = loader.load();
+               saveBtnController = loader.getController();
+               saveBtnContainer.getChildren().add(saveBtnNode);
+               saveBtnNode.setDisable(true);
+          } catch (IOException e) {
+               e.printStackTrace();
+          }
+     }
+
      @FXML
      private void initialize() {
           initTableViewConroller();
           initFileChooserContorller();
           initScannReceiptBtnController();
+          initSaveBtnView();
      }
 
-     public void toggleScannReceiptBtnViewDisable(){
+     public void toggleScannReceiptBtnViewDisable() {
           scannBtnNode.setDisable(!scannBtnNode.isDisable());
      }
 
-     public void toggleTableViewDisable(){
+     public void toggleTableViewDisable() {
           tableViewNode.setDisable(!tableViewNode.isDisable());
      }
 
-     public void clearFilePathText(){
+     public void toggleSaveBtnDisable(){
+          saveBtnNode.setDisable(!saveBtnNode.isDisable());
+     }
+     public void clearFilePathText() {
           fileChooserViewController.clearFilePathText();
      }
 
-     
      public void addReceiptInTable(Receipt receipt) {
           tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
-     }
-
-     @FXML
-     public void handleSaveBtn() {
-          System.out.println("c");
      }
 
 }
