@@ -1,13 +1,24 @@
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import fxmltableview.*?>
-<?import javafx.scene.control.cell.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+
 <?import javafx.scene.layout.VBox?>
+
+<?import fxmltableview.*?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.*?>
+
+<?import javafx.collections.ObservableList?>
+<?import javafx.collections.FXCollections?>
+
 <VBox xmlns="http://javafx.com/javafx/23.0.1"
-   xmlns:fx="http://javafx.com/fxml/1" fx:id="tableViewContainer" fx:controller="dot.javaFX.controller.TableViewController">
+   xmlns:fx="http://javafx.com/fxml/1" fx:id="tableViewContainer"
+   fx:controller="dot.javaFX.controller.TableViewController">
    <TableView maxWidth="800.0"
-      minWidth="269.0" prefHeight="114.0" prefWidth="269.0" VBox.vgrow="ALWAYS" fx:id="receiptValuesTable">
+      minWidth="269.0" prefHeight="114.0" prefWidth="269.0" VBox.vgrow="ALWAYS"
+      fx:id="receiptValuesTable">
       <columns>
          <TableColumn maxWidth="25.0" minWidth="25.0" prefWidth="25.0" text="Nr.">
             <cellValueFactory>
@@ -15,25 +26,26 @@
             </cellValueFactory>
          </TableColumn>
          <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
-            prefWidth="100.0" text="Datum">
+            prefWidth="100.0" text="Datum" fx:id="dateColumn" onEditStartProperty="editStart">
             <cellValueFactory>
                <PropertyValueFactory property="date" />
             </cellValueFactory>
          </TableColumn>
          <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
-            prefWidth="177.0" text="Geschäft">
+            prefWidth="177.0" text="Geschäft" fx:id="shopNameColumn">
             <cellValueFactory>
                <PropertyValueFactory property="shopName" />
             </cellValueFactory>
          </TableColumn>
          <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
-            prefWidth="144.0" text="Verwendung">
+            prefWidth="144.0" text="Verwendung" fx:id="purposeColumn">
             <cellValueFactory>
                <PropertyValueFactory property="purpose" />
             </cellValueFactory>
+          
          </TableColumn>
          <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0"
-            prefWidth="84.0" text="Summe">
+            prefWidth="84.0" text="Summe" fx:id="summColumn">
             <cellValueFactory>
                <PropertyValueFactory property="summ" />
             </cellValueFactory>
