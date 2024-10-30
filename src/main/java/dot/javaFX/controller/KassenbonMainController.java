@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dot.business.handler.FileHandler;
 import dot.business.receipt.Receipt;
 import dot.business.receipt.ReceiptScanner;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
@@ -17,9 +19,8 @@ import javafx.scene.layout.StackPane;
 public class KassenbonMainController {
 
      private Stage stage;
-     private File receiptFile;
      private List<Receipt> receipts = new ArrayList<>();
-     private final File documentsDirectory = new File(System.getProperty("user.home") + File.separator + "Documents" + File.separator);
+     private FileHandler fileHandler = new FileHandler();
 
      private VBox tableViewNode;
      private VBox fileChooserNode;
@@ -47,19 +48,14 @@ public class KassenbonMainController {
           this.stage = stage;
      }
 
-     public void setReceiptFile(File file) {
-          this.receiptFile = file;
-     }
-
-     public File getReceiptFile() {
-          return receiptFile;
+     public FileHandler getFileHandler() {
+          return fileHandler;
      }
 
      public void addReceiptInList(Receipt receipt) {
           receipts.add(receipt);
      }
 
-     
      private void initFileChooserContorller() {
           try {
                FXMLLoader fileChooserViewLoader = new FXMLLoader(
@@ -74,10 +70,6 @@ public class KassenbonMainController {
                // TODO Auto-generated catch block
                e.printStackTrace();
           }
-     }
-
-     public File getDocumentsDirectory() {
-          return documentsDirectory;
      }
 
      private void initScannReceiptBtnController() {
@@ -137,9 +129,10 @@ public class KassenbonMainController {
           tableViewNode.setDisable(!tableViewNode.isDisable());
      }
 
-     public void toggleSaveBtnDisable(){
+     public void toggleSaveBtnDisable() {
           saveBtnNode.setDisable(!saveBtnNode.isDisable());
      }
+
      public void clearFilePathText() {
           fileChooserViewController.clearFilePathText();
      }

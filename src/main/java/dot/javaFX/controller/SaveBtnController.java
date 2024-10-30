@@ -25,9 +25,9 @@ public class SaveBtnController {
     @FXML
     public void handleSaveBtn() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setInitialDirectory(mainController.getDocumentsDirectory());
+        directoryChooser.setInitialDirectory(mainController.getFileHandler().getDocumentsDirectory());
         File selectedDirectory = directoryChooser.showDialog(stage);
-        System.out.println(selectedDirectory.getAbsolutePath());
+        mainController.getFileHandler().setOutputFolder(selectedDirectory);
     }
 
   

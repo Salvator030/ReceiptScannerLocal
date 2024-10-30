@@ -1,7 +1,7 @@
 package dot.business.ocrScanner;
 
 import java.io.File;
-import dot.business.handler.FileHelper;
+import dot.business.handler.FileHandler;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
@@ -33,7 +33,7 @@ public class Tess {
             System.out.println("Normal");
             result = tesseract.doOCR(image);
             System.out.println(result);
-            FileHelper.writeToFile("Normal", result);
+            FileHandler.writeToFile("Normal", result);
         } catch (TesseractException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
