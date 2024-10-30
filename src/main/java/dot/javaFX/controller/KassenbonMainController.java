@@ -19,6 +19,7 @@ public class KassenbonMainController {
      private Stage stage;
      private File receiptFile;
      private List<Receipt> receipts = new ArrayList<>();
+     private final File documentsDirectory = new File(System.getProperty("user.home") + File.separator + "Documents" + File.separator);
 
      private VBox tableViewNode;
      private VBox fileChooserNode;
@@ -58,6 +59,7 @@ public class KassenbonMainController {
           receipts.add(receipt);
      }
 
+     
      private void initFileChooserContorller() {
           try {
                FXMLLoader fileChooserViewLoader = new FXMLLoader(
@@ -72,6 +74,10 @@ public class KassenbonMainController {
                // TODO Auto-generated catch block
                e.printStackTrace();
           }
+     }
+
+     public File getDocumentsDirectory() {
+          return documentsDirectory;
      }
 
      private void initScannReceiptBtnController() {
@@ -108,6 +114,7 @@ public class KassenbonMainController {
                saveBtnNode = loader.load();
                saveBtnController = loader.getController();
                saveBtnContainer.getChildren().add(saveBtnNode);
+               saveBtnController.setMainController(this);
                saveBtnNode.setDisable(true);
           } catch (IOException e) {
                e.printStackTrace();
