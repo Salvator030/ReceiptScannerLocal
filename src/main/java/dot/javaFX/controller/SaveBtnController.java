@@ -1,12 +1,37 @@
 package dot.javaFX.controller;
 
 import javafx.fxml.FXML;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+import java.io.File;
 
 public class SaveBtnController {
 
+    private Stage stage;
+    private KassenbonMainController mainController;
+
+    
+
+    
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void setMainController(KassenbonMainController mainController) {
+        this.mainController = mainController;
+    }
+
+    
     @FXML
     public void handleSaveBtn() {
-        System.out.println("c");
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(mainController.getDocumentsDirectory());
+        File selectedDirectory = directoryChooser.showDialog(stage);
+        System.out.println(selectedDirectory.getAbsolutePath());
     }
+
+  
+
+
 
 }
