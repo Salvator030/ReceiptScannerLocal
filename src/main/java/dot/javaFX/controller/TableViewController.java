@@ -23,29 +23,63 @@ public class TableViewController {
 
    @FXML
    private TableColumn<ReceiptsValuesTableRow, String> purposeColumn = null;
-   
+
    @FXML
    private TableColumn<ReceiptsValuesTableRow, String> summColumn = null;
 
    ObservableList<ReceiptsValuesTableRow> observableArrayList = FXCollections.observableArrayList();
-   ObservableList<String> purposeOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3",
+   ObservableList<String> purposeOptions = FXCollections.observableArrayList("Büromaterial", "Lebensmittel",
+         "Sachmittel",
          "null");
    ComboBoxTableCell<ReceiptsValuesTableRow, String> comboBoxTableCell = new ComboBoxTableCell<>(purposeOptions);
+
+   private void initDateColumn() {
+      dateColumn.setCellFactory(TextFieldTableCell.<ReceiptsValuesTableRow>forTableColumn());
+      dateColumn.setOnEditCommit(event -> {
+         final String value = event.getNewValue() != null ? event.getNewValue() : event.getOldValue();
+         ((ReceiptsValuesTableRow) event.getTableView().getItems()
+               .get(event.getTablePosition().getRow())).setDate(value);
+         receiptValuesTable.refresh();
+      });
+   }
+
+   private void initShopNameColumn() {
+      shopNameColumn.setCellFactory(TextFieldTableCell.<ReceiptsValuesTableRow>forTableColumn());
+      shopNameColumn.setOnEditCommit(event -> {
+         final String value = event.getNewValue() != null ? event.getNewValue() : event.getOldValue();
+         ((ReceiptsValuesTableRow) event.getTableView().getItems()
+               .get(event.getTablePosition().getRow())).setShopName(value);
+         receiptValuesTable.refresh();
+      });
+   }
+
+   private void initPurposeColumn() {
+      purposeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(purposeOptions));
+      purposeColumn.setOnEditCommit(event -> {
+         final String value = event.getNewValue() != null ? event.getNewValue() : event.getOldValue();
+         ((ReceiptsValuesTableRow) event.getTableView().getItems()
+               .get(event.getTablePosition().getRow())).setPurpose(value);
+         receiptValuesTable.refresh();
+      });
+   }
+
+   private void initSummColumn() {
+      summColumn.setCellFactory(TextFieldTableCell.<ReceiptsValuesTableRow>forTableColumn());
+      summColumn.setOnEditCommit(event -> {
+         final String value = event.getNewValue() != null ? event.getNewValue() : event.getOldValue();
+         ((ReceiptsValuesTableRow) event.getTableView().getItems()
+               .get(event.getTablePosition().getRow())).setSumm(value);
+         receiptValuesTable.refresh();
+      });
+   }
 
    @FXML
    public void initialize() {
       receiptValuesTable.setEditable(true);
-      dateColumn.setCellFactory(TextFieldTableCell.<ReceiptsValuesTableRow>forTableColumn());
-
-      dateColumn.setOnEditCommit(event -> {
-         final String value = event.getNewValue() != null ?
-         event.getNewValue() : event.getOldValue();
-         ((ReceiptsValuesTableRow) event.getTableView().getItems()
-            .get(event.getTablePosition().getRow())).setDate(value);
-      });
-      shopNameColumn.setCellFactory(TextFieldTableCell.<ReceiptsValuesTableRow>forTableColumn());
-      purposeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(purposeOptions));
-      summColumn.setCellFactory(TextFieldTableCell.<ReceiptsValuesTableRow>forTableColumn());
+      initDateColumn();
+      initShopNameColumn();
+      initPurposeColumn();
+      initSummColumn();
 
    }
 
