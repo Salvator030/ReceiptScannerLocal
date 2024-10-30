@@ -8,6 +8,9 @@ public class FileHandler {
 
     private File inputFile;
     private File outputFolder;
+    private String outputFileName;
+    private String outputFileDate;
+    private final String outputFileType = ".xlsx";
     private final String tessDataPath = "src/main/resources/tessdata";
     private final File documentsDirectory = new File(
             System.getProperty("user.home") + File.separator + "Documents" + File.separator);
@@ -40,6 +43,14 @@ public class FileHandler {
         return documentsDirectory;
     }
 
+        public String getOutputFileName() {
+        return outputFileName;
+    }
+
+    public void setOutputFileNamePrefix(String outputFileName) {
+        this.outputFileName = outputFileName;
+    }
+
     public static void writeToFile(String name, String res) {
         int counter = 1;
         String pathString = ("src/main/resources/out" + name + ".txt");
@@ -55,5 +66,7 @@ public class FileHandler {
             }
         }
     }
+
+
 
 }

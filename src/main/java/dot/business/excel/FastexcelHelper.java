@@ -111,19 +111,21 @@ public class FastexcelHelper {
         return dataFormat.format(date);
     }
 
-    private String createFileName(String monthAndYear){
-        return "Abrechnung-"+ monthAndYear;
+    private String createFileName(String monthAndYear) {
+        return "Abrechnung-" + monthAndYear;
     }
 
-    private String getFileLocation(String fileName){
-        File currDir = new File(".");
-        String path = currDir.getAbsolutePath();
+    private String getFileLocation(File folder, String fileName) {
+        String path = folder.getAbsolutePath();
         return path.substring(0, path.length() - 1) + fileName + ".xlsx";
     }
 
-    public void writeExcel(String fileName, Receipt receipt) throws IOException, NumberFormatException, ParseException {
-       
-        String fileLocation = fileName != null ? getFileLocation(fileName) : getFileLocation(createFileName(monthAndYearToString(receipt.getDate())));
+    public void writeReceiptToExcel(File folder, String fileName, Receipt receipt)
+            throws IOException, NumberFormatException, ParseException {
+
+        String fileLocation = fileName != null ? getFileLocation(folder, fileName)
+                : getFileLocation(folder, createFileName(monthAndYearToString(receipt.getDate())));
+                
         Map<Integer, List<String>> data = readExcel(fileLocation);
         List<Receipt> receipts = parseDataToReceiptList(data);
         receipts.add(receipt);
