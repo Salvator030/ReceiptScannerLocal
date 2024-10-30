@@ -1,4 +1,4 @@
-* * Kundenbeleg * *
+*  * Kundenbeleg  *  *
 Blume2000 SE
 
 Filiale 1140
@@ -6,15 +6,15 @@ Filiale 1140
 Marzahner Promenade 1 A
 12679 Berlin
 
-Danke für Ihren Einkauf!
+Danke fÃ¼r Ihren Einkauf!
 
 Datum: 01.08.2024
 Uhrzeit: 14:04:13 Uhr
 Beleg-Nr. 1867
-Trace-Nr., 119815
+Trace-Nr. 119815
 Kartenzahlung
 
-kontakt 1os
+Kontaktlos
 
 SEPA Lastschrift
 
@@ -22,28 +22,27 @@ Online
 
 CDGM
 
-Kurz-BLZ RER
-Kto. HR2I01
-Karte 2 gültig bis 12/27
-IBAN DEB21 08290 1
-G-ID DE16Z7700000020245
-M-ID G529523915867240801 1404
-Terminal-ID \ 65295239
-Betrag EUR 11428
+Kurz-BLZ #####
+Kto. ######2901
+Karte 2 gÃültig bis 12/27
+IBAN DES210############2901
+G-ID DE16ZZZ00000020245
+M-ID G5295239158672408011404
+Terminal-ID J 65295239
+Betrag EUR 1128
 
-Transaktion erfalgreich
+Transaktion erfolgreich
 
 Bitte Beleg aufbewahren
 
-Die Belastung erfolgt zum nächstmöglichen
+Die Belastung erfolgt zum nÃchstmÃglichen
 Bankarbeitstag.
 
 Weitere Informationen zu SEPA-Lastschrift:
-https ://www.payone, com/
+https://www.payone.com/
 SEPA-Lastschrift
 
 Informationen zur
 Datenverarbeitung durch
 PAYONE
-
-WWW. payone, COMm/dsgvo
+www.payone.com/dsgvo

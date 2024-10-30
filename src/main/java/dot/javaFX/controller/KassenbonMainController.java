@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dot.business.handler.FileHandler;
 import dot.business.receipt.Receipt;
 import dot.business.receipt.ReceiptScanner;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
@@ -17,8 +19,8 @@ import javafx.scene.layout.StackPane;
 public class KassenbonMainController {
 
      private Stage stage;
-     private File receiptFile;
      private List<Receipt> receipts = new ArrayList<>();
+     private FileHandler fileHandler = new FileHandler();
 
      private VBox tableViewNode;
      private VBox fileChooserNode;
@@ -46,12 +48,8 @@ public class KassenbonMainController {
           this.stage = stage;
      }
 
-     public void setReceiptFile(File file) {
-          this.receiptFile = file;
-     }
-
-     public File getReceiptFile() {
-          return receiptFile;
+     public FileHandler getFileHandler() {
+          return fileHandler;
      }
 
      public void addReceiptInList(Receipt receipt) {
@@ -108,6 +106,7 @@ public class KassenbonMainController {
                saveBtnNode = loader.load();
                saveBtnController = loader.getController();
                saveBtnContainer.getChildren().add(saveBtnNode);
+               saveBtnController.setMainController(this);
                saveBtnNode.setDisable(true);
           } catch (IOException e) {
                e.printStackTrace();
@@ -130,9 +129,10 @@ public class KassenbonMainController {
           tableViewNode.setDisable(!tableViewNode.isDisable());
      }
 
-     public void toggleSaveBtnDisable(){
+     public void toggleSaveBtnDisable() {
           saveBtnNode.setDisable(!saveBtnNode.isDisable());
      }
+
      public void clearFilePathText() {
           fileChooserViewController.clearFilePathText();
      }

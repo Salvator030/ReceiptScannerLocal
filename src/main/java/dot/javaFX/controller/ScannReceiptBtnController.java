@@ -1,7 +1,5 @@
 package dot.javaFX.controller;
 
-import java.io.File;
-
 import dot.business.receipt.Receipt;
 import dot.business.receipt.ReceiptScanner;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
@@ -33,7 +31,7 @@ public class ScannReceiptBtnController {
             protected Void call() throws Exception {
                 scannReceiptBtn.setVisible(false);
                 progressIndicator.setVisible(true); //progress indicator set visible
-                receiptScanner.setReceiptImage(mainController.getReceiptFile());
+                receiptScanner.setReceiptImage(mainController.getFileHandler().getInputFile());
                 Receipt receipt = receiptScanner.scannReceipt();
                 mainController.addReceiptInList(receipt);
                 mainController.addReceiptInTable(receipt);
