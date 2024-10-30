@@ -1,7 +1,5 @@
 package dot.javaFX.controller;
 
-import java.io.File;
-
 import dot.business.receipt.Receipt;
 import dot.business.receipt.ReceiptScanner;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
