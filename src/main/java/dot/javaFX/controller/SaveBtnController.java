@@ -25,6 +25,7 @@ public class SaveBtnController {
     @FXML
     public void handleSaveBtn() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Ablage Ordner der Ecxel Datei");
         directoryChooser.setInitialDirectory(mainController.getFileHandler().getDocumentsDirectory());
         File selectedDirectory = directoryChooser.showDialog(stage);
         mainController.getFileHandler().setOutputFolder(selectedDirectory);
