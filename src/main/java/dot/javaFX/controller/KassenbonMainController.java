@@ -2,6 +2,7 @@ package dot.javaFX.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,8 +144,8 @@ public class KassenbonMainController {
           tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
      }
 
-     public void writeReceiptsToEcxel(){
-          excelHelper.set
+     public void writeReceiptsToExcel() throws NumberFormatException, IOException, ParseException {
+          excelHelper.writeReceiptsToExcel(fileHandler.getFullOuputFilePath(), receipts);
      }
 
 }
