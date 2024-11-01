@@ -3,6 +3,7 @@ package dot.business.handler;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -14,9 +15,8 @@ public class FileHandler {
     private File inputFile;
     private File outputFolder;
     private final String defaultFileName = "Kassenbons-Abrechnung";
-    private String outputFileName =  defaultFileName;
+    private String outputFileName = defaultFileName;
     private String outputFileDate;
-    private Path fullOuputFilePath; 
     private final String outputFileType = ".xlsx";
     private final String tessDataPath = "src/main/resources/tessdata";
     private final File documentsDirectory = new File(
@@ -31,7 +31,9 @@ public class FileHandler {
     }
 
     public void setOutputFolder(File outputFolder) {
-        this.outputFolder = outputFolder;
+        if (outputFolder != null) {
+            this.outputFolder = outputFolder;
+        }
     }
 
     public File getInputFile() {
@@ -54,17 +56,6 @@ public class FileHandler {
         return outputFileName;
     }
 
-    
-    
-
-
-
-
-
-    public Path getFullOuputFilePath() {
-        return fullOuputFilePath;
-    }
-
     public String getOutputFileDate() {
         return outputFileDate;
     }
@@ -77,23 +68,19 @@ public class FileHandler {
         this.outputFileDate = outputFileDate;
     }
 
-    public static void writeToFile(String name, String res) {
-        int counter = 1;
-        String pathString = ("src/main/resources/out" + name + ".txt");
-        PrintWriter printWriter = null;
-        try {
-            printWriter = new PrintWriter(new FileWriter(pathString));
-            printWriter.write(res);
-        } catch (Exception e) {
-        } finally {
-            if (printWriter != null) {
-                printWriter.flush();
-                printWriter.close();
-            }
+    public Path getFullOuputFilePath() {
+        Path path = Path.of(outputFolder.toString(), outputFileName + outputFileType);
+        return path;
+    }
+
+    public void checkExistFile() {
+        if (!Files.exists(getFullOuputFilePath())) {
+            System.out.println("create File");
+            new File(getFullOuputFilePath().toString());
         }
     }
 
-      private String monthAndYearToString(Date date) {
+    private String monthAndYearToString(Date date) {
         DateFormat dataFormat = new SimpleDateFormat("MM-yyyy");
         return dataFormat.format(date);
     }
@@ -102,14 +89,25 @@ public class FileHandler {
         return previx + "-" + date + ".xlsx";
     }
 
-    private String fileLocationToString(File folder, String fileName, String date) {
+    public String fileLocationToString(File folder, String fileName) {
         String path = folder.getAbsolutePath();
-        return path.substring(0, path.length() - 1) + createFullFileName(fileName, date);
-    }
-
-    private String getFileLocation(File folder, String fileName, String date) {
-        String fileLocation = fileLocationToString(folder, fileName, date);
-        return fileLocation;
+        return path.substring(0, path.length() - 1) + File.separator + fileName;
     }
 
 }
+
+// public static void writeToFile(String name, String res) {
+// int counter = 1;
+// String pathString = ("src/main/resources/out" + name + ".txt");
+// PrintWriter printWriter = null;
+// try {
+// printWriter = new PrintWriter(new FileWriter(pathString));
+// printWriter.write(res);
+// } catch (Exception e) {
+// } finally {
+// if (printWriter != null) {
+// printWriter.flush();
+// printWriter.close();
+// }
+// }
+// }
