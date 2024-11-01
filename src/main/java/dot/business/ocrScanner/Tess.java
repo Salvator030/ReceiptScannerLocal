@@ -33,7 +33,7 @@ public class Tess {
             System.out.println("Normal");
             result = tesseract.doOCR(image);
             System.out.println(result);
-            FileHandler.writeToFile("Normal", result);
+            // FileHandler.writeToFile("Normal", result);
         } catch (TesseractException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
