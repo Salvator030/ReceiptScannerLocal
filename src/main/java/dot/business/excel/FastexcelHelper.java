@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,34 +107,30 @@ public class FastexcelHelper {
         createSummRow(ws, rowNumber, getTotalSumm(receiptsList));
     }
 
-    private String monthAndYearToString(Date date) {
-        DateFormat dataFormat = new SimpleDateFormat("MM-yyyy");
-        return dataFormat.format(date);
-    }
-
-    private String createFileName(String monthAndYear){
-        return "Abrechnung-"+ monthAndYear;
-    }
-
-    private String getFileLocation(String fileName){
-        File currDir = new File(".");
-        String path = currDir.getAbsolutePath();
-        return path.substring(0, path.length() - 1) + fileName + ".xlsx";
-    }
-
-    public void writeExcel(String fileName, Receipt receipt) throws IOException, NumberFormatException, ParseException {
-       
-        String fileLocation = fileName != null ? getFileLocation(fileName) : getFileLocation(createFileName(monthAndYearToString(receipt.getDate())));
-        Map<Integer, List<String>> data = readExcel(fileLocation);
-        List<Receipt> receipts = parseDataToReceiptList(data);
-        receipts.add(receipt);
-
-        try (OutputStream os = Files.newOutputStream(Paths.get(fileLocation));
+    private void writeDataToFile(Path fullOutputFilePath, List<Receipt> receipts) throws IOException {
+        try (OutputStream os = Files.newOutputStream(fullOutputFilePath);
                 Workbook wb = new Workbook(os, "MyApplication", "1.0")) {
             Worksheet ws = wb.newWorksheet("Sheet 1");
             createTableHead(ws);
             createTableBody(ws, receipts);
-
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+    }
+
+    private void mergeData(List<Receipt> data, List<Receipt> receiptList) {
+        for (Receipt receipt : receiptList) {
+            data.add(receipt);
+        }
+    }
+
+    public void writeReceiptsToExcel(Path fullOutputFilePath, List<Receipt> receiptList)
+            throws IOException, NumberFormatException, ParseException {
+
+        List<Receipt> data = parseDataToReceiptList(readExcel(fullOutputFilePath.toString()));
+        mergeData(data, receiptList);
+        writeDataToFile(fullOutputFilePath, data);
+
     }
 }

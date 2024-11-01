@@ -2,9 +2,11 @@ package dot.javaFX.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dot.business.excel.FastexcelHelper;
 import dot.business.handler.FileHandler;
 import dot.business.receipt.Receipt;
 import dot.business.receipt.ReceiptScanner;
@@ -21,6 +23,7 @@ public class KassenbonMainController {
      private Stage stage;
      private List<Receipt> receipts = new ArrayList<>();
      private FileHandler fileHandler = new FileHandler();
+     private FastexcelHelper excelHelper = new FastexcelHelper();
 
      private VBox tableViewNode;
      private VBox fileChooserNode;
@@ -139,6 +142,11 @@ public class KassenbonMainController {
 
      public void addReceiptInTable(Receipt receipt) {
           tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
+     }
+
+     public void writeReceiptsToExcel() throws NumberFormatException, IOException, ParseException {
+          fileHandler.checkExistFile();
+          excelHelper.writeReceiptsToExcel(fileHandler.getFullOuputFilePath(), receipts);
      }
 
 }
