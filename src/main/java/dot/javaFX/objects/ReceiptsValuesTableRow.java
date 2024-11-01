@@ -6,7 +6,7 @@ import java.util.Date;
 
 import dot.business.receipt.Receipt;
 
-public class ReceiptsValuesTableRow {
+public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow>{
 
     private String number;
     private String date;
@@ -72,5 +72,10 @@ public class ReceiptsValuesTableRow {
     public void setSumm(String summ) {
         this.summ = summ;
     }
+
+    @Override
+    public int compareTo(ReceiptsValuesTableRow row) {
+        return this.date.compareTo(row.getDate());
+           }
 
 }
