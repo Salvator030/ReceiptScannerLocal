@@ -1,4 +1,4 @@
-*  * Kundenbeleg  *  *
+*  * Kundenbeleg  * *
 Blume2000 SE
 
 Filiale 1140
@@ -6,7 +6,7 @@ Filiale 1140
 Marzahner Promenade 1 A
 12679 Berlin
 
-Danke fÃ¼r Ihren Einkauf!
+Danke für Ihren Einkauf!
 
 Datum: 01.08.2024
 Uhrzeit: 14:04:13 Uhr
@@ -24,18 +24,18 @@ CDGM
 
 Kurz-BLZ #####
 Kto. ######2901
-Karte 2 gÃültig bis 12/27
-IBAN DES210############2901
+Karte 2 gültig bis 12/27
+IBAN DE5210############2901
 G-ID DE16ZZZ00000020245
-M-ID G5295239158672408011404
-Terminal-ID J 65295239
-Betrag EUR 1128
+M-ID G529523918672408011404
+Terminal-ID | 65295239
+Betrag EUR 11,28
 
 Transaktion erfolgreich
 
-Bitte Beleg aufbewahren
+Bitte Belesg aufbewahren
 
-Die Belastung erfolgt zum nÃchstmÃglichen
+Die Belastung erfolgt zum nächstmöglichen
 Bankarbeitstag.
 
 Weitere Informationen zu SEPA-Lastschrift:
