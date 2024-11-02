@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dot.business.receipt.Receipt;
+import javafx.collections.transformation.FilteredList;
 
 public class FastexcelHelper {
 
@@ -120,9 +121,15 @@ public class FastexcelHelper {
     }
 
     private void mergeData(List<Receipt> data, List<Receipt> receiptList) {
-        for (Receipt receipt : receiptList) {
-            data.add(receipt);
-        }
+        // List<Receipt> dateRows = data.stream()
+        //         .filter(receiptRow -> receiptRow.getDateFormatString().matches("\\d{2}.\\d{4}")).toList();
+        // for (Receipt receipt : receiptList) {
+        //     boolean isPresent = false;
+        //     for (Receipt comperativReceipt : dateRows) {
+        //         if (comperativReceipt.get())
+        //     }data.add(receipt);
+        // }
+
     }
 
     public void writeReceiptsToExcel(Path fullOutputFilePath, List<Receipt> receiptList)
