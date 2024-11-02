@@ -1,12 +1,13 @@
 package dot.javaFX.objects;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dot.business.receipt.Receipt;
 
-public class ReceiptsValuesTableRow {
+public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow> {
 
     private String number;
     private String date;
@@ -20,7 +21,7 @@ public class ReceiptsValuesTableRow {
         this.date = formater.format(date);
         this.shopName = shopName;
         this.purpose = purpose;
-        this.summ = "" +summ;
+        this.summ = "" + summ;
     }
 
     public ReceiptsValuesTableRow(int number, Receipt receipt, String purpose) {
@@ -30,6 +31,14 @@ public class ReceiptsValuesTableRow {
         this.shopName = receipt.getShopName();
         this.purpose = purpose;
         this.summ = Double.toString(receipt.getSumm());
+    }
+    public ReceiptsValuesTableRow(String date) {
+        this.number = "";
+      
+        this.date = date;
+        this.shopName = "";
+        this.purpose = "";
+        this.summ = "";
     }
 
     public String getNumber() {
@@ -71,6 +80,22 @@ public class ReceiptsValuesTableRow {
 
     public void setSumm(String summ) {
         this.summ = summ;
+    }
+
+    @Override
+    public int compareTo(ReceiptsValuesTableRow row) {
+        String tempDate = this.date;
+        if (this.date.matches("\\d{2}.\\d{4}")){
+            tempDate = "01." + date;
+        }
+        try {
+            return new SimpleDateFormat("dd.MM.yyyy").parse(tempDate)
+                    .compareTo(new SimpleDateFormat("dd.MM.yyyy").parse(row.getDate()));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }
