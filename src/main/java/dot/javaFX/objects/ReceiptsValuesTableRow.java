@@ -1,12 +1,13 @@
 package dot.javaFX.objects;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dot.business.receipt.Receipt;
 
-public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow>{
+public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow> {
 
     private String number;
     private String date;
@@ -20,7 +21,7 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
         this.date = formater.format(date);
         this.shopName = shopName;
         this.purpose = purpose;
-        this.summ = "" +summ;
+        this.summ = "" + summ;
     }
 
     public ReceiptsValuesTableRow(int number, Receipt receipt, String purpose) {
@@ -75,7 +76,14 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
 
     @Override
     public int compareTo(ReceiptsValuesTableRow row) {
-        return this.date.compareTo(row.getDate());
-           }
+        try {
+            return new SimpleDateFormat("dd.MM.yyyy").parse(this.date)
+                    .compareTo(new SimpleDateFormat("dd.MM.yyyy").parse(row.getDate()));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
 }
