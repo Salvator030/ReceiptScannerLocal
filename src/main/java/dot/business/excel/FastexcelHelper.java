@@ -8,9 +8,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.dhatim.fastexcel.reader.ReadableWorkbook;
@@ -26,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dot.business.receipt.Receipt;
+import dot.javaFX.objects.ReceiptsValuesTableRow;
 import javafx.collections.transformation.FilteredList;
 
 public class FastexcelHelper {
@@ -78,15 +82,14 @@ public class FastexcelHelper {
         return summ;
     }
 
-    private List<Receipt> parseDataToReceiptList(Map<Integer, List<String>> data)
+    private List<ReceiptsValuesTableRow> parseDataToReceiptValuesTableRowList(Map<Integer, List<String>> data)
             throws NumberFormatException, ParseException {
         Integer[] keySet = data.keySet().toArray(new Integer[0]);
         int lastRecepitIndex = keySet.length - 2;
-        List<Receipt> receiptsList = new ArrayList<>();
+        List<ReceiptsValuesTableRow> receiptsList = new ArrayList<>();
         for (int i = 1; i <= lastRecepitIndex; i++) {
-
-            receiptsList.add(new Receipt(new SimpleDateFormat("dd.MM.yyyy").parse(data.get(keySet[i]).get(0)),
-                    data.get(keySet[i]).get(1), Double.parseDouble(data.get(keySet[i]).get(2))));
+            receiptsList.add(new ReceiptsValuesTableRow(receiptsList.size() + 1, data.get(keySet[i]).get(0),
+                    data.get(keySet[i]).get(1), "null", Double.parseDouble(data.get(keySet[i]).get(2))));
         }
 
         return receiptsList;
@@ -120,15 +123,26 @@ public class FastexcelHelper {
         }
     }
 
-    private void mergeData(List<Receipt> data, List<Receipt> receiptList) {
-        // List<Receipt> dateRows = data.stream()
-        //         .filter(receiptRow -> receiptRow.getDateFormatString().matches("\\d{2}.\\d{4}")).toList();
-        // for (Receipt receipt : receiptList) {
-        //     boolean isPresent = false;
-        //     for (Receipt comperativReceipt : dateRows) {
-        //         if (comperativReceipt.get())
-        //     }data.add(receipt);
-        // }
+    private void mergeData(List<ReceiptsValuesTableRow> data, List<ReceiptsValuesTableRow> newReceiptRowList) {
+        Set<ReceiptsValuesTableRow> set = new HashSet<ReceiptsValuesTableRow>(data);
+        set.addAll(newReceiptRowList);
+        data = set.stream().toList();
+    }
+
+    private void spliReceiptRowsListByDate( List<ReceiptsValuesTableRow> list){
+        Map<String, List<ReceiptsValuesTableRow>>  receiptRowsByDateMap ;
+        String currentDate = list.get(0).getDate();
+        int startIndex;
+        int endIndex;
+        int listSize = list.size();
+        for (int i = 0; i < listSize; i++ ){
+            if (list.get(i).getDate().length() == 7){
+                currentDate = row.getDate();
+                List<Re = new HashMap<>();
+
+
+            }
+        }
 
     }
 
