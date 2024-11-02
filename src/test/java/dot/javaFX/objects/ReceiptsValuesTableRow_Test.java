@@ -46,8 +46,8 @@ public class ReceiptsValuesTableRow_Test {
             for (ReceiptsValuesTableRow r : receipList){
                 output += r.getDate() + " ";
             }
-            String ref = dates[3] + " " + dates[1] + " " + dates[0] + " " + dates[2] + " ";
-            assertEquals(dates[3] , output);
+            String strB = dates[3] +" "+ dates[1] + " " + dates[0] + " " + dates[2] + " ";
+            assertEquals(strB , output);
     }
 
 
