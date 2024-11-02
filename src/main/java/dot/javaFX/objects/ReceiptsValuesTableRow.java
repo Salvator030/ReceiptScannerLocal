@@ -32,6 +32,14 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
         this.purpose = purpose;
         this.summ = Double.toString(receipt.getSumm());
     }
+    public ReceiptsValuesTableRow(String date) {
+        this.number = "";
+      
+        this.date = date;
+        this.shopName = "";
+        this.purpose = "";
+        this.summ = "";
+    }
 
     public String getNumber() {
         return number;
@@ -76,8 +84,12 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
 
     @Override
     public int compareTo(ReceiptsValuesTableRow row) {
+        String tempDate = this.date;
+        if (this.date.matches("\\d{2}.\\d{4}")){
+            tempDate = "01." + date;
+        }
         try {
-            return new SimpleDateFormat("dd.MM.yyyy").parse(this.date)
+            return new SimpleDateFormat("dd.MM.yyyy").parse(tempDate)
                     .compareTo(new SimpleDateFormat("dd.MM.yyyy").parse(row.getDate()));
         } catch (ParseException e) {
             // TODO Auto-generated catch block
