@@ -1,6 +1,7 @@
 package dot.javaFX.controller;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.io.output.CloseShieldOutputStream;
 
@@ -38,6 +39,8 @@ public class TableViewController {
          "null");
    ComboBoxTableCell<ReceiptsValuesTableRow, String> comboBoxTableCell = new ComboBoxTableCell<>(purposeOptions);
 
+
+   
    private void initDateColumn() {
       dateColumn.setCellFactory(TextFieldTableCell.<ReceiptsValuesTableRow>forTableColumn());
       dateColumn.setOnEditCommit(event -> {
@@ -88,10 +91,22 @@ public class TableViewController {
 
    }
 
+  
+   public void addDateRow( ReceiptsValuesTableRow receiptsValuesTableRow, ObservableList<ReceiptsValuesTableRow> list){
+      String serachFor = receiptsValuesTableRow.getDate().substring(3);
+      List<ReceiptsValuesTableRow> filtredList = list
+            .filtered(r -> r.getDate().equalsIgnoreCase(serachFor));
+      if (filtredList.isEmpty()) {
+         int i = list.indexOf(receiptsValuesTableRow);
+         list.add(i - 1, new ReceiptsValuesTableRow(serachFor));
+      }
+   }
+
    @FXML
    public void addRow(ReceiptsValuesTableRow receiptsValuesTableRow) {
       observableArrayList.add(receiptsValuesTableRow);
       Collections.sort(observableArrayList);
+     addDateRow( receiptsValuesTableRow, observableArrayList);
       receiptValuesTable.setItems(observableArrayList);
    }
 
