@@ -129,29 +129,28 @@ public class FastexcelHelper {
         data = set.stream().toList();
     }
 
-    private void spliReceiptRowsListByDate( List<ReceiptsValuesTableRow> list){
-        Map<String, List<ReceiptsValuesTableRow>>  receiptRowsByDateMap ;
+    public HashMap<String, List<ReceiptsValuesTableRow>> spliReceiptRowsListByDate(List<ReceiptsValuesTableRow> list) {
+        HashMap<String, List<ReceiptsValuesTableRow>> map = new HashMap<>();
         String currentDate = list.get(0).getDate();
-        int startIndex;
-        int endIndex;
         int listSize = list.size();
-        for (int i = 0; i < listSize; i++ ){
-            if (list.get(i).getDate().length() == 7){
-                currentDate = row.getDate();
-                List<Re = new HashMap<>();
-
-
+        for (int i = 0; i < listSize; i++) {
+            if (list.get(i).getDate().length() == 7) {
+                currentDate = list.get(i).getDate();
+                map.put(currentDate, new ArrayList<ReceiptsValuesTableRow>());
+             } else {
+             map.get(currentDate).add(list.get(i));
             }
         }
+        return map;
 
     }
 
     public void writeReceiptsToExcel(Path fullOutputFilePath, List<Receipt> receiptList)
             throws IOException, NumberFormatException, ParseException {
 
-        List<Receipt> data = parseDataToReceiptList(readExcel(fullOutputFilePath.toString()));
-        mergeData(data, receiptList);
-        writeDataToFile(fullOutputFilePath, data);
+        // List<Receipt> data = parseDataToReceiptList(readExcel(fullOutputFilePath.toString()));
+        // mergeData(data, receiptList);
+        // writeDataToFile(fullOutputFilePath, data);
 
     }
 }
