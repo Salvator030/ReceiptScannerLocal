@@ -8,9 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.dhatim.fastexcel.reader.ReadableWorkbook;
@@ -26,6 +30,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dot.business.receipt.Receipt;
+import dot.javaFX.objects.ReceiptsValuesTableRow;
+import javafx.collections.transformation.FilteredList;
 
 public class FastexcelHelper {
 
@@ -77,15 +83,14 @@ public class FastexcelHelper {
         return summ;
     }
 
-    private List<Receipt> parseDataToReceiptList(Map<Integer, List<String>> data)
+    private List<ReceiptsValuesTableRow> parseDataToReceiptValuesTableRowList(Map<Integer, List<String>> data)
             throws NumberFormatException, ParseException {
         Integer[] keySet = data.keySet().toArray(new Integer[0]);
         int lastRecepitIndex = keySet.length - 2;
-        List<Receipt> receiptsList = new ArrayList<>();
+        List<ReceiptsValuesTableRow> receiptsList = new ArrayList<>();
         for (int i = 1; i <= lastRecepitIndex; i++) {
-
-            receiptsList.add(new Receipt(new SimpleDateFormat("dd.MM.yyyy").parse(data.get(keySet[i]).get(0)),
-                    data.get(keySet[i]).get(1), Double.parseDouble(data.get(keySet[i]).get(2))));
+            receiptsList.add(new ReceiptsValuesTableRow(receiptsList.size() + 1, data.get(keySet[i]).get(0),
+                    data.get(keySet[i]).get(1), "null", Double.parseDouble(data.get(keySet[i]).get(2))));
         }
 
         return receiptsList;
@@ -107,7 +112,7 @@ public class FastexcelHelper {
         createSummRow(ws, rowNumber, getTotalSumm(receiptsList));
     }
 
-    private void writeDataToFile(Path fullOutputFilePath, List<Receipt> receipts) throws IOException {
+    private void writeRowListToFile(Path fullOutputFilePath, List<Receipt> receipts) throws IOException {
         try (OutputStream os = Files.newOutputStream(fullOutputFilePath);
                 Workbook wb = new Workbook(os, "MyApplication", "1.0")) {
             Worksheet ws = wb.newWorksheet("Sheet 1");
@@ -119,18 +124,42 @@ public class FastexcelHelper {
         }
     }
 
-    private void mergeData(List<Receipt> data, List<Receipt> receiptList) {
-        for (Receipt receipt : receiptList) {
-            data.add(receipt);
+    public void mergeDataOfSameMonth(List<ReceiptsValuesTableRow> data, List<ReceiptsValuesTableRow> newReceiptRowList) {
+        for (ReceiptsValuesTableRow row : data) {
+            newReceiptRowList.removeIf(r -> r.getDate().equalsIgnoreCase(row.getDate())
+                    && r.getPurpose().equalsIgnoreCase(row.getPurpose())
+                    && r.getShopName().equalsIgnoreCase(row.getShopName())
+                    && r.getSumm().equalsIgnoreCase(row.getSumm()));
+
         }
+        data.addAll(newReceiptRowList);
+        Collections.sort(data);
+
+    }
+
+    public HashMap<String, List<ReceiptsValuesTableRow>> spliReceiptRowsListByDate(List<ReceiptsValuesTableRow> list) {
+        HashMap<String, List<ReceiptsValuesTableRow>> map = new HashMap<>();
+        String currentDate = list.get(0).getDate();
+        int listSize = list.size();
+        for (int i = 0; i < listSize; i++) {
+            if (list.get(i).getDate().length() == 7) {
+                currentDate = list.get(i).getDate();
+                map.put(currentDate, new ArrayList<ReceiptsValuesTableRow>());
+            } else {
+                map.get(currentDate).add(list.get(i));
+            }
+        }
+        return map;
+
     }
 
     public void writeReceiptsToExcel(Path fullOutputFilePath, List<Receipt> receiptList)
             throws IOException, NumberFormatException, ParseException {
 
-        List<Receipt> data = parseDataToReceiptList(readExcel(fullOutputFilePath.toString()));
-        mergeData(data, receiptList);
-        writeDataToFile(fullOutputFilePath, data);
+        // List<Receipt> data =
+        // parseDataToReceiptList(readExcel(fullOutputFilePath.toString()));
+        // mergeData(data, receiptList);
+        // writeDataToFile(fullOutputFilePath, data);
 
     }
 }

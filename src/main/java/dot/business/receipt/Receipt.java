@@ -1,23 +1,29 @@
 package dot.business.receipt;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javafx.scene.input.DataFormat;
 
 public class Receipt {
 
+    private int indexInTable;
     private String shopName;
     private double summ;
-    private Date date;
+    private String date;
+    private String purpose;
+    private final SimpleDateFormat formaterFullDate = new SimpleDateFormat("dd.MM.yyyy");;
+    private final SimpleDateFormat formaterMonthAndYear = new SimpleDateFormat("MM.yyyy");;
 
-    public Receipt(Date date, String shopName, double summ) {
+    public Receipt(String date, String shopName, double summ) {
         this.shopName = shopName;
         this.summ = summ;
         this.date = date;
     }
 
-    public Receipt(Object object, Object object2) {
-        //TODO Auto-generated constructor stub
-    }
-
+ 
     public String getShopName() {
         return shopName;
     }
@@ -34,12 +40,34 @@ public class Receipt {
         this.summ = summ;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
+
+
+    public int getIndexInTable() {
+        return indexInTable;
+    }
+
+
+    public void setIndexInTable(int indexInTable) {
+        this.indexInTable = indexInTable;
+    }
+
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    
 
 }

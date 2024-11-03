@@ -15,10 +15,9 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
     private String purpose;
     private String summ;
 
-    public ReceiptsValuesTableRow(int number, Date date, String shopName, String purpose, Double summ) {
+    public ReceiptsValuesTableRow(int number, String date, String shopName, String purpose, Double summ) {
         this.number = Integer.toString(number);
-        DateFormat formater = new SimpleDateFormat("dd.MM.yyyy");
-        this.date = formater.format(date);
+        this.date = date;
         this.shopName = shopName;
         this.purpose = purpose;
         this.summ = "" + summ;
@@ -26,15 +25,15 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
 
     public ReceiptsValuesTableRow(int number, Receipt receipt, String purpose) {
         this.number = Integer.toString(number);
-        DateFormat formater = new SimpleDateFormat("dd.MM.yyyy");
-        this.date = formater.format(receipt.getDate());
+        this.date = receipt.getDate();
         this.shopName = receipt.getShopName();
         this.purpose = purpose;
         this.summ = Double.toString(receipt.getSumm());
     }
+
     public ReceiptsValuesTableRow(String date) {
         this.number = "";
-      
+
         this.date = date;
         this.shopName = "";
         this.purpose = "";
@@ -85,7 +84,7 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
     @Override
     public int compareTo(ReceiptsValuesTableRow row) {
         String tempDate = this.date;
-        if (this.date.matches("\\d{2}.\\d{4}")){
+        if (this.date.matches("\\d{2}.\\d{4}")) {
             tempDate = "01." + date;
         }
         try {
