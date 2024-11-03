@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -123,8 +124,16 @@ public class FastexcelHelper {
         }
     }
 
-    public void mergeData(List<ReceiptsValuesTableRow> data, List<ReceiptsValuesTableRow> newReceiptRowList) {
-    data.removeIf(r-> r.getDate().equalsIgnoreCase(null));
+    public void mergeDataOfSameMonth(List<ReceiptsValuesTableRow> data, List<ReceiptsValuesTableRow> newReceiptRowList) {
+        for (ReceiptsValuesTableRow row : data) {
+            newReceiptRowList.removeIf(r -> r.getDate().equalsIgnoreCase(row.getDate())
+                    && r.getPurpose().equalsIgnoreCase(row.getPurpose())
+                    && r.getShopName().equalsIgnoreCase(row.getShopName())
+                    && r.getSumm().equalsIgnoreCase(row.getSumm()));
+
+        }
+        data.addAll(newReceiptRowList);
+        Collections.sort(data);
 
     }
 
@@ -136,8 +145,8 @@ public class FastexcelHelper {
             if (list.get(i).getDate().length() == 7) {
                 currentDate = list.get(i).getDate();
                 map.put(currentDate, new ArrayList<ReceiptsValuesTableRow>());
-             } else {
-             map.get(currentDate).add(list.get(i));
+            } else {
+                map.get(currentDate).add(list.get(i));
             }
         }
         return map;
@@ -147,7 +156,8 @@ public class FastexcelHelper {
     public void writeReceiptsToExcel(Path fullOutputFilePath, List<Receipt> receiptList)
             throws IOException, NumberFormatException, ParseException {
 
-        // List<Receipt> data = parseDataToReceiptList(readExcel(fullOutputFilePath.toString()));
+        // List<Receipt> data =
+        // parseDataToReceiptList(readExcel(fullOutputFilePath.toString()));
         // mergeData(data, receiptList);
         // writeDataToFile(fullOutputFilePath, data);
 
