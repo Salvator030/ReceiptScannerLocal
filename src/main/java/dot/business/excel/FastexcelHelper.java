@@ -111,7 +111,7 @@ public class FastexcelHelper {
         createSummRow(ws, rowNumber, getTotalSumm(receiptsList));
     }
 
-    private void writeDataToFile(Path fullOutputFilePath, List<Receipt> receipts) throws IOException {
+    private void writeRowListToFile(Path fullOutputFilePath, List<Receipt> receipts) throws IOException {
         try (OutputStream os = Files.newOutputStream(fullOutputFilePath);
                 Workbook wb = new Workbook(os, "MyApplication", "1.0")) {
             Worksheet ws = wb.newWorksheet("Sheet 1");
@@ -123,10 +123,9 @@ public class FastexcelHelper {
         }
     }
 
-    private void mergeData(List<ReceiptsValuesTableRow> data, List<ReceiptsValuesTableRow> newReceiptRowList) {
-        Set<ReceiptsValuesTableRow> set = new HashSet<ReceiptsValuesTableRow>(data);
-        set.addAll(newReceiptRowList);
-        data = set.stream().toList();
+    public void mergeData(List<ReceiptsValuesTableRow> data, List<ReceiptsValuesTableRow> newReceiptRowList) {
+    data.removeIf(r-> r.getDate().equalsIgnoreCase(null));
+
     }
 
     public HashMap<String, List<ReceiptsValuesTableRow>> spliReceiptRowsListByDate(List<ReceiptsValuesTableRow> list) {
