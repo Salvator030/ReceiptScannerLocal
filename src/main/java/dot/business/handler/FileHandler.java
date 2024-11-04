@@ -2,6 +2,7 @@ package dot.business.handler;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,11 +10,11 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Set;
 
 public class FileHandler {
-
     private File inputFile;
-    private File outputFolder;
     private final String defaultFileName = "Kassenbons-Abrechnung";
     private String outputFileName = defaultFileName;
     private String outputFileDate;
@@ -21,6 +22,8 @@ public class FileHandler {
     private final String tessDataPath = "src/main/resources/tessdata";
     private final File documentsDirectory = new File(
             System.getProperty("user.home") + File.separator + "Documents" + File.separator);
+    private File inputFolder = documentsDirectory;
+    private File outputFolder = documentsDirectory;
 
     public void setInputFile(String filePath) {
         this.inputFile = new File(filePath);
@@ -73,11 +76,24 @@ public class FileHandler {
         return path;
     }
 
-    public void checkExistFile() {
-        if (!Files.exists(getFullOuputFilePath())) {
+    public Path getFullInputFilePath(String date) {
+        Path path = Path.of(inputFolder.toString(), outputFileName + "-" + date.replace(".", "") + outputFileType);
+        return path;
+    }
+
+    public boolean checkExistFile(Path path) {
+        if (!Files.exists(path)) {
             System.out.println("create File");
-            new File(getFullOuputFilePath().toString());
+          File file=  new File(path.toString());
+          try {
+            file.createNewFile();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+            return false;
+        }
+        return true;
     }
 
     private String monthAndYearToString(Date date) {
@@ -92,6 +108,14 @@ public class FileHandler {
     public String fileLocationToString(File folder, String fileName) {
         String path = folder.getAbsolutePath();
         return path.substring(0, path.length() - 1) + File.separator + fileName;
+    }
+
+    public HashMap<String, Path> getExcelFilesPathesToReadIn(Set<String> datesKeys) {
+        HashMap<String, Path> datePathMap = new HashMap<String, Path>();
+        for (String date : datesKeys) {
+            datePathMap.put(date, getFullInputFilePath(date));
+        }
+        return datePathMap;
     }
 
 }

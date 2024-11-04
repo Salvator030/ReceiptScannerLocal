@@ -145,8 +145,8 @@ public class KassenbonMainController {
      }
 
      public void writeReceiptsToExcel() throws NumberFormatException, IOException, ParseException {
-          fileHandler.checkExistFile();
-          excelHelper.writeReceiptsToExcel(fileHandler.getFullOuputFilePath(), receipts);
-     }
 
+          excelHelper.writeReceiptsToExcelFiles(tableViewController.getRowList());
+
+     }
 }
