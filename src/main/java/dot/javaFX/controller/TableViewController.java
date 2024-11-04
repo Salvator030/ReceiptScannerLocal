@@ -33,12 +33,15 @@ public class TableViewController {
    @FXML
    private TableColumn<ReceiptsValuesTableRow, String> summColumn = null;
 
-   ObservableList<ReceiptsValuesTableRow> observableArrayList = FXCollections.observableArrayList();
+   private ObservableList<ReceiptsValuesTableRow> rowList = FXCollections.observableArrayList();
    ObservableList<String> purposeOptions = FXCollections.observableArrayList("Büromaterial", "Lebensmittel",
          "Sachmittel",
          "null");
    ComboBoxTableCell<ReceiptsValuesTableRow, String> comboBoxTableCell = new ComboBoxTableCell<>(purposeOptions);
 
+   public List<ReceiptsValuesTableRow> getRowList(){
+      return rowList;
+   }
 
    
    private void initDateColumn() {
@@ -104,10 +107,10 @@ public class TableViewController {
 
    @FXML
    public void addRow(ReceiptsValuesTableRow receiptsValuesTableRow) {
-      observableArrayList.add(receiptsValuesTableRow);
-      Collections.sort(observableArrayList);
-     addDateRow( receiptsValuesTableRow, observableArrayList);
-      receiptValuesTable.setItems(observableArrayList);
+      rowList.add(receiptsValuesTableRow);
+      Collections.sort(rowList);
+     addDateRow( receiptsValuesTableRow, rowList);
+      receiptValuesTable.setItems(rowList);
    }
 
 }
