@@ -26,10 +26,12 @@ public class ItemScanner {
        
         System.out.println("result: " + result);
             // String regex = ".*([A-Za-z]*)\\s(\\d+[,.]{1}\\d{2})\\s?[€]";
-            String regex = "\\d{1-4}";
+          
+            String regex = "\\d+[.,]{1}\\d{2}";
             Matcher m = Pattern.compile(regex).matcher(result);
-            System.out.println(m.group(1));
-            return Double.parseDouble(m.group(1));
+              System.out.println("matches: " + m.find());
+            System.out.println(m.group(0));
+            return Double.parseDouble(m.group(2).replace(",", "."));
 
             // for (int i = 0; i < COUNTER; i++) {
             //     if (string.toLowerCase().contains(SYNONYMS_FOR_SUMM[i])) {
