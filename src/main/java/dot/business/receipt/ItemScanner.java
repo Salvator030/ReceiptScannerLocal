@@ -21,17 +21,22 @@ public class ItemScanner {
     }
 
     public double getTotalSumm(String result) {
-        final String[] SYNONYMS_FOR_SUMM = { "summe", "zu zahlen", "gesamt", "betrag" };
-        final int COUNTER = SYNONYMS_FOR_SUMM.length;
-        String[] resultArray = result.split("\n");
-        for (String string : resultArray) {
-            for (int i = 0; i < COUNTER; i++) {
-                if (string.toLowerCase().contains(SYNONYMS_FOR_SUMM[i])) {
-                    return Double.parseDouble(string.replaceAll("[^0-9,]", "").replace(',', '.'));
-                }
-            }
-        }
-        return 0;
+        // final String[] SYNONYMS_FOR_SUMM = { "summe", "zu zahlen", "gesamt", "betrag" };
+        // final int COUNTER = SYNONYMS_FOR_SUMM.length;
+       
+        System.out.println("result: " + result);
+            // String regex = ".*([A-Za-z]*)\\s(\\d+[,.]{1}\\d{2})\\s?[€]";
+            String regex = "\\d{1-4}";
+            Matcher m = Pattern.compile(regex).matcher(result);
+            System.out.println(m.group(1));
+            return Double.parseDouble(m.group(1));
+
+            // for (int i = 0; i < COUNTER; i++) {
+            //     if (string.toLowerCase().contains(SYNONYMS_FOR_SUMM[i])) {
+            //         return Double.parseDouble(string.replaceAll("[^0-9,]", "").replace(',', '.'));
+            //     }
+            // }
+      
     }
 
     public String getDate(String result) {
