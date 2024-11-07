@@ -56,6 +56,7 @@ public class KassenbonMainController {
      }
 
      public void addReceiptInList(Receipt receipt) {
+          System.out.println("addReceiptInList");
           receipts.add(receipt);
      }
 
@@ -141,6 +142,7 @@ public class KassenbonMainController {
      }
 
      public void addReceiptInTable(Receipt receipt) {
+          System.out.println("addReceiptInTable");
           tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
      }
 

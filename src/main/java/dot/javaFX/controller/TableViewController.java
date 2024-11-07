@@ -101,16 +101,22 @@ public class TableViewController {
             .filtered(r -> r.getDate().equalsIgnoreCase(serachFor));
       if (filtredList.isEmpty()) {
          int i = list.indexOf(receiptsValuesTableRow);
-         list.add(i - 1, new ReceiptsValuesTableRow(serachFor));
+         list.add(i , new ReceiptsValuesTableRow(serachFor));
       }
    }
 
    @FXML
    public void addRow(ReceiptsValuesTableRow receiptsValuesTableRow) {
+      try{
       rowList.add(receiptsValuesTableRow);
       Collections.sort(rowList);
      addDateRow( receiptsValuesTableRow, rowList);
       receiptValuesTable.setItems(rowList);
+   }catch (Exception e){
+     for(StackTraceElement  s : e.getStackTrace()){
+System.err.println(s);
+     };
+   }
    }
 
 }

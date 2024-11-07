@@ -20,6 +20,10 @@ public class Receipt {
     public Receipt(String date, String shopName, double summ) {
         this.shopName = shopName;
         this.summ = summ;
+        if(date .length() == 8){
+            String[] temp = date.split(".");
+            this.date = temp[0]+"."+temp[1]+".20"+temp[2];
+        }
         this.date = date;
     }
 

@@ -30,10 +30,12 @@ public class ScannReceiptBtnController {
             @Override
             protected Void call() throws Exception {
                 scannReceiptBtn.setVisible(false);
-                progressIndicator.setVisible(true); //progress indicator set visible
+               progressIndicator.setVisible(true); //progress indicator set visible
                 receiptScanner.setReceiptImage(mainController.getFileHandler().getInputFile());
                 Receipt receipt = receiptScanner.scannReceipt(receiptScanner.scanImage());
+                System.out.println("5");
                 mainController.addReceiptInList(receipt);
+                System.out.println("6");
                 mainController.addReceiptInTable(receipt);
 
                 return null;

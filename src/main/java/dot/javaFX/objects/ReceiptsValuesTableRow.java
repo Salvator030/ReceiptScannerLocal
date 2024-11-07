@@ -84,12 +84,18 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
     @Override
     public int compareTo(ReceiptsValuesTableRow row) {
         String tempDate = this.date;
+        String rowDate = row.getDate();
         if (this.date.matches("\\d{2}.\\d{4}")) {
             tempDate = "01." + date;
         }
+        System.out.println(rowDate);
+        if (rowDate.matches("\\d{2}.\\d{4}")) {
+            rowDate = "01." + rowDate;
+        }
+
         try {
             return new SimpleDateFormat("dd.MM.yyyy").parse(tempDate)
-                    .compareTo(new SimpleDateFormat("dd.MM.yyyy").parse(row.getDate()));
+                    .compareTo(new SimpleDateFormat("dd.MM.yyyy").parse(rowDate));
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
