@@ -45,7 +45,9 @@ public class ItemScanner_Test {
              assertEquals(null,itemScanner.getDate(s));
         }
 
-        assertEquals(ExampleReceiptStrings.getExampleReceiptString1_date(), ExampleReceiptStrings.getExampleReceiptString1());
+        assertEquals(ExampleReceiptStrings.getExampleReceiptString1_date(), itemScanner.getDate(ExampleReceiptStrings.getExampleReceiptString1_DateLine()));
+        assertEquals(ExampleReceiptStrings.getExampleReceiptString2_date(), itemScanner.getDate(ExampleReceiptStrings.getExampleReceiptString2_DateLine()));
+        assertEquals(ExampleReceiptStrings.getExampleReceiptString3_date(), itemScanner.getDate(ExampleReceiptStrings.getExampleReceiptString3_DateLine()));
        
     }
 }
