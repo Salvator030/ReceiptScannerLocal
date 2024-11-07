@@ -1,4 +1,4 @@
-package dot.receipt;
+package dot.business.receipt;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,8 +67,8 @@ public class ExampleReceiptStrings {
         return 11.28;
     }
 
-    public static Date getExampleReceiptString1_date() throws ParseException{
-        return  new SimpleDateFormat("dd.MM.yyyy").parse("01.08.2024") ;
+    public static String getExampleReceiptString1_date() {
+        return "01.08.2024";
     }
 
 }
