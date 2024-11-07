@@ -28,6 +28,8 @@ public class ItemScanner_Test {
         assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[5] + " " + summ + "\t€"));
         assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[6] + " " + summ + "\t €"));
 
+
+        assertEquals(ExampleReceiptStrings.getExampleReceiptString1_summ(), ExampleReceiptStrings.getExampleReceiptString1());
     }
 
     @Test
@@ -42,6 +44,8 @@ public class ItemScanner_Test {
         for (String s : resiltArray2){
              assertEquals(null,itemScanner.getDate(s));
         }
+
+        assertEquals(ExampleReceiptStrings.getExampleReceiptString1_date(), ExampleReceiptStrings.getExampleReceiptString1());
        
     }
 }
