@@ -40,6 +40,7 @@ public class ReceiptScanner {
                 name = itemScanner.getStoreName(resultString);
             }
             if (summ == null) {
+
                 summ = itemScanner.getTotalSumm(resultString);
             }
 

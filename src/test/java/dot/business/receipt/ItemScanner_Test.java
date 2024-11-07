@@ -29,7 +29,7 @@ public class ItemScanner_Test {
         assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[6] + " " + summ + "\t €"));
 
 
-        assertEquals(ExampleReceiptStrings.getExampleReceiptString1_summ(), ExampleReceiptStrings.getExampleReceiptString1());
+        assertEquals(ExampleReceiptStrings.getExampleReceiptString1_summ(), itemScanner.getTotalSumm("Betrag EUR 11,28\n"));
     }
 
     @Test

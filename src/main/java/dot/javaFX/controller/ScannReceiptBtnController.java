@@ -32,7 +32,7 @@ public class ScannReceiptBtnController {
                 scannReceiptBtn.setVisible(false);
                 progressIndicator.setVisible(true); //progress indicator set visible
                 receiptScanner.setReceiptImage(mainController.getFileHandler().getInputFile());
-                Receipt receipt = receiptScanner.scannReceipt();
+                Receipt receipt = receiptScanner.scannReceipt(receiptScanner.scanImage());
                 mainController.addReceiptInList(receipt);
                 mainController.addReceiptInTable(receipt);
 
