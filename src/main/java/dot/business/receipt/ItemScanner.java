@@ -9,45 +9,46 @@ import java.util.regex.Pattern;
 public class ItemScanner {
 
     public String getStoreName(String result) {
-        String[] resultArray = result.split("\n");
-        for (String resultString : resultArray) {
-            resultString = resultString.toLowerCase();
-            if ((!resultString.contains("beleg") || !resultString.matches(".*[kassenbon].*")
-                    || !resultString.matches("^.*[quittung].*")) && !resultString.isBlank()) {
-                return resultString;
-            }
+
+        String name = null;
+       String lowCasewresult = result.toLowerCase();
+        if ((!lowCasewresult.contains("beleg") || !lowCasewresult.matches(".*[kassenbon].*")
+                || !lowCasewresult.matches("^.*[quittung].*")) && !lowCasewresult.isBlank()) {
+            name = result;
         }
-        return null;
+
+        return name;
     }
 
-    public double getTotalSumm(String result) {
+    public Double getTotalSumm(String result) {
         final String[] SYNONYMS_FOR_SUMM = { "summe", "zahlen", "gesamt", "betrag", "eur" };
         final int COUNTER = SYNONYMS_FOR_SUMM.length;
-       
+
         System.out.println("result: " + result);
 
-        Double summ =null;
-                     
-                String regex = "^\\D{1}\\w+(?:\\s*\\w*)[:]?\\s+(\\d+[,.]\\d{2})\\s*[€]?$";
-      
-            Matcher m = Pattern.compile(regex).matcher(result);
-         System.out.println("Matches: " + m.matches());
-            for (int i = 0; i < COUNTER; i++) {
-                if (result.toLowerCase().contains(SYNONYMS_FOR_SUMM[i])) {
-            
-                    System.out.println("groupe1: " + m.group(1));
-                    summ =  Double.parseDouble(m.group(1).replace(",", "."));
-                    break;
-                }
+        Double summ = null;
+
+        String regex = "^\\D{1}\\w+(?:\\s*\\w*)[:]?\\s+(\\d+[,.]\\d{2})\\s*[€]?$";
+
+        Matcher m = Pattern.compile(regex).matcher(result);
+        System.out.println("Matches: " + m.matches());
+        for (String s : SYNONYMS_FOR_SUMM ) {
+            if (result.toLowerCase().contains(s)) {
+                System.out.println("SYNONYMS_FOR_SUMM[i]: " +s);
+                System.out.println("groupe1: " + m.group(1));
+                summ = Double.parseDouble(m.group(1).replace(",", "."));
+             
             }
-            return summ;      
+        }
+        return summ != null ? summ : null;
     }
 
     public String getDate(String result) {
-        String regex = ".*(\\d{2}[.]\\d{2}[.]\\d{4}).*";
+        String regex = "^(?:\\w*[:]*\\s*)(\\d{2}[.]\\d{2}[.]\\d{2,4}).*\\n?";               
         Matcher m = Pattern.compile(regex).matcher(result);
+        System.out.println(m.matches());
         String date = null;
-        if(m.matches()){
+        if (m.matches()) {
             date = m.group(1);
         }
         return date;

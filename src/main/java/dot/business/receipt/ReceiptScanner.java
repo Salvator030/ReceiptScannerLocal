@@ -2,6 +2,7 @@ package dot.business.receipt;
 
 import dot.business.ocrScanner.Tess;
 import java.io.File;
+import java.util.HashMap;
 
 public class ReceiptScanner {
 
@@ -19,12 +20,33 @@ public class ReceiptScanner {
         image = file;
     }
 
-    public Receipt scannReceipt() {
-        String result = tess.tess4jNormal(image);
-        Receipt receipt = result != null
-                ? new Receipt(itemScanner.getDate(result), itemScanner.getStoreName(result),
-                        itemScanner.getTotalSumm(result))
-                : null;
+    public String scanImage(){
+        return tess.tess4jNormal(image);
+    }
+
+    public Receipt scannReceipt( String result) {
+      
+        String date = null;
+        String name = null;
+        Double summ = null;
+
+        String[] resultArray = result.split("\n");
+        for (String resultString : resultArray) {
+
+            if (date == null) {
+                date = itemScanner.getDate(resultString);
+            }
+            if (name == null) {
+                name = itemScanner.getStoreName(resultString);
+            }
+            if (summ == null) {
+
+                summ = itemScanner.getTotalSumm(resultString);
+            }
+
+        }
+        Receipt receipt = new Receipt(date != null ? date : "", name != null ? name : "",
+                summ != null ? summ : 0);
 
         return receipt;
     }
