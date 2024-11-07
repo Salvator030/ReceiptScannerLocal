@@ -44,8 +44,9 @@ public class ItemScanner {
     }
 
     public String getDate(String result) {
-        String regex = ".*(\\d{2}[.]\\d{2}[.]\\d{4}).*";
+        String regex = "^(?:\\w*[:]*\\s*)(\\d{2}[.]\\d{2}[.]\\d{2,4}).*\\n?";               
         Matcher m = Pattern.compile(regex).matcher(result);
+        System.out.println(m.matches());
         String date = null;
         if (m.matches()) {
             date = m.group(1);
