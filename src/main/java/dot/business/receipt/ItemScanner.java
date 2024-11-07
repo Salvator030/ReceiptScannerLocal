@@ -11,9 +11,9 @@ public class ItemScanner {
     public String getStoreName(String result) {
 
         String name = null;
-        result = result.toLowerCase();
-        if ((!result.contains("beleg") || !result.matches(".*[kassenbon].*")
-                || !result.matches("^.*[quittung].*")) && !result.isBlank()) {
+       String lowCasewresult = result.toLowerCase();
+        if ((!lowCasewresult.contains("beleg") || !lowCasewresult.matches(".*[kassenbon].*")
+                || !lowCasewresult.matches("^.*[quittung].*")) && !lowCasewresult.isBlank()) {
             name = result;
         }
 

@@ -60,7 +60,7 @@ public class ExampleReceiptStrings {
     }
 
     public static String getExampleReceiptString1_name(){
-        return "blume2000 SE";
+        return "Blume2000 SE";
     }
 
     public static double getExampleReceiptString1_summ(){
