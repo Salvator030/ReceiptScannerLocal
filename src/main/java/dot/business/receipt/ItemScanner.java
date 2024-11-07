@@ -9,15 +9,15 @@ import java.util.regex.Pattern;
 public class ItemScanner {
 
     public String getStoreName(String result) {
-        String[] resultArray = result.split("\n");
-        for (String resultString : resultArray) {
-            resultString = resultString.toLowerCase();
-            if ((!resultString.contains("beleg") || !resultString.matches(".*[kassenbon].*")
-                    || !resultString.matches("^.*[quittung].*")) && !resultString.isBlank()) {
-                return resultString;
+
+        String name = null;
+        result = result.toLowerCase();
+            if ((!result.contains("beleg") || !result.matches(".*[kassenbon].*")
+                    || !result.matches("^.*[quittung].*")) && !result.isBlank()) {
+                name =  result;
             }
-        }
-        return null;
+        
+        return name;
     }
 
     public double getTotalSumm(String result) {
