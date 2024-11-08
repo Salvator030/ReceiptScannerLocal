@@ -56,6 +56,7 @@ public class KassenbonMainController {
      }
 
      public void addReceiptInList(Receipt receipt) {
+          System.out.println("addReceiptInList");
           receipts.add(receipt);
      }
 
@@ -129,7 +130,10 @@ public class KassenbonMainController {
      }
 
      public void toggleTableViewDisable() {
-          tableViewNode.setDisable(!tableViewNode.isDisable());
+          if(!receipts.isEmpty()){
+               tableViewNode.setDisable(false);
+          }else{
+          tableViewNode.setDisable(!tableViewNode.isDisable());}
      }
 
      public void toggleSaveBtnDisable() {
@@ -141,6 +145,7 @@ public class KassenbonMainController {
      }
 
      public void addReceiptInTable(Receipt receipt) {
+          System.out.println("addReceiptInTable");
           tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
      }
 

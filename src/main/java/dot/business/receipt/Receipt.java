@@ -20,8 +20,24 @@ public class Receipt {
     public Receipt(String date, String shopName, double summ) {
         this.shopName = shopName;
         this.summ = summ;
-        this.date = date;
+        
+         this.date = checkDate(date);
+        
     }
+
+    private String checkDate(String date){
+        System.out.println(date);
+        if(date .length() == 8){
+            String[] temp = date.split("[.]");
+            System.out.println(temp.length);
+            System.out.println(temp[0]);
+            System.out.println(temp[1]);
+            System.out.println(temp[2]);
+          return  temp[0]+"."+temp[1]+".20"+temp[2];
+
+        }
+        return date;
+    } 
 
  
     public String getShopName() {
