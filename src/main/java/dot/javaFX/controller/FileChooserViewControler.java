@@ -41,8 +41,10 @@ public class FileChooserViewControler {
     @FXML
     public void handelSelectReceiptBtn() {
         File file = getFileFromFileChooser();
-        mainController.getFileHandler().setInputFile(file);
-        filePathText.setText(file.getAbsolutePath());
-        mainController.toggleScannReceiptBtnViewDisable();
+        if (file != null) {
+            mainController.getFileHandler().setInputFile(file);
+            filePathText.setText(file.getAbsolutePath());
+            mainController.toggleScannReceiptBtnViewDisable();
+        }
     }
 }
