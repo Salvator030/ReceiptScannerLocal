@@ -92,7 +92,7 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
         if (rowDate.matches("\\d{2}.\\d{4}")) {
             rowDate = "01." + rowDate;
         }
-
+       
         try {
             return new SimpleDateFormat("dd.MM.yyyy").parse(tempDate)
                     .compareTo(new SimpleDateFormat("dd.MM.yyyy").parse(rowDate));
