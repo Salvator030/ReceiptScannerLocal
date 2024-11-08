@@ -130,7 +130,10 @@ public class KassenbonMainController {
      }
 
      public void toggleTableViewDisable() {
-          tableViewNode.setDisable(!tableViewNode.isDisable());
+          if(!receipts.isEmpty()){
+               tableViewNode.setDisable(false);
+          }else{
+          tableViewNode.setDisable(!tableViewNode.isDisable());}
      }
 
      public void toggleSaveBtnDisable() {
