@@ -26,7 +26,7 @@ public class FileChooserViewControler {
     @FXML
     private Text filePathText = null;
 
-    public void clearFilePathText(){
+    public void clearFilePathText() {
         filePathText.setText("");
     }
 
