@@ -39,11 +39,10 @@ public class TableViewController {
          "null");
    ComboBoxTableCell<ReceiptsValuesTableRow, String> comboBoxTableCell = new ComboBoxTableCell<>(purposeOptions);
 
-   public List<ReceiptsValuesTableRow> getRowList(){
+   public List<ReceiptsValuesTableRow> getRowList() {
       return rowList;
    }
 
-   
    private void initDateColumn() {
       dateColumn.setCellFactory(TextFieldTableCell.<ReceiptsValuesTableRow>forTableColumn());
       dateColumn.setOnEditCommit(event -> {
@@ -94,29 +93,31 @@ public class TableViewController {
 
    }
 
-  
-   public void addDateRow( ReceiptsValuesTableRow receiptsValuesTableRow, ObservableList<ReceiptsValuesTableRow> list){
+   public void addDateRow(ReceiptsValuesTableRow receiptsValuesTableRow, ObservableList<ReceiptsValuesTableRow> list) {
       String serachFor = receiptsValuesTableRow.getDate().substring(3);
       List<ReceiptsValuesTableRow> filtredList = list
             .filtered(r -> r.getDate().equalsIgnoreCase(serachFor));
       if (filtredList.isEmpty()) {
          int i = list.indexOf(receiptsValuesTableRow);
-         list.add(i , new ReceiptsValuesTableRow(serachFor));
+         list.add(i, new ReceiptsValuesTableRow(serachFor));
       }
    }
 
    @FXML
    public void addRow(ReceiptsValuesTableRow receiptsValuesTableRow) {
-      try{
-      rowList.add(receiptsValuesTableRow);
-      Collections.sort(rowList);
-     addDateRow( receiptsValuesTableRow, rowList);
-      receiptValuesTable.setItems(rowList);
-   }catch (Exception e){
-     for(StackTraceElement  s : e.getStackTrace()){
-System.err.println(s);
-     };
-   }
+      try {
+         rowList.add(receiptsValuesTableRow);
+         Collections.sort(rowList);
+         if (!receiptsValuesTableRow.getDate().equals("")) {
+            addDateRow(receiptsValuesTableRow, rowList);
+         }
+         receiptValuesTable.setItems(rowList);
+      } catch (Exception e) {
+         for (StackTraceElement s : e.getStackTrace()) {
+            System.err.println(s);
+         }
+         ;
+      }
    }
 
 }
