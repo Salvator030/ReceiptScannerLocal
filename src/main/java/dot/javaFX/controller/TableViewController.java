@@ -33,14 +33,16 @@ public class TableViewController {
    @FXML
    private TableColumn<ReceiptsValuesTableRow, String> summColumn = null;
 
-   ObservableList<ReceiptsValuesTableRow> observableArrayList = FXCollections.observableArrayList();
+   private ObservableList<ReceiptsValuesTableRow> rowList = FXCollections.observableArrayList();
    ObservableList<String> purposeOptions = FXCollections.observableArrayList("Büromaterial", "Lebensmittel",
          "Sachmittel",
          "null");
    ComboBoxTableCell<ReceiptsValuesTableRow, String> comboBoxTableCell = new ComboBoxTableCell<>(purposeOptions);
 
+   public List<ReceiptsValuesTableRow> getRowList() {
+      return rowList;
+   }
 
-   
    private void initDateColumn() {
       dateColumn.setCellFactory(TextFieldTableCell.<ReceiptsValuesTableRow>forTableColumn());
       dateColumn.setOnEditCommit(event -> {
@@ -91,23 +93,31 @@ public class TableViewController {
 
    }
 
-  
-   public void addDateRow( ReceiptsValuesTableRow receiptsValuesTableRow, ObservableList<ReceiptsValuesTableRow> list){
+   public void addDateRow(ReceiptsValuesTableRow receiptsValuesTableRow, ObservableList<ReceiptsValuesTableRow> list) {
       String serachFor = receiptsValuesTableRow.getDate().substring(3);
       List<ReceiptsValuesTableRow> filtredList = list
             .filtered(r -> r.getDate().equalsIgnoreCase(serachFor));
       if (filtredList.isEmpty()) {
          int i = list.indexOf(receiptsValuesTableRow);
-         list.add(i - 1, new ReceiptsValuesTableRow(serachFor));
+         list.add(i, new ReceiptsValuesTableRow(serachFor));
       }
    }
 
    @FXML
    public void addRow(ReceiptsValuesTableRow receiptsValuesTableRow) {
-      observableArrayList.add(receiptsValuesTableRow);
-      Collections.sort(observableArrayList);
-     addDateRow( receiptsValuesTableRow, observableArrayList);
-      receiptValuesTable.setItems(observableArrayList);
+      try {
+         rowList.add(receiptsValuesTableRow);
+         Collections.sort(rowList);
+         if (!receiptsValuesTableRow.getDate().equals("")) {
+            addDateRow(receiptsValuesTableRow, rowList);
+         }
+         receiptValuesTable.setItems(rowList);
+      } catch (Exception e) {
+         for (StackTraceElement s : e.getStackTrace()) {
+            System.err.println(s);
+         }
+         ;
+      }
    }
 
 }

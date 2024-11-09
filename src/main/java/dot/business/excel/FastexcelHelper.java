@@ -8,9 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.dhatim.fastexcel.reader.ReadableWorkbook;
@@ -25,9 +29,14 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
+import dot.business.handler.FileHandler;
 import dot.business.receipt.Receipt;
+import dot.javaFX.objects.ReceiptsValuesTableRow;
+import javafx.collections.transformation.FilteredList;
 
 public class FastexcelHelper {
+
+    FileHandler fileHandler = new FileHandler();
 
     public Map<Integer, List<String>> readExcel(String fileLocation) {
         Map<Integer, List<String>> data = new HashMap<>();
@@ -69,36 +78,35 @@ public class FastexcelHelper {
         ws.value(rowNumber, 2, summ);
     }
 
-    private double getTotalSumm(List<Receipt> receipts) {
+    private double getTotalSumm(List<ReceiptsValuesTableRow> receipts) {
         double summ = 0;
-        for (Receipt r : receipts) {
-            summ += r.getSumm();
+        for (ReceiptsValuesTableRow r : receipts) {
+            summ += Double.parseDouble(r.getSumm());
         }
         return summ;
     }
 
-    private List<Receipt> parseDataToReceiptList(Map<Integer, List<String>> data)
+    private List<ReceiptsValuesTableRow> parseDataToReceiptValuesTableRowList(Map<Integer, List<String>> data)
             throws NumberFormatException, ParseException {
         Integer[] keySet = data.keySet().toArray(new Integer[0]);
         int lastRecepitIndex = keySet.length - 2;
-        List<Receipt> receiptsList = new ArrayList<>();
+        List<ReceiptsValuesTableRow> receiptsList = new ArrayList<>();
         for (int i = 1; i <= lastRecepitIndex; i++) {
-
-            receiptsList.add(new Receipt(new SimpleDateFormat("dd.MM.yyyy").parse(data.get(keySet[i]).get(0)),
-                    data.get(keySet[i]).get(1), Double.parseDouble(data.get(keySet[i]).get(2))));
+            receiptsList.add(new ReceiptsValuesTableRow(receiptsList.size() + 1, data.get(keySet[i]).get(0),
+                    data.get(keySet[i]).get(1), "null", Double.parseDouble(data.get(keySet[i]).get(2))));
         }
 
         return receiptsList;
     }
 
-    private void createTableBody(Worksheet ws, List<Receipt> receiptsList)
+    private void createTableBody(Worksheet ws, List<ReceiptsValuesTableRow> receiptsList)
             throws NumberFormatException, ParseException {
-
-        DateFormat dataFormat = new SimpleDateFormat("dd.MM.yyyy");
+System.out.println("createTableBody");
+      
         int rowNumber = 2;
-        for (Receipt r : receiptsList) {
+        for (ReceiptsValuesTableRow r : receiptsList) {
             ws.range(rowNumber, 0, rowNumber, 2).style().wrapText(true).set();
-            ws.value(rowNumber, 0, dataFormat.format(r.getDate()));
+            ws.value(rowNumber, 0, r.getDate());
             ws.value(rowNumber, 1, r.getShopName());
             ws.value(rowNumber, 2, r.getSumm());
             ++rowNumber;
@@ -107,7 +115,7 @@ public class FastexcelHelper {
         createSummRow(ws, rowNumber, getTotalSumm(receiptsList));
     }
 
-    private void writeDataToFile(Path fullOutputFilePath, List<Receipt> receipts) throws IOException {
+    private void writeRowListToFile(Path fullOutputFilePath, List<ReceiptsValuesTableRow> receipts) throws IOException {
         try (OutputStream os = Files.newOutputStream(fullOutputFilePath);
                 Workbook wb = new Workbook(os, "MyApplication", "1.0")) {
             Worksheet ws = wb.newWorksheet("Sheet 1");
@@ -119,18 +127,90 @@ public class FastexcelHelper {
         }
     }
 
-    private void mergeData(List<Receipt> data, List<Receipt> receiptList) {
-        for (Receipt receipt : receiptList) {
-            data.add(receipt);
+    private void mergeDataOfSameMonth(List<ReceiptsValuesTableRow> targetList,
+            List<ReceiptsValuesTableRow> sourceList) {
+        for (ReceiptsValuesTableRow row : targetList) {
+            sourceList.removeIf(r -> r.getDate().equalsIgnoreCase(row.getDate())
+                    && r.getPurpose().equalsIgnoreCase(row.getPurpose())
+                    && r.getShopName().equalsIgnoreCase(row.getShopName())
+                    && r.getSumm().equalsIgnoreCase(row.getSumm()));
+
+        }
+        targetList.addAll(sourceList);
+        Collections.sort(targetList);
+
+    }
+
+    private void mergeMapOfSomeMonth(HashMap<String, List<ReceiptsValuesTableRow>> targetMap,
+            HashMap<String, List<ReceiptsValuesTableRow>> sourceMap, Set<String> keys) {
+
+        for (String key : keys) {
+            if (sourceMap.containsKey(key)) {
+                mergeDataOfSameMonth(targetMap.get(key), sourceMap.get(key));
+            }
         }
     }
 
-    public void writeReceiptsToExcel(Path fullOutputFilePath, List<Receipt> receiptList)
-            throws IOException, NumberFormatException, ParseException {
+    public HashMap<String, List<ReceiptsValuesTableRow>> spliReceiptRowsListByDate(List<ReceiptsValuesTableRow> list) {
+        HashMap<String, List<ReceiptsValuesTableRow>> map = new HashMap<>();
+        String currentDate = list.get(0).getDate();
+        int listSize = list.size();
+        for (int i = 0; i < listSize; i++) {
+            if (list.get(i).getDate().length() == 7) {
+                currentDate = list.get(i).getDate();
+                map.put(currentDate, new ArrayList<ReceiptsValuesTableRow>());
+            } else {
+                map.get(currentDate).add(list.get(i));
+            }
+        }
+        return map;
 
-        List<Receipt> data = parseDataToReceiptList(readExcel(fullOutputFilePath.toString()));
-        mergeData(data, receiptList);
-        writeDataToFile(fullOutputFilePath, data);
+    }
+
+    public HashMap<String, List<ReceiptsValuesTableRow>> fetchTableRowsFromFilesWhenExist(Set<String> keys,
+            HashMap<String, Path> datePathMap) {
+        datePathMap = fileHandler.getExcelFilesPathesToReadIn(keys);
+        HashMap<String, List<ReceiptsValuesTableRow>> dateRowsMap = new HashMap<>();
+        for (String key : keys) {
+            if (fileHandler.checkExistFile(datePathMap.get(key))) {
+                try {
+                    dateRowsMap.put(key,
+                            parseDataToReceiptValuesTableRowList(readExcel(datePathMap.get(key).toString())));
+                } catch (NumberFormatException | ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return dateRowsMap;
+    }
+
+    private void writeReceiptMapToExcelFiles(HashMap<String, List<ReceiptsValuesTableRow>> receiptRowsForMonthMap,
+            HashMap<String, Path> pathMap, Set<String> keys) {
+        for (String key : keys) {
+            try {
+                writeRowListToFile(pathMap.get(key), receiptRowsForMonthMap.get(key));
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void writeReceiptsToExcelFiles( List<ReceiptsValuesTableRow> receiptList)
+
+         throws IOException, NumberFormatException, ParseException {
+            System.out.println("writeReceiptsToExcelFiles");
+            System.out.println("\tspliReceiptRowsListByDate");
+        HashMap<String, List<ReceiptsValuesTableRow>> receiptRowsForMonthMap = spliReceiptRowsListByDate(receiptList);
+        System.out.println("\treceiptRowsForMonthMap");
+        Set<String> keys = receiptRowsForMonthMap.keySet();
+        System.out.println("\tgetExcelFilesPathesToReadIn");
+        HashMap<String, Path> pathMap = fileHandler.getExcelFilesPathesToReadIn(keys);
+        HashMap<String, List<ReceiptsValuesTableRow>> dateRowsMap = fetchTableRowsFromFilesWhenExist(keys, pathMap);
+        mergeMapOfSomeMonth(receiptRowsForMonthMap, dateRowsMap, keys);
+        writeReceiptMapToExcelFiles(receiptRowsForMonthMap, pathMap, keys);
+        
 
     }
 }

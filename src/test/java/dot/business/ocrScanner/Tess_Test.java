@@ -6,7 +6,7 @@ import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
-import dot.receipt.ExampleReceiptStrings;
+import dot.business.receipt.ExampleReceiptStrings;
 
 public class Tess_Test {
     private Tess tess = new Tess();
