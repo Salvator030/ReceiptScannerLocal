@@ -19,7 +19,7 @@ public class Tess {
 
     private  void setTessaract() {
         tesseract.setDatapath(tessdataPath);
-        tesseract.setLanguage("deu_rece");
+        tesseract.setLanguage("deu_rece_3_0");
         tesseract.setPageSegMode(4);
         tesseract.setOcrEngineMode(1);
 
