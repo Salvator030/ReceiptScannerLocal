@@ -10,6 +10,7 @@ import dot.business.excel.FastexcelHelper;
 import dot.business.handler.FileHandler;
 import dot.business.receipt.Receipt;
 import dot.business.receipt.ReceiptScanner;
+import dot.javaFX.models.MainViewModel;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,15 +21,13 @@ import javafx.scene.layout.StackPane;
 
 public class KassenbonMainController {
 
-     private Stage stage;
-     private List<Receipt> receipts = new ArrayList<>();
-     private FileHandler fileHandler = new FileHandler();
-     private FastexcelHelper excelHelper = new FastexcelHelper();
+     private MainViewModel mainViewModel = new MainViewModel();
 
      private VBox tableViewNode;
      private VBox fileChooserNode;
      private StackPane scannBtnNode;
      private VBox saveBtnNode;
+
 
      @FXML
      private VBox tableViewContainer = null;
@@ -42,10 +41,23 @@ public class KassenbonMainController {
      @FXML
      private VBox saveBtnContainer = null;
 
+
+
+
      private TableViewController tableViewController;
      private FileChooserViewControler fileChooserViewController;
      private ScannReceiptBtnController scannReceiptBtnController;
      private SaveBtnController saveBtnController;
+
+
+
+
+     private Stage stage;
+     private List<Receipt> receipts = new ArrayList<>();
+     private FileHandler fileHandler = new FileHandler();
+     private FastexcelHelper excelHelper = new FastexcelHelper();
+
+
 
      public void setStage(Stage stage) {
           this.stage = stage;
@@ -68,7 +80,9 @@ public class KassenbonMainController {
                fileChooserViewController = fileChooserViewLoader.getController();
                fileChooserContainer.getChildren().add(fileChooserNode);
                fileChooserViewController.setMainController(this);
+               fileChooserViewController.getFilePathText().textProperty().bind(mainViewModel.filePathStringProperty());
                fileChooserViewController.setStage(stage);
+
 
           } catch (IOException e) {
                // TODO Auto-generated catch block
@@ -83,7 +97,7 @@ public class KassenbonMainController {
                scannBtnNode = scannReceiptBtnViewLoader.load();
                scannReceiptBtnController = scannReceiptBtnViewLoader.getController();
                scannReceiptBtnContainer.getChildren().add(scannBtnNode);
-               scannBtnNode.setDisable(true);
+               scannBtnNode.disableProperty().bind(mainViewModel.inputFileSetProperty().not());
                scannReceiptBtnController.setMainController(this);
 
           } catch (IOException e) {
@@ -98,7 +112,7 @@ public class KassenbonMainController {
                tableViewNode = tableViewLoader.load();
                tableViewController = tableViewLoader.getController();
                tableViewContainer.getChildren().add(tableViewNode);
-               tableViewNode.setDisable(true);
+               tableViewNode.disableProperty().bind(mainViewModel.tableRowListProperty().not());
           } catch (IOException e) {
                e.printStackTrace();
           }
@@ -125,33 +139,33 @@ public class KassenbonMainController {
           initSaveBtnView();
      }
 
-     public void toggleScannReceiptBtnViewDisable() {
-          scannBtnNode.setDisable(!scannBtnNode.isDisable());
-     }
+     // public void toggleScannReceiptBtnViewDisable() {
+     //      scannBtnNode.setDisable(!scannBtnNode.isDisable());
+     // }
 
-     public void toggleTableViewDisable() {
-          if(!receipts.isEmpty()){
-               tableViewNode.setDisable(false);
-          }else{
-          tableViewNode.setDisable(!tableViewNode.isDisable());}
-     }
+     // public void toggleTableViewDisable() {
+     //      if(!receipts.isEmpty()){
+     //           tableViewNode.setDisable(false);
+     //      }else{
+     //      tableViewNode.setDisable(!tableViewNode.isDisable());}
+     // }
 
-     public void toggleSaveBtnDisable() {
-          saveBtnNode.setDisable(!saveBtnNode.isDisable());
-     }
+     // public void toggleSaveBtnDisable() {
+     //      saveBtnNode.setDisable(!saveBtnNode.isDisable());
+     // }
 
-     public void clearFilePathText() {
-          fileChooserViewController.clearFilePathText();
-     }
+     // public void clearFilePathText() {
+     //      fileChooserViewController.clearFilePathText();
+     // }
 
-     public void addReceiptInTable(Receipt receipt) {
-          System.out.println("addReceiptInTable");
-          tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
-     }
+     // public void addReceiptInTable(Receipt receipt) {
+     //      System.out.println("addReceiptInTable");
+     //      tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
+     // }
 
-     public void writeReceiptsToExcel() throws NumberFormatException, IOException, ParseException {
+     // public void writeReceiptsToExcel() throws NumberFormatException, IOException, ParseException {
 
-          excelHelper.writeReceiptsToExcelFiles(tableViewController.getRowList());
+     //      excelHelper.writeReceiptsToExcelFiles(tableViewController.getRowList());
 
-     }
+     // }
 }

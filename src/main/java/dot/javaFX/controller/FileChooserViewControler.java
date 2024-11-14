@@ -14,6 +14,8 @@ public class FileChooserViewControler {
     private Stage stage;
     private KassenbonMainController mainController;
 
+    
+
     public void setMainController(KassenbonMainController controller) {
         mainController = controller;
         System.out.println("mainController " + mainController);
@@ -30,6 +32,10 @@ public class FileChooserViewControler {
         filePathText.setText("");
     }
 
+    public Text getFilePathText(){
+        return filePathText;
+    }
+
     private File getFileFromFileChooser() {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.jpg, *.png, *.tif",
@@ -40,11 +46,13 @@ public class FileChooserViewControler {
 
     @FXML
     public void handelSelectReceiptBtn() {
-        File file = getFileFromFileChooser();
-        if (file != null) {
-            mainController.getFileHandler().setInputFile(file);
-            filePathText.setText(file.getAbsolutePath());
-            mainController.toggleScannReceiptBtnViewDisable();
-        }
+    //     File file = getFileFromFileChooser();
+    //     if (file != null) {
+    //         mainController.getFileHandler().setInputFile(file);
+    //         filePathText.setText(file.getAbsolutePath());
+    //         mainController.toggleScannReceiptBtnViewDisable();
+    //     }
     }
+
+    
 }

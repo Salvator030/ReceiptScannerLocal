@@ -30,11 +30,11 @@ public class SaveBtnController {
 
     @FXML
     public void handleSaveBtn() throws NumberFormatException, IOException, ParseException {
-        File directory = directoryChooser();
-        if (directory != null) {
-            mainController.getFileHandler().setOutputFolder(directory);
-            mainController.writeReceiptsToExcel();
+        // File directory = directoryChooser();
+        // if (directory != null) {
+        //     mainController.getFileHandler().setOutputFolder(directory);
+        //     mainController.writeReceiptsToExcel();
         }
-    }
+    // }
 
 }
