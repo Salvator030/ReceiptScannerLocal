@@ -4,6 +4,7 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableListValue;
 
 import java.io.File;
+import java.util.List;
 
 import dot.business.receipt.Receipt;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
@@ -20,10 +21,14 @@ public class MainViewModel {
   private final ObjectProperty<File> inputFile = new SimpleObjectProperty<File>(null);
   private final BooleanProperty inputFileSet = new SimpleBooleanProperty(false);
   private final StringProperty filePathSting = new SimpleStringProperty(null);
-  private final ObjectProperty<File> ecxelFile = new SimpleObjectProperty<File>(null);
-  private final BooleanProperty ecxelFileSet = new SimpleBooleanProperty(false);
   private final ObservableListValue<ReceiptsValuesTableRow> tableRows = new SimpleListProperty<ReceiptsValuesTableRow>(
       null);
+      private final ObservableListValue<Receipt> receiptsList = new SimpleListProperty<>();
+
+  
+  private final ObjectProperty<File> ecxelFile = new SimpleObjectProperty<File>(null);
+  private final BooleanProperty ecxelFileSet = new SimpleBooleanProperty(false);
+
   private final BooleanProperty tableRowsListEmty = new SimpleBooleanProperty();
   private final ObjectProperty<Receipt> scannedReceipt = new SimpleObjectProperty<Receipt>();
 
@@ -61,6 +66,30 @@ public class MainViewModel {
 
   public void setFilePathString(String path) {
     this.filePathSting.set(path);
+  }
+
+  public List<ReceiptsValuesTableRow> getTableRows(){
+    return this.tableRows.get();
+  }
+
+  public ObservableListValue<ReceiptsValuesTableRow> tableRowsProperty(){
+    return this.tableRows;
+  }
+
+  public void addTablesRows(ReceiptsValuesTableRow row){
+    this.tableRows.add(row);
+  }
+
+  public List<Receipt> getReceiptsList(){
+    return this.receiptsList.get();
+  }
+
+  public ObservableListValue receiptsListProperty(){
+    return this.receiptsList;
+  }
+
+  public void addReceiptsList(Receipt receipt){
+    this.receiptsList.add(receipt);
   }
 
   public File getEcxelFile() {

@@ -16,12 +16,15 @@ public class ScannReceiptBtnController {
     @FXML
     Button scannReceiptBtn = null;
 
-    private KassenbonMainController mainController;
-    private ReceiptScanner receiptScanner = new ReceiptScanner();
+    private MainInteractor mainInteractor;
+  
+    
 
-    public void setMainController(KassenbonMainController controller) {
-        mainController = controller;
+    public void setMainInteractor(MainInteractor mainInteractor) {
+        this.mainInteractor = mainInteractor;
     }
+
+
 
     @FXML
     public void handelScannReceiptBtn() {
