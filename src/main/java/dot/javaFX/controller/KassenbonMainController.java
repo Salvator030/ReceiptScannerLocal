@@ -108,7 +108,7 @@ public class KassenbonMainController {
                scannReceiptBtnController = scannReceiptBtnViewLoader.getController();
                scannReceiptBtnContainer.getChildren().add(scannBtnNode);
                scannBtnNode.disableProperty().bind(mainViewModel.inputFileSetProperty().not());
-               scannReceiptBtnController.setMainController(this);
+               scannReceiptBtnController.setMainInteractor(mainInteractor);
 
           } catch (IOException e) {
                // TODO Auto-generated catch block
