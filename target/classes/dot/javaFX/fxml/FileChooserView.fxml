@@ -8,7 +8,7 @@
    xmlns:fx="http://javafx.com/fxml/1"
    fx:controller="dot.javaFX.controller.FileChooserViewControler" alignment="CENTER">
    <Button fx:id="selectReceiptBtn" alignment="CENTER" mnemonicParsing="false"
-      onAction="#handelSelectReceiptBtn" prefHeight="25.0" prefWidth="137.0"
+      onAction="#onClickFileCooserBtn" prefHeight="25.0" prefWidth="137.0"
       text="Kassenbon wählen">
       <VBox.margin>
          <Insets bottom="8.0" />
