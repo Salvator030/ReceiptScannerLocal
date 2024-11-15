@@ -21,13 +21,15 @@ import javafx.scene.layout.StackPane;
 
 public class KassenbonMainController {
 
-     private MainViewModel mainViewModel = new MainViewModel();
+     private Stage stage;
 
+     private MainViewModel mainViewModel = new MainViewModel();
+     private MainInteractor mainInteractor = new MainInteractor(mainViewModel, stage);
+    
      private VBox tableViewNode;
      private VBox fileChooserNode;
      private StackPane scannBtnNode;
      private VBox saveBtnNode;
-
 
      @FXML
      private VBox tableViewContainer = null;
@@ -41,9 +43,6 @@ public class KassenbonMainController {
      @FXML
      private VBox saveBtnContainer = null;
 
-
-
-
      private TableViewController tableViewController;
      private FileChooserViewControler fileChooserViewController;
      private ScannReceiptBtnController scannReceiptBtnController;
@@ -52,7 +51,7 @@ public class KassenbonMainController {
 
 
 
-     private Stage stage;
+   
      private List<Receipt> receipts = new ArrayList<>();
      private FileHandler fileHandler = new FileHandler();
      private FastexcelHelper excelHelper = new FastexcelHelper();
@@ -63,9 +62,20 @@ public class KassenbonMainController {
           this.stage = stage;
      }
 
+     
+
+     public MainInteractor getMainInteractor() {
+          return mainInteractor;
+     }
+
+
+
      public FileHandler getFileHandler() {
           return fileHandler;
      }
+
+
+
 
      public void addReceiptInList(Receipt receipt) {
           System.out.println("addReceiptInList");
@@ -79,7 +89,7 @@ public class KassenbonMainController {
                fileChooserNode = fileChooserViewLoader.load();
                fileChooserViewController = fileChooserViewLoader.getController();
                fileChooserContainer.getChildren().add(fileChooserNode);
-               fileChooserViewController.setMainController(this);
+               fileChooserViewController.setInteractor(mainInteractor);
                fileChooserViewController.getFilePathText().textProperty().bind(mainViewModel.filePathStringProperty());
                fileChooserViewController.setStage(stage);
 
