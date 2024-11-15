@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
@@ -12,14 +13,12 @@ import javafx.stage.FileChooser;
 public class FileChooserViewControler {
 
     private Stage stage;
-    private KassenbonMainController mainController;
+   private MainInteractor interactor;
 
-    
+   public void setInteractor(MainInteractor mainInteractor){
+    this.interactor = mainInteractor;
+   }
 
-    public void setMainController(KassenbonMainController controller) {
-        mainController = controller;
-        System.out.println("mainController " + mainController);
-    }
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -27,6 +26,15 @@ public class FileChooserViewControler {
 
     @FXML
     private Text filePathText = null;
+    
+    @FXML 
+    private Button selectReceiptBtn = null;
+
+
+    // @FXML
+    // private void initialize() {
+    //     selectReceiptBtn.setOnAction(evt -> onClickHandler.run());
+    // }
 
     public void clearFilePathText() {
         filePathText.setText("");
@@ -36,22 +44,17 @@ public class FileChooserViewControler {
         return filePathText;
     }
 
-    private File getFileFromFileChooser() {
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.jpg, *.png, *.tif",
-                new ArrayList<String>(Arrays.asList("*.jpg", "*.png", "*.tif")));
-        fileChooser.getExtensionFilters().add(extFilter);
-        return fileChooser.showOpenDialog(stage);
-    }
+    // private File getFileFromFileChooser() {
+    //     FileChooser fileChooser = new FileChooser();
+    //     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.jpg, *.png, *.tif",
+    //             new ArrayList<String>(Arrays.asList("*.jpg", "*.png", "*.tif")));
+    //     fileChooser.getExtensionFilters().add(extFilter);
+    //     return fileChooser.showOpenDialog(stage);
+    // }
 
     @FXML
-    public void handelSelectReceiptBtn() {
-    //     File file = getFileFromFileChooser();
-    //     if (file != null) {
-    //         mainController.getFileHandler().setInputFile(file);
-    //         filePathText.setText(file.getAbsolutePath());
-    //         mainController.toggleScannReceiptBtnViewDisable();
-    //     }
+    public void onClickFileCooserBtn() {
+      interactor.handelChooseInputFileBtn();
     }
 
     
