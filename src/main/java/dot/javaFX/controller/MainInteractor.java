@@ -66,42 +66,15 @@ public class MainInteractor {
         }
     }
 
-    protected void handelScannReceiptBtn( Event evnt){
+    protected void handelScannReceiptBtn( ){
 
-         Button btn = (Button) evnt.getSource();
-     Task<Void> task1 = new Task<Void>() { // create Task
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    btn.setVisible(false);
-                    progressIndicator.setVisible(true); // progress indicator set visible
                     receiptScanner.setReceiptImage(mainViewModel.getInputFile());
                     mainViewModel.setInputFile(null);
-                    mainViewModel.setScannendReceipt( receiptScanner.scannReceipt(receiptScanner.scanImage()));
-                    mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
-                   mainViewModel.addTablesRows(new ReceiptsValuesTableRow(0, mainViewModel.getScannedReceipt(), "null"));;
-                } catch (Exception e) {
-                    for (StackTraceElement s : e.getStackTrace()) {
-                        System.err.println(s);
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            protected void succeeded() {
-                progressIndicator.setVisible(false); // progress indicator set not visible
-          btn.setVisible(true);
-                scannReceiptBtn.setVisible(true);
-                mainController.toggleScannReceiptBtnViewDisable();
-                mainController.toggleTableViewDisable();
-                mainController.clearFilePathText();
-                mainController.toggleSaveBtnDisable();
-            }
-        };
-
-        Thread thread1 = new Thread(task1); // assign Task into thread
-        thread1.start();
+                    Receipt receipt = receiptScanner.scannReceipt(receiptScanner.scanImage());
+                    mainViewModel.setScannendReceipt(receipt);
+                    mainViewModel.addReceiptsList(receipt);
+                   mainViewModel.addTablesRows(new ReceiptsValuesTableRow(0, receipt, "null"));;
+          
 
 
     }
