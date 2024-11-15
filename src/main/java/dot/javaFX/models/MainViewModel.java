@@ -2,14 +2,18 @@ package dot.javaFX.models;
 
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableListValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import dot.business.receipt.Receipt;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -21,11 +25,9 @@ public class MainViewModel {
   private final ObjectProperty<File> inputFile = new SimpleObjectProperty<File>(null);
   private final BooleanProperty inputFileSet = new SimpleBooleanProperty(false);
   private final StringProperty filePathSting = new SimpleStringProperty(null);
-  private final ObservableListValue<ReceiptsValuesTableRow> tableRows = new SimpleListProperty<ReceiptsValuesTableRow>(
-      null);
-      private final ObservableListValue<Receipt> receiptsList = new SimpleListProperty<>();
+  private final ListProperty<ReceiptsValuesTableRow> tableRows = new SimpleListProperty<ReceiptsValuesTableRow>(FXCollections.observableArrayList());
+  private final ListProperty<Receipt> receiptsList = new SimpleListProperty<Receipt>(FXCollections.observableArrayList() );
 
-  
   private final ObjectProperty<File> ecxelFile = new SimpleObjectProperty<File>(null);
   private final BooleanProperty ecxelFileSet = new SimpleBooleanProperty(false);
 
@@ -44,15 +46,15 @@ public class MainViewModel {
     inputFile.set(file);
   }
 
-  public boolean isInputFileSet(){
+  public boolean isInputFileSet() {
     return inputFileSet.get();
   }
 
-  public BooleanProperty inputFileSetProperty(){
+  public BooleanProperty inputFileSetProperty() {
     return inputFileSet;
   }
 
-  public void setInputFileSet(boolean isSet){
+  public void setInputFileSet(boolean isSet) {
     inputFileSet.set(isSet);
   }
 
@@ -68,28 +70,28 @@ public class MainViewModel {
     this.filePathSting.set(path);
   }
 
-  public List<ReceiptsValuesTableRow> getTableRows(){
+  public List<ReceiptsValuesTableRow> getTableRows() {
     return this.tableRows.get();
   }
 
-  public ObservableListValue<ReceiptsValuesTableRow> tableRowsProperty(){
+  public ObservableListValue<ReceiptsValuesTableRow> tableRowsProperty() {
     return this.tableRows;
   }
 
-  public void addTablesRows(ReceiptsValuesTableRow row){
+  public void addTablesRows(ReceiptsValuesTableRow row) {
     this.tableRows.add(row);
   }
 
-  public List<Receipt> getReceiptsList(){
+  public List<Receipt> getReceiptsList() {
     return this.receiptsList.get();
   }
 
-  public ObservableListValue receiptsListProperty(){
+  public ObservableListValue receiptsListProperty() {
     return this.receiptsList;
   }
 
-  public void addReceiptsList(Receipt receipt){
-    this.receiptsList.add(receipt);
+  public void addReceiptsList(Receipt receipt) {
+    this.receiptsList.get().add(receipt);
   }
 
   public File getEcxelFile() {
