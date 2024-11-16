@@ -1,17 +1,13 @@
 package dot.business.excel;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,16 +19,9 @@ import org.dhatim.fastexcel.Workbook;
 import org.dhatim.fastexcel.Worksheet;
 import org.dhatim.fastexcel.reader.Cell;
 import org.dhatim.fastexcel.reader.Sheet;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
-
 import dot.business.handler.FileHandler;
-import dot.business.receipt.Receipt;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
-import javafx.collections.transformation.FilteredList;
 
 public class FastexcelHelper {
 
