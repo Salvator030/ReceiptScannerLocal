@@ -1,6 +1,7 @@
 package dot.javaFX.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -9,24 +10,22 @@ import java.text.ParseException;
 
 public class SaveBtnController {
 
-    private Stage stage;
-    private KassenbonMainController mainController;
+    @FXML
+    private Button scannReceiptBtn = null;
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
+ private MainInteractor mainInteractor;
 
-    public void setMainController(KassenbonMainController mainController) {
-        this.mainController = mainController;
-    }
+ 
 
-    private File directoryChooser() {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Ablage Ordner der Ecxel Datei");
-        directoryChooser.setInitialDirectory(mainController.getFileHandler().getDocumentsDirectory());
-        File selectedDirectory = directoryChooser.showDialog(stage);
-        return selectedDirectory;
+  public Button getScannReceiptBtn() {
+    return scannReceiptBtn;
+}
+
+
+public void setMainInteractor(MainInteractor mainInteractor) {
+        this.mainInteractor = mainInteractor;
     }
+  
 
     @FXML
     public void handleSaveBtn() throws NumberFormatException, IOException, ParseException {
@@ -36,5 +35,7 @@ public class SaveBtnController {
         //     mainController.writeReceiptsToExcel();
         }
     // }
+
+   
 
 }
