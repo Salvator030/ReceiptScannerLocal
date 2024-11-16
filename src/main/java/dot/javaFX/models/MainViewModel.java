@@ -25,15 +25,20 @@ public class MainViewModel {
   private final ObjectProperty<File> inputFile = new SimpleObjectProperty<File>(null);
   private final BooleanProperty inputFileSet = new SimpleBooleanProperty(false);
   private final StringProperty filePathSting = new SimpleStringProperty(null);
-  private final ListProperty<ReceiptsValuesTableRow> tableRows = new SimpleListProperty<ReceiptsValuesTableRow>(FXCollections.observableArrayList());
-  private final ListProperty<Receipt> receiptsList = new SimpleListProperty<Receipt>(FXCollections.observableArrayList() );
 
+  private final ObjectProperty<Receipt> scannedReceipt = new SimpleObjectProperty<Receipt>();
+
+  private final ListProperty<ReceiptsValuesTableRow> tableRows = new SimpleListProperty<ReceiptsValuesTableRow>(FXCollections.observableArrayList());
+   private final BooleanProperty tableRowsListEmty = new SimpleBooleanProperty();
+  private final ListProperty<Receipt> receiptsList = new SimpleListProperty<Receipt>(FXCollections.observableArrayList() );
+private final BooleanProperty receiptsListEmty = new SimpleBooleanProperty(true);
+  private final ObjectProperty<File> outputDirectory = new SimpleObjectProperty<>(null);
   private final ObjectProperty<File> ecxelFile = new SimpleObjectProperty<File>(null);
   private final BooleanProperty ecxelFileSet = new SimpleBooleanProperty(false);
 
-  private final BooleanProperty tableRowsListEmty = new SimpleBooleanProperty();
-  private final ObjectProperty<Receipt> scannedReceipt = new SimpleObjectProperty<Receipt>();
+ 
 
+// inputFile
   public File getInputFile() {
     return inputFile.get();
   }
@@ -46,6 +51,7 @@ public class MainViewModel {
     inputFile.set(file);
   }
 
+  // inputFileSet
   public boolean isInputFileSet() {
     return inputFileSet.get();
   }
@@ -58,6 +64,7 @@ public class MainViewModel {
     inputFileSet.set(isSet);
   }
 
+  // filePathSting
   public String getFilePathSting() {
     return filePathSting.get();
   }
@@ -69,6 +76,22 @@ public class MainViewModel {
   public void setFilePathString(String path) {
     this.filePathSting.set(path);
   }
+
+  // scannedReceipt
+
+  public Receipt getScannedReceipt() {
+    return scannedReceipt.get();
+  }
+
+  public ObjectProperty<Receipt> scannedReceiptProperty() {
+    return scannedReceipt;
+  }
+
+  public void setScannendReceipt(Receipt receipt) {
+    scannedReceipt.set(receipt);
+  }
+
+  // tableRows
 
   public List<ReceiptsValuesTableRow> getTableRows() {
     return this.tableRows.get();
@@ -82,6 +105,20 @@ public class MainViewModel {
     this.tableRows.add(row);
   }
 
+  // tableRowsListEmty
+  public boolean isTableRowListEmpty() {
+    return tableRowsListEmty.get();
+  }
+
+  public BooleanProperty tableRowListEmptyProperty() {
+    return tableRowsListEmty;
+  }
+
+  public void setTableRowListEmpty(boolean isEmpty) {
+    this.tableRowsListEmty.set(isEmpty);
+  }
+
+  // receiptsList
   public List<Receipt> getReceiptsList() {
     return this.receiptsList.get();
   }
@@ -94,6 +131,33 @@ public class MainViewModel {
     this.receiptsList.get().add(receipt);
   }
 
+  // receiptsListEmty
+  public boolean isReceiptsListEmpty(){
+    return this.receiptsListEmty.get();
+  }
+
+  public  BooleanProperty receiptsListEmptyProperty(){
+    return this.receiptsListEmty;
+  }
+
+  public void setReceiptsListEmpty(boolean empty){
+    this.receiptsListEmty.set(empty);
+  }
+
+  // outputDirectory
+  public File getOutputDirectory(){
+    return this.outputDirectory.get();
+  }
+
+  public ObjectProperty<File> outputDirectoryProperty(){
+    return this.outputDirectory;
+  }
+
+  public void setOutputDirectory(File directory){
+    this.outputDirectory.set(directory);
+  }
+
+  // ecxelFile
   public File getEcxelFile() {
     return ecxelFile.get();
   }
@@ -106,6 +170,7 @@ public class MainViewModel {
     this.ecxelFile.set(file);
   }
 
+  // ecxelFileSet
   public Boolean isEcxelFileSet() {
     return ecxelFileSet.get();
   }
@@ -118,28 +183,8 @@ public class MainViewModel {
     ecxelFileSet.set(isSet);
   }
 
-  public boolean isTableRowListEmpty() {
-    return tableRowsListEmty.get();
-  }
 
-  public BooleanProperty tableRowListProperty() {
-    return tableRowsListEmty;
-  }
 
-  public void setTableRowListEmpty(boolean isEmpty) {
-    this.tableRowsListEmty.set(isEmpty);
-  }
 
-  public Receipt getScannedReceipt() {
-    return scannedReceipt.get();
-  }
-
-  public ObjectProperty<Receipt> scannedReceiptProperty() {
-    return scannedReceipt;
-  }
-
-  public void setScannendReceipt(Receipt receipt) {
-    scannedReceipt.set(receipt);
-  }
 
 }

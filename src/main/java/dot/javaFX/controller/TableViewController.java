@@ -19,7 +19,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 public class TableViewController {
 
    @FXML
-   private TableView<ReceiptsValuesTableRow> receiptValuesTable = null;
+   private TableView<ReceiptsValuesTableRow> receiptsTable = null;
 
    @FXML
    private TableColumn<ReceiptsValuesTableRow, String> dateColumn = null;
@@ -33,15 +33,17 @@ public class TableViewController {
    @FXML
    private TableColumn<ReceiptsValuesTableRow, String> summColumn = null;
 
-   private ObservableList<ReceiptsValuesTableRow> rowList = FXCollections.observableArrayList();
-   ObservableList<String> purposeOptions = FXCollections.observableArrayList("Büromaterial", "Lebensmittel",
+   private ObservableList<String> purposeOptions = FXCollections.observableArrayList("Büromaterial", "Lebensmittel",
          "Sachmittel",
          "null");
    ComboBoxTableCell<ReceiptsValuesTableRow, String> comboBoxTableCell = new ComboBoxTableCell<>(purposeOptions);
 
-   public List<ReceiptsValuesTableRow> getRowList() {
-      return rowList;
+   
+
+   public TableView<ReceiptsValuesTableRow> getReceiptsTable() {
+      return receiptsTable;
    }
+
 
    private void initDateColumn() {
       dateColumn.setCellFactory(TextFieldTableCell.<ReceiptsValuesTableRow>forTableColumn());
@@ -49,7 +51,7 @@ public class TableViewController {
          final String value = event.getNewValue() != null ? event.getNewValue() : event.getOldValue();
          ((ReceiptsValuesTableRow) event.getTableView().getItems()
                .get(event.getTablePosition().getRow())).setDate(value);
-         receiptValuesTable.refresh();
+         receiptsTable.refresh();
       });
    }
 
@@ -59,7 +61,7 @@ public class TableViewController {
          final String value = event.getNewValue() != null ? event.getNewValue() : event.getOldValue();
          ((ReceiptsValuesTableRow) event.getTableView().getItems()
                .get(event.getTablePosition().getRow())).setShopName(value);
-         receiptValuesTable.refresh();
+         receiptsTable.refresh();
       });
    }
 
@@ -69,7 +71,7 @@ public class TableViewController {
          final String value = event.getNewValue() != null ? event.getNewValue() : event.getOldValue();
          ((ReceiptsValuesTableRow) event.getTableView().getItems()
                .get(event.getTablePosition().getRow())).setPurpose(value);
-         receiptValuesTable.refresh();
+         receiptsTable.refresh();
       });
    }
 
@@ -79,45 +81,18 @@ public class TableViewController {
          final String value = event.getNewValue() != null ? event.getNewValue() : event.getOldValue();
          ((ReceiptsValuesTableRow) event.getTableView().getItems()
                .get(event.getTablePosition().getRow())).setSumm(value);
-         receiptValuesTable.refresh();
+         receiptsTable.refresh();
       });
    }
 
    @FXML
    public void initialize() {
-      receiptValuesTable.setEditable(true);
+      receiptsTable.setEditable(true);
       initDateColumn();
       initShopNameColumn();
       initPurposeColumn();
       initSummColumn();
 
-   }
-
-   public void addDateRow(ReceiptsValuesTableRow receiptsValuesTableRow, ObservableList<ReceiptsValuesTableRow> list) {
-      String serachFor = receiptsValuesTableRow.getDate().substring(3);
-      List<ReceiptsValuesTableRow> filtredList = list
-            .filtered(r -> r.getDate().equalsIgnoreCase(serachFor));
-      if (filtredList.isEmpty()) {
-         int i = list.indexOf(receiptsValuesTableRow);
-         list.add(i, new ReceiptsValuesTableRow(serachFor));
-      }
-   }
-
-   @FXML
-   public void addRow(ReceiptsValuesTableRow receiptsValuesTableRow) {
-      try {
-         rowList.add(receiptsValuesTableRow);
-         Collections.sort(rowList);
-         if (!receiptsValuesTableRow.getDate().equals("")) {
-            addDateRow(receiptsValuesTableRow, rowList);
-         }
-         receiptValuesTable.setItems(rowList);
-      } catch (Exception e) {
-         for (StackTraceElement s : e.getStackTrace()) {
-            System.err.println(s);
-         }
-         ;
-      }
    }
 
 }
