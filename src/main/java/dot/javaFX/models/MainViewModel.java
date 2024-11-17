@@ -26,8 +26,8 @@ public class MainViewModel {
   private final BooleanProperty inputFileSet = new SimpleBooleanProperty(false);
   private final StringProperty filePathSting = new SimpleStringProperty(null);
 
-  private final ObjectProperty<Receipt> scannedReceipt = new SimpleObjectProperty<Receipt>();
-
+  private final ObjectProperty<Receipt> scannedReceipt = new SimpleObjectProperty<Receipt>(new Receipt("", "", 0));
+private final BooleanProperty scanning = new SimpleBooleanProperty(false); 
   private final ListProperty<ReceiptsValuesTableRow> tableRows = new SimpleListProperty<ReceiptsValuesTableRow>(FXCollections.observableArrayList());
    private final BooleanProperty tableRowsListEmty = new SimpleBooleanProperty();
   private final ListProperty<Receipt> receiptsList = new SimpleListProperty<Receipt>(FXCollections.observableArrayList() );
@@ -89,6 +89,19 @@ private final BooleanProperty receiptsListEmty = new SimpleBooleanProperty(true)
 
   public void setScannendReceipt(Receipt receipt) {
     scannedReceipt.set(receipt);
+  }
+
+  // scanning
+  public boolean isSanning(){
+    return this.scanning.get();
+  }
+
+  public BooleanProperty scanningProperty(){
+    return this.scanning;
+  }
+
+  public void setScanning(boolean isScanning){
+    this.scanning.set(isScanning);
   }
 
   // tableRows
