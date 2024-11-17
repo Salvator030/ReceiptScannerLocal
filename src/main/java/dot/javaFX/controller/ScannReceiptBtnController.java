@@ -12,10 +12,20 @@ import javafx.scene.control.ProgressIndicator;
 public class ScannReceiptBtnController {
 
     @FXML
-    ProgressIndicator progressIndicator = null;
+   private ProgressIndicator progressIndicator = null;
 
     @FXML
-    Button scannReceiptBtn = null;
+    private  Button scannReceiptBtn = null;
+
+    
+
+    public ProgressIndicator getProgressIndicator() {
+        return progressIndicator;
+    }
+
+    public Button getScannReceiptBtn() {
+        return scannReceiptBtn;
+    }
 
     private MainInteractor mainInteractor;
 
@@ -25,7 +35,7 @@ public class ScannReceiptBtnController {
 
     @FXML
     public void handelScannReceiptBtn() {
-        mainInteractor.handelScannReceiptBtn(scannReceiptBtn, progressIndicator);
+        mainInteractor.handelScannReceiptBtn();
     }
 
 }
