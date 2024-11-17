@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 
+import javafx.stage.Stage;
 import dot.javaFX.models.MainViewModel;
 
 public class MainInteractor_Test {
