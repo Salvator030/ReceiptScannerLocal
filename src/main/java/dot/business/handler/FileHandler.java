@@ -1,15 +1,9 @@
 package dot.business.handler;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -96,15 +90,6 @@ public class FileHandler {
         return true;
     }
 
-    private String monthAndYearToString(Date date) {
-        DateFormat dataFormat = new SimpleDateFormat("MM-yyyy");
-        return dataFormat.format(date);
-    }
-
-    private String createFullFileName(String previx, String date) {
-        return previx + "-" + date + ".xlsx";
-    }
-
     public String fileLocationToString(File folder, String fileName) {
         String path = folder.getAbsolutePath();
         return path.substring(0, path.length() - 1) + File.separator + fileName;
@@ -119,19 +104,3 @@ public class FileHandler {
     }
 
 }
-
-// public static void writeToFile(String name, String res) {
-// int counter = 1;
-// String pathString = ("src/main/resources/out" + name + ".txt");
-// PrintWriter printWriter = null;
-// try {
-// printWriter = new PrintWriter(new FileWriter(pathString));
-// printWriter.write(res);
-// } catch (Exception e) {
-// } finally {
-// if (printWriter != null) {
-// printWriter.flush();
-// printWriter.close();
-// }
-// }
-// }

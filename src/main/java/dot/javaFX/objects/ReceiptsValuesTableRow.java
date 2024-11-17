@@ -1,10 +1,7 @@
 package dot.javaFX.objects;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import dot.business.receipt.Receipt;
 
 public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow> {
@@ -85,12 +82,18 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
     public int compareTo(ReceiptsValuesTableRow row) {
         String tempDate = this.date;
         String rowDate = row.getDate();
-        if (this.date.matches("\\d{2}.\\d{4}")) {
+        if (tempDate.matches("\\d{2}.\\d{4}")) {
             tempDate = "01." + date;
+        }
+        else if(tempDate.equals("nicht erkannt")){
+            tempDate = "01.01.2100";
         }
         System.out.println(rowDate);
         if (rowDate.matches("\\d{2}.\\d{4}")) {
             rowDate = "01." + rowDate;
+        }
+        else if(rowDate.equals("nicht erkannt")){
+            rowDate = "01.01.2100";
         }
        
         try {

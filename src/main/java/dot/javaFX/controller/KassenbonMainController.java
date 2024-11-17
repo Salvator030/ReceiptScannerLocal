@@ -1,30 +1,20 @@
 package dot.javaFX.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-
-import dot.business.excel.FastexcelHelper;
-import dot.business.handler.FileHandler;
-import dot.business.receipt.Receipt;
-import dot.business.receipt.ReceiptScanner;
-import dot.javaFX.objects.ReceiptsValuesTableRow;
+import dot.javaFX.models.MainViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.layout.StackPane;
 
 public class KassenbonMainController {
 
      private Stage stage;
-     private List<Receipt> receipts = new ArrayList<>();
-     private FileHandler fileHandler = new FileHandler();
-     private FastexcelHelper excelHelper = new FastexcelHelper();
 
+     private MainViewModel mainViewModel = new MainViewModel();
+     private MainInteractor mainInteractor = new MainInteractor(mainViewModel, stage);
+    
      private VBox tableViewNode;
      private VBox fileChooserNode;
      private StackPane scannBtnNode;
@@ -51,13 +41,8 @@ public class KassenbonMainController {
           this.stage = stage;
      }
 
-     public FileHandler getFileHandler() {
-          return fileHandler;
-     }
-
-     public void addReceiptInList(Receipt receipt) {
-          System.out.println("addReceiptInList");
-          receipts.add(receipt);
+     public MainInteractor getMainInteractor() {
+          return mainInteractor;
      }
 
      private void initFileChooserContorller() {
@@ -67,9 +52,9 @@ public class KassenbonMainController {
                fileChooserNode = fileChooserViewLoader.load();
                fileChooserViewController = fileChooserViewLoader.getController();
                fileChooserContainer.getChildren().add(fileChooserNode);
-               fileChooserViewController.setMainController(this);
-               fileChooserViewController.setStage(stage);
-
+               fileChooserViewController.setInteractor(mainInteractor);
+               fileChooserViewController.getFilePathText().textProperty().bind(mainViewModel.filePathStringProperty());
+         
           } catch (IOException e) {
                // TODO Auto-generated catch block
                e.printStackTrace();
@@ -83,8 +68,11 @@ public class KassenbonMainController {
                scannBtnNode = scannReceiptBtnViewLoader.load();
                scannReceiptBtnController = scannReceiptBtnViewLoader.getController();
                scannReceiptBtnContainer.getChildren().add(scannBtnNode);
-               scannBtnNode.setDisable(true);
-               scannReceiptBtnController.setMainController(this);
+               scannBtnNode.disableProperty().bind(mainViewModel.inputFileSetProperty().not());
+               scannReceiptBtnController.getProgressIndicator().disableProperty().set(false);
+               scannReceiptBtnController.getProgressIndicator().visibleProperty().bind(mainViewModel.scanningProperty());
+               scannReceiptBtnController.getScannReceiptBtn().visibleProperty().bind(mainViewModel.scanningProperty().not());
+               scannReceiptBtnController.setMainInteractor(mainInteractor);
 
           } catch (IOException e) {
                // TODO Auto-generated catch block
@@ -98,7 +86,8 @@ public class KassenbonMainController {
                tableViewNode = tableViewLoader.load();
                tableViewController = tableViewLoader.getController();
                tableViewContainer.getChildren().add(tableViewNode);
-               tableViewNode.setDisable(true);
+               tableViewController.getReceiptsTable().itemsProperty().bind(mainViewModel.tableRowsProperty());;
+               tableViewNode.disableProperty().bind(mainViewModel.tableRowListEmptyProperty());
           } catch (IOException e) {
                e.printStackTrace();
           }
@@ -110,8 +99,8 @@ public class KassenbonMainController {
                saveBtnNode = loader.load();
                saveBtnController = loader.getController();
                saveBtnContainer.getChildren().add(saveBtnNode);
-               saveBtnController.setMainController(this);
-               saveBtnNode.setDisable(true);
+               saveBtnController.setMainInteractor(mainInteractor);
+               saveBtnNode.disableProperty().bind(mainViewModel.receiptsListEmptyProperty());
           } catch (IOException e) {
                e.printStackTrace();
           }
@@ -125,33 +114,33 @@ public class KassenbonMainController {
           initSaveBtnView();
      }
 
-     public void toggleScannReceiptBtnViewDisable() {
-          scannBtnNode.setDisable(!scannBtnNode.isDisable());
-     }
+     // public void toggleScannReceiptBtnViewDisable() {
+     //      scannBtnNode.setDisable(!scannBtnNode.isDisable());
+     // }
 
-     public void toggleTableViewDisable() {
-          if(!receipts.isEmpty()){
-               tableViewNode.setDisable(false);
-          }else{
-          tableViewNode.setDisable(!tableViewNode.isDisable());}
-     }
+     // public void toggleTableViewDisable() {
+     //      if(!receipts.isEmpty()){
+     //           tableViewNode.setDisable(false);
+     //      }else{
+     //      tableViewNode.setDisable(!tableViewNode.isDisable());}
+     // }
 
-     public void toggleSaveBtnDisable() {
-          saveBtnNode.setDisable(!saveBtnNode.isDisable());
-     }
+     // public void toggleSaveBtnDisable() {
+     //      saveBtnNode.setDisable(!saveBtnNode.isDisable());
+     // }
 
-     public void clearFilePathText() {
-          fileChooserViewController.clearFilePathText();
-     }
+     // public void clearFilePathText() {
+     //      fileChooserViewController.clearFilePathText();
+     // }
 
-     public void addReceiptInTable(Receipt receipt) {
-          System.out.println("addReceiptInTable");
-          tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
-     }
+     // public void addReceiptInTable(Receipt receipt) {
+     //      System.out.println("addReceiptInTable");
+     //      tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
+     // }
 
-     public void writeReceiptsToExcel() throws NumberFormatException, IOException, ParseException {
+     // public void writeReceiptsToExcel() throws NumberFormatException, IOException, ParseException {
 
-          excelHelper.writeReceiptsToExcelFiles(tableViewController.getRowList());
+     //      excelHelper.writeReceiptsToExcelFiles(tableViewController.getRowList());
 
-     }
+     // }
 }

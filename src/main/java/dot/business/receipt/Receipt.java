@@ -1,12 +1,5 @@
 package dot.business.receipt;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javafx.scene.input.DataFormat;
-
 public class Receipt {
 
     private int indexInTable;
@@ -14,9 +7,7 @@ public class Receipt {
     private double summ;
     private String date;
     private String purpose;
-    private final SimpleDateFormat formaterFullDate = new SimpleDateFormat("dd.MM.yyyy");;
-    private final SimpleDateFormat formaterMonthAndYear = new SimpleDateFormat("MM.yyyy");;
-
+  
     public Receipt(String date, String shopName, double summ) {
         this.shopName = shopName;
         this.summ = summ;

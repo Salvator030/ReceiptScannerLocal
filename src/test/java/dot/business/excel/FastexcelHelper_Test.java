@@ -96,14 +96,12 @@ public class FastexcelHelper_Test {
 
          List<ReceiptsValuesTableRow> inputList = new ArrayList<>(Arrays.asList(
 
-         new ReceiptsValuesTableRow("01.2024"),
+ 
          new ReceiptsValuesTableRow(0,"02.01.2024","Edeka","",2.10),
          new ReceiptsValuesTableRow(0,"04.01.2024","Netto","",5.09),
-         new ReceiptsValuesTableRow("08.2024"),
          new ReceiptsValuesTableRow(0,"01.08.2024","Edeka","",2.10),
          new ReceiptsValuesTableRow(0,"02.08.2024","Netto","",5.09),
          new ReceiptsValuesTableRow(0,"05.08.2024","Aldi","",20.01),
-         new ReceiptsValuesTableRow("01.2025"),
          new ReceiptsValuesTableRow(0,"01.01.2025","Netto","",5.09)));
 
          String path1 =  System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Kassenbons-Abrechnung-012024.xlsx";

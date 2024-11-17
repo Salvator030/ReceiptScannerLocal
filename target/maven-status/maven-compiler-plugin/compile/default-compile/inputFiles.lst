@@ -1,14 +1,15 @@
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\javaFX\controller\ScannReceiptBtnController.java
+d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\javaFX\controller\MainInteractor.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\business\excel\FastexcelHelper.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\javaFX\objects\ReceiptsValuesTableRow.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\javaFX\controller\FileChooserViewControler.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\business\handler\FileHandler.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\Main.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\javaFX\controller\SaveBtnController.java
+d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\javaFX\models\MainViewModel.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\javaFX\controller\KassenbonMainController.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\business\ocrScanner\Tess.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\javaFX\controller\TableViewController.java
-d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\javaFX\handler\KassenbonMainHandler.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\business\receipt\ItemScanner.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\business\receipt\ReceiptScanner.java
 d:\Develop\Repositorys\java_ocr_test\src\main\java\dot\business\receipt\Receipt.java

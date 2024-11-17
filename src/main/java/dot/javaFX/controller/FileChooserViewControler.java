@@ -1,50 +1,36 @@
 package dot.javaFX.controller;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.stage.FileChooser;
 
 public class FileChooserViewControler {
 
-    private Stage stage;
-    private KassenbonMainController mainController;
+   private MainInteractor interactor;
 
-    public void setMainController(KassenbonMainController controller) {
-        mainController = controller;
-        System.out.println("mainController " + mainController);
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
+   public void setInteractor(MainInteractor mainInteractor){
+    this.interactor = mainInteractor;
+   }
 
     @FXML
     private Text filePathText = null;
+    
+    @FXML 
+    private Button selectReceiptBtn = null;
 
-    public void clearFilePathText() {
+
+     public void clearFilePathText() {
         filePathText.setText("");
     }
 
-    private File getFileFromFileChooser() {
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.jpg, *.png, *.tif",
-                new ArrayList<String>(Arrays.asList("*.jpg", "*.png", "*.tif")));
-        fileChooser.getExtensionFilters().add(extFilter);
-        return fileChooser.showOpenDialog(stage);
+    public Text getFilePathText(){
+        return filePathText;
     }
 
     @FXML
-    public void handelSelectReceiptBtn() {
-        File file = getFileFromFileChooser();
-        if (file != null) {
-            mainController.getFileHandler().setInputFile(file);
-            filePathText.setText(file.getAbsolutePath());
-            mainController.toggleScannReceiptBtnViewDisable();
-        }
+    public void onClickFileCooserBtn() {
+      interactor.handelChooseInputFileBtn();
     }
+
+    
 }
