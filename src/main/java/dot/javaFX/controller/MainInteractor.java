@@ -1,6 +1,8 @@
 package dot.javaFX.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,6 +14,7 @@ import dot.business.receipt.Receipt;
 import dot.business.receipt.ReceiptScanner;
 import dot.javaFX.models.MainViewModel;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.scene.control.Button;
@@ -31,7 +34,8 @@ public class MainInteractor {
     public MainInteractor(MainViewModel mainViewModel, Stage stage) {
         this.mainViewModel = mainViewModel;
         this.receiptScanner = new ReceiptScanner();
-        this.excelHelper= new FastexcelHelper();
+        fileHandler = new FileHandler();
+        this.excelHelper = new FastexcelHelper();
 
         mainViewModel.inputFileSetProperty()
                 .bind(Bindings.createBooleanBinding(() -> checkIfFileSet(), mainViewModel.inputFileProperty()));
@@ -39,7 +43,8 @@ public class MainInteractor {
                 .bind(Bindings.createStringBinding(() -> setNewPath(), mainViewModel.inputFileProperty()));
         mainViewModel.tableRowListEmptyProperty().bind(
                 Bindings.createBooleanBinding(() -> checkIsTableRowListEmpty(), mainViewModel.tableRowsProperty()));
-                mainViewModel.receiptsListEmptyProperty().bind(Bindings.createBooleanBinding(() -> checkIsreceiptsListEmpty(), mainViewModel.receiptsListProperty()));
+        mainViewModel.receiptsListEmptyProperty().bind(
+                Bindings.createBooleanBinding(() -> checkIsreceiptsListEmpty(), mainViewModel.receiptsListProperty()));
 
     }
 
@@ -58,11 +63,11 @@ public class MainInteractor {
     }
 
     private boolean checkIsTableRowListEmpty() {
-   
+
         return mainViewModel.getTableRows().isEmpty();
     }
 
-    private boolean checkIsreceiptsListEmpty(){
+    private boolean checkIsreceiptsListEmpty() {
         return mainViewModel.getReceiptsList().isEmpty();
     }
 
@@ -74,7 +79,7 @@ public class MainInteractor {
         return fileChooser.showOpenDialog(stage);
     }
 
-       private File directoryChooser() {
+    private File directoryChooser() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Ablage Ordner der Ecxel Datei");
         // directoryChooser.setInitialDirectory(mainController.getFileHandler().getDocumentsDirectory());
@@ -90,24 +95,28 @@ public class MainInteractor {
         }
     }
 
-    protected void handelScannReceiptBtn(Button btn, ProgressIndicator progressIndicator) {
+    protected void handelScannReceiptBtn() {
+        System.out.println("start");
 
         Task<Void> task1 = new Task<Void>() { // create Task
             @Override
             protected Void call() throws Exception {
                 try {
-                    btn.setVisible(false);
-                    progressIndicator.setVisible(true); // progress indicator set visible
+
+                    mainViewModel.setScanning(true);
 
                     receiptScanner.setReceiptImage(mainViewModel.getInputFile());
                     mainViewModel.setInputFile(null);
+                    System.out.println("scann");
                     Receipt receipt = receiptScanner.scannReceipt(receiptScanner.scanImage());
-                    mainViewModel.setScannendReceipt(receipt);
-
-                    mainViewModel.addReceiptsList(receipt);
-                    mainViewModel.addTablesRows(
-                            new ReceiptsValuesTableRow(mainViewModel.getReceiptsList().size(), receipt, "null"));
-                Collections.sort(mainViewModel.getTableRows());
+                    Platform.runLater(() -> {
+                        mainViewModel.setScannendReceipt(receipt);
+                        System.out.println(mainViewModel.getTableRows().size());
+                        mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
+                        mainViewModel.addTablesRows(new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
+                                mainViewModel.getScannedReceipt(), ""));
+                        // Collections.sort(mainViewModel.getTableRows()); });
+                    });
                 } catch (Exception e) {
 
                     for (StackTraceElement s : e.getStackTrace()) {
@@ -115,18 +124,28 @@ public class MainInteractor {
                     }
                 }
                 return null;
+
             }
 
             @Override
             protected void succeeded() {
-                progressIndicator.setVisible(false); // progress indicator set not visible
-                btn.setVisible(true);
+                Platform.runLater(() -> mainViewModel.setScanning(false));
             }
         };
 
         Thread thread1 = new Thread(task1); // assign Task into thread
         thread1.start();
+    }
 
+    public void handelSafeBtn() {
+        mainViewModel.setOutputDirectory(directoryChooser());
+        fileHandler.setOutputFolder(mainViewModel.getOutputDirectory());
+        try {
+            excelHelper.writeReceiptsToExcelFiles(mainViewModel.getTableRows());
+        } catch (NumberFormatException | IOException | ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }
