@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import dot.business.excel.FastexcelHelper;
 import dot.business.handler.FileHandler;
@@ -87,6 +88,15 @@ public class MainInteractor {
         return selectedDirectory;
     }
 
+    private Receipt scannInputFile() {
+        receiptScanner.setReceiptImage(mainViewModel.getInputFile());
+        mainViewModel.setInputFile(null);
+        System.out.println("scann");
+        return receiptScanner.scannReceipt(receiptScanner.scanImage());
+    }
+
+     
+
     protected void handelChooseInputFileBtn() {
 
         File file = getFileFromFileChooser();
@@ -104,20 +114,18 @@ public class MainInteractor {
                 try {
 
                     mainViewModel.setScanning(true);
-
-                    receiptScanner.setReceiptImage(mainViewModel.getInputFile());
-                    mainViewModel.setInputFile(null);
-                    System.out.println("scann");
-                    Receipt receipt = receiptScanner.scannReceipt(receiptScanner.scanImage());
+                    Receipt receipt = scannInputFile();
                     Platform.runLater(() -> {
                         mainViewModel.setScannendReceipt(receipt);
                         System.out.println(mainViewModel.getTableRows().size());
                         mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
-                        mainViewModel.addTablesRows(new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
-                                mainViewModel.getScannedReceipt(), ""));
-                        // Collections.sort(mainViewModel.getTableRows()); });
-                    });
-                } catch (Exception e) {
+                        ReceiptsValuesTableRow row = new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
+                        mainViewModel.getScannedReceipt(), "");
+                        mainViewModel.addTablesRows(row);
+                         Collections.sort(mainViewModel.getTableRows()); 
+
+ 
+                });} catch (Exception e) {
 
                     for (StackTraceElement s : e.getStackTrace()) {
                         System.err.println(s);
@@ -141,6 +149,7 @@ public class MainInteractor {
         mainViewModel.setOutputDirectory(directoryChooser());
         fileHandler.setOutputFolder(mainViewModel.getOutputDirectory());
         try {
+
             excelHelper.writeReceiptsToExcelFiles(mainViewModel.getTableRows());
         } catch (NumberFormatException | IOException | ParseException e) {
             // TODO Auto-generated catch block
