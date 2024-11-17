@@ -90,8 +90,8 @@ public class FastexcelHelper {
 
     private void createTableBody(Worksheet ws, List<ReceiptsValuesTableRow> receiptsList)
             throws NumberFormatException, ParseException {
-System.out.println("createTableBody");
-      
+        System.out.println("createTableBody");
+
         int rowNumber = 2;
         for (ReceiptsValuesTableRow r : receiptsList) {
             ws.range(rowNumber, 0, rowNumber, 2).style().wrapText(true).set();
@@ -142,15 +142,16 @@ System.out.println("createTableBody");
 
     public HashMap<String, List<ReceiptsValuesTableRow>> spliReceiptRowsListByDate(List<ReceiptsValuesTableRow> list) {
         HashMap<String, List<ReceiptsValuesTableRow>> map = new HashMap<>();
-        String currentDate = list.get(0).getDate();
+
         int listSize = list.size();
         for (int i = 0; i < listSize; i++) {
-            if (list.get(i).getDate().length() == 7) {
-                currentDate = list.get(i).getDate();
+            String currentDate = list.get(i).getDate().substring(3);
+            if (!map.containsKey(currentDate)) {
+
                 map.put(currentDate, new ArrayList<ReceiptsValuesTableRow>());
-            } else {
-                map.get(currentDate).add(list.get(i));
             }
+            map.get(currentDate).add(list.get(i));
+
         }
         return map;
 
@@ -186,11 +187,12 @@ System.out.println("createTableBody");
         }
     }
 
-    public void writeReceiptsToExcelFiles( List<ReceiptsValuesTableRow> receiptList)
+    public void writeReceiptsToExcelFiles(List<ReceiptsValuesTableRow> receiptList)
 
-         throws IOException, NumberFormatException, ParseException {
-            System.out.println("writeReceiptsToExcelFiles");
-            System.out.println("\tspliReceiptRowsListByDate");
+            throws IOException, NumberFormatException, ParseException {
+        System.out.println("writeReceiptsToExcelFiles");
+        System.out.println("\tspliReceiptRowsListByDate");
+        System.out.println("size: " + receiptList.size());
         HashMap<String, List<ReceiptsValuesTableRow>> receiptRowsForMonthMap = spliReceiptRowsListByDate(receiptList);
         System.out.println("\treceiptRowsForMonthMap");
         Set<String> keys = receiptRowsForMonthMap.keySet();
@@ -199,7 +201,6 @@ System.out.println("createTableBody");
         HashMap<String, List<ReceiptsValuesTableRow>> dateRowsMap = fetchTableRowsFromFilesWhenExist(keys, pathMap);
         mergeMapOfSomeMonth(receiptRowsForMonthMap, dateRowsMap, keys);
         writeReceiptMapToExcelFiles(receiptRowsForMonthMap, pathMap, keys);
-        
 
     }
 }
