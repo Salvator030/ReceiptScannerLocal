@@ -13,29 +13,19 @@ public class SaveBtnController {
     @FXML
     private Button scannReceiptBtn = null;
 
- private MainInteractor mainInteractor;
+    private MainInteractor mainInteractor;
 
- 
+    public Button getScannReceiptBtn() {
+        return scannReceiptBtn;
+    }
 
-  public Button getScannReceiptBtn() {
-    return scannReceiptBtn;
-}
-
-
-public void setMainInteractor(MainInteractor mainInteractor) {
+    public void setMainInteractor(MainInteractor mainInteractor) {
         this.mainInteractor = mainInteractor;
     }
-  
 
     @FXML
     public void handleSaveBtn() throws NumberFormatException, IOException, ParseException {
-        // File directory = directoryChooser();
-        // if (directory != null) {
-        //     mainController.getFileHandler().setOutputFolder(directory);
-        //     mainController.writeReceiptsToExcel();
-        }
-    // }
-
-   
+        mainInteractor.handelSafeBtn();
+    }
 
 }
