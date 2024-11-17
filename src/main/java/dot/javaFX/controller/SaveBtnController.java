@@ -2,9 +2,6 @@ package dot.javaFX.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 

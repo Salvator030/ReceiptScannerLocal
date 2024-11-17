@@ -1,19 +1,12 @@
 package dot.javaFX.controller;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.apache.commons.io.output.CloseShieldOutputStream;
-
 import dot.javaFX.objects.ReceiptsValuesTableRow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.print.Collation;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
 public class TableViewController {

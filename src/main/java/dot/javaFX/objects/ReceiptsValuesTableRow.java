@@ -1,10 +1,7 @@
 package dot.javaFX.objects;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import dot.business.receipt.Receipt;
 
 public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow> {

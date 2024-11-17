@@ -3,15 +3,11 @@ package dot.javaFX.models;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableListValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import dot.business.receipt.Receipt;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
-import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -136,7 +132,7 @@ private final BooleanProperty receiptsListEmty = new SimpleBooleanProperty(true)
     return this.receiptsList.get();
   }
 
-  public ObservableListValue receiptsListProperty() {
+  public ObservableListValue<Receipt> receiptsListProperty() {
     return this.receiptsList;
   }
 

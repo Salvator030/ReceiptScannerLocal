@@ -1,10 +1,5 @@
 package dot.javaFX.controller;
 
-import dot.business.receipt.Receipt;
-import dot.business.receipt.ReceiptScanner;
-import dot.javaFX.objects.ReceiptsValuesTableRow;
-import javafx.concurrent.Task;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;

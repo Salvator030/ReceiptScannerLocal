@@ -1,15 +1,13 @@
 package dot.business.ocrScanner;
 
 import java.io.File;
-import dot.business.handler.FileHandler;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
 public class Tess {
 
   
-    private static String outPutImagePath = "src/main/resources/test.JPG";
-    private static final String tessdataPath = "src/main/resources/tessdata";
+        private static final String tessdataPath = "src/main/resources/tessdata";
     private  Tesseract tesseract;
 
    public Tess(){
