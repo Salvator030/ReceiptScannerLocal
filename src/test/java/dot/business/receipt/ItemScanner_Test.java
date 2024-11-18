@@ -35,8 +35,8 @@ public class ItemScanner_Test {
     @Test
     public void getDate_diverentString_matchCorectOutput(){
 
-        String[] resultArray = {"22.02.2024", "Date 22.02.2024", "Date: 22.02.2024","Date:\t\t22.02.2024","\t\t22.02.2024\t\t" };
-        String[] resiltArray2 = {"Summe:\t22,22 €" , "22/02/2024" + "02.2.2024"};
+        String[] resultArray = {"22.02.2024", "Date 22.02.2024", "Date: 22.02.2024","Date:\t\t22.02.2024","\t\t22.02.2024\t\t", "22/02/2024"  };
+        String[] resiltArray2 = {"Summe:\t22,22 €" , "02.2.2024"};
 
         for (String s : resultArray){
             assertEquals("22.02.2024",itemScanner.getDate(s));
