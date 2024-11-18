@@ -42,7 +42,6 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
     }
 
     public void setNumber(String number) {
-        System.out.println(number);
         this.number = number;
     }
 
@@ -88,7 +87,6 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
         else if(tempDate.equals("nicht erkannt")){
             tempDate = "01.01.2100";
         }
-        System.out.println(rowDate);
         if (rowDate.matches("\\d{2}.\\d{4}")) {
             rowDate = "01." + rowDate;
         }

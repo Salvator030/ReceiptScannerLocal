@@ -28,10 +28,9 @@ public class Tess {
 
         String result = null;
         try {
-            System.out.println("Normal");
+        
             result = tesseract.doOCR(image);
-            System.out.println(result);
-            // FileHandler.writeToFile("Normal", result);
+                    // FileHandler.writeToFile("Normal", result);
         } catch (TesseractException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

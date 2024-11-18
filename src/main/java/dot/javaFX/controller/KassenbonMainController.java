@@ -114,33 +114,5 @@ public class KassenbonMainController {
           initSaveBtnView();
      }
 
-     // public void toggleScannReceiptBtnViewDisable() {
-     //      scannBtnNode.setDisable(!scannBtnNode.isDisable());
-     // }
-
-     // public void toggleTableViewDisable() {
-     //      if(!receipts.isEmpty()){
-     //           tableViewNode.setDisable(false);
-     //      }else{
-     //      tableViewNode.setDisable(!tableViewNode.isDisable());}
-     // }
-
-     // public void toggleSaveBtnDisable() {
-     //      saveBtnNode.setDisable(!saveBtnNode.isDisable());
-     // }
-
-     // public void clearFilePathText() {
-     //      fileChooserViewController.clearFilePathText();
-     // }
-
-     // public void addReceiptInTable(Receipt receipt) {
-     //      System.out.println("addReceiptInTable");
-     //      tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
-     // }
-
-     // public void writeReceiptsToExcel() throws NumberFormatException, IOException, ParseException {
-
-     //      excelHelper.writeReceiptsToExcelFiles(tableViewController.getRowList());
-
-     // }
+    
 }

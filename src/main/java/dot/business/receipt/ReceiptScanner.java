@@ -23,7 +23,6 @@ public class ReceiptScanner {
     }
 
     public Receipt scannReceipt(String result) {
-        System.out.println("scannReceipt");
         String date = null;
         String name = null;
         Double summ = null;

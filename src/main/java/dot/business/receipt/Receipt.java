@@ -17,14 +17,9 @@ public class Receipt {
     }
 
     private String checkDate(String date){
-        System.out.println(date);
-        if(date .length() == 8){
+           if(date .length() == 8){
             String[] temp = date.split("[.]");
-            System.out.println(temp.length);
-            System.out.println(temp[0]);
-            System.out.println(temp[1]);
-            System.out.println(temp[2]);
-          return  temp[0]+"."+temp[1]+".20"+temp[2];
+                return  temp[0]+"."+temp[1]+".20"+temp[2];
 
         }
         return date;

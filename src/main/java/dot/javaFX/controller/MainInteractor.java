@@ -86,7 +86,6 @@ public class MainInteractor {
     private Receipt scannInputFile() {
         receiptScanner.setReceiptImage(mainViewModel.getInputFile());
         mainViewModel.setInputFile(null);
-        System.out.println("scann");
         return receiptScanner.scannReceipt(receiptScanner.scanImage());
     }
 
@@ -101,7 +100,6 @@ public class MainInteractor {
     }
 
     protected void handelScannReceiptBtn() {
-        System.out.println("start");
 
         Task<Void> task1 = new Task<Void>() { // create Task
             @Override
@@ -112,7 +110,6 @@ public class MainInteractor {
                     Receipt receipt = scannInputFile();
                     Platform.runLater(() -> {
                         mainViewModel.setScannendReceipt(receipt);
-                        System.out.println(mainViewModel.getTableRows().size());
                         mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
                         ReceiptsValuesTableRow row = new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
                         mainViewModel.getScannedReceipt(), "");
