@@ -146,6 +146,7 @@ public class MainInteractor {
         try {
 
             excelHelper.writeReceiptsToExcelFiles(mainViewModel.getTableRows());
+            mainViewModel.tableRowsProperty().clear();
         } catch (NumberFormatException | IOException | ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
