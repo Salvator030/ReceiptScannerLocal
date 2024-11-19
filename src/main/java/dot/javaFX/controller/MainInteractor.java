@@ -90,7 +90,13 @@ public class MainInteractor {
         return receiptScanner.scannReceipt(receiptScanner.scanImage());
     }
 
-     
+    private boolean isScannedReceiptComplet(Receipt receipt) {
+        if (receipt.getDate() != null && receipt.getPurpose() != null && receipt.getShopName() != null
+                && receipt.getSumm() != 0) {
+            return true;
+        }
+        return false;
+    }
 
     protected void handelChooseInputFileBtn() {
 
@@ -110,17 +116,18 @@ public class MainInteractor {
 
                     mainViewModel.setScanning(true);
                     Receipt receipt = scannInputFile();
-                    Platform.runLater(() -> {
-                        mainViewModel.setScannendReceipt(receipt);
-                        System.out.println(mainViewModel.getTableRows().size());
-                        mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
-                        ReceiptsValuesTableRow row = new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
-                        mainViewModel.getScannedReceipt(), "");
-                        mainViewModel.addTablesRows(row);
-                         Collections.sort(mainViewModel.getTableRows()); 
-
- 
-                });} catch (Exception e) {
+                    if (isScannedReceiptComplet(receipt)) {
+                        Platform.runLater(() -> {
+                            mainViewModel.setScannendReceipt(receipt);
+                            System.out.println(mainViewModel.getTableRows().size());
+                            mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
+                            ReceiptsValuesTableRow row = new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
+                                    mainViewModel.getScannedReceipt(), "");
+                            mainViewModel.addTablesRows(row);
+                            Collections.sort(mainViewModel.getTableRows());
+                        });
+                    }
+                } catch (Exception e) {
 
                     for (StackTraceElement s : e.getStackTrace()) {
                         System.err.println(s);
