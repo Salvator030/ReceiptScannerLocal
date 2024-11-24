@@ -17,12 +17,12 @@ public class ItemScanner {
         return name;
     }
 
-    public Double getTotalSumm(String result) {
+    public String getTotalSumm(String result) {
         final String[] SYNONYMS_FOR_SUMM = { "summe", "zahlen", "gesamt", "betrag", "eur" };
      
         System.out.println("result: " + result);
 
-        Double summ = null;
+        String summ = null;
 
         String regex = "^\\D{1}\\w+(?:\\s*\\w*)[:]?\\s+(\\d+[,.]\\d{2})\\s*[€]?$";
         try{
@@ -32,7 +32,7 @@ public class ItemScanner {
             if (result.toLowerCase().contains(s)) {
                 System.out.println("SYNONYMS_FOR_SUMM[i]: " +s);
                 System.out.println("groupe1: " + m.group(1));
-                summ = Double.parseDouble(m.group(1).replace(",", "."));
+                summ = m.group(1).replace(",", ".");
              
             }
         }}catch(Exception e){

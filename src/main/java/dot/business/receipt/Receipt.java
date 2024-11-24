@@ -1,80 +1,92 @@
 package dot.business.receipt;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Receipt {
 
-    private int indexInTable;
-    private String shopName;
-    private double summ;
-    private String date;
-    private String purpose;
-  
-    public Receipt(String date, String shopName, double summ) {
-        this.shopName = shopName;
-        this.summ = summ;
-        
-         this.date = checkDate(date);
-        
+    private SimpleStringProperty shopName;
+    private SimpleStringProperty summ;
+    private SimpleStringProperty date;
+    private SimpleStringProperty purpose;
+
+    public Receipt(String date, String shopName, String summ, String purpose) {
+        this.shopName = new SimpleStringProperty(shopName);
+        this.date = new SimpleStringProperty(date);
+        this.summ = new SimpleStringProperty(summ);
+        this.purpose = new SimpleStringProperty(purpose);
+
+    };
+
+    public Receipt(String date, String shopName, String summ) {
+        this.shopName = new SimpleStringProperty(shopName);
+        this.date = new SimpleStringProperty(date);
+        this.summ = new SimpleStringProperty(summ);
+        this.purpose = new SimpleStringProperty("nicht gesetz");
+
     }
 
-    private String checkDate(String date){
-        System.out.println(date);
-        if(date .length() == 8){
-            String[] temp = date.split("[.]");
-            System.out.println(temp.length);
-            System.out.println(temp[0]);
-            System.out.println(temp[1]);
-            System.out.println(temp[2]);
-          return  temp[0]+"."+temp[1]+".20"+temp[2];
-
-        }
-        return date;
-    } 
-
- 
     public String getShopName() {
-        return shopName;
+        return shopName.get();
+    }
+
+    public SimpleStringProperty shopNameProperty() {
+        return this.shopName;
     }
 
     public void setShopName(String shopName) {
-        this.shopName = shopName;
+        this.shopName.set(shopName);
     }
 
-    public double getSumm() {
-        return summ;
+    public String getSumm() {
+        return this.summ.get();
     }
 
-    public void setSumm(double summ) {
-        this.summ = summ;
+    public SimpleStringProperty summProperty(){
+        return this.summ;
+    }
+
+    public void setSumm(String summ) {
+        this.summ.set(summ);
     }
 
     public String getDate() {
-        return date;
+        return date.get();
     }
 
+    public SimpleStringProperty dateProperty(){
+        return this.date;
+    }
     public void setDate(String date) {
-        this.date = date;
+        this.date.set(date);
     }
-
-
-    public int getIndexInTable() {
-        return indexInTable;
-    }
-
-
-    public void setIndexInTable(int indexInTable) {
-        this.indexInTable = indexInTable;
-    }
-
 
     public String getPurpose() {
-        return purpose;
+        return purpose.get();
     }
 
+    public SimpleStringProperty purposeProperty(){
+        return this.purpose;
+    }
 
     public void setPurpose(String purpose) {
-        this.purpose = purpose;
+        this.purpose.set(purpose);
     }
 
-    
-
 }
+
+// private String checkDate(String date) {
+// System.out.println(date);
+// if (date.length() == 8) {
+// String[] temp = date.split("[.]");
+// System.out.println(temp.length);
+// System.out.println(temp[0]);
+// System.out.println(temp[1]);
+// System.out.println(temp[2]);
+// return temp[0] + "." + temp[1] + ".20" + temp[2];
+
+// }
+// return date;
+// }

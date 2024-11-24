@@ -22,19 +22,20 @@ public class MainViewModel {
   private final BooleanProperty inputFileSet = new SimpleBooleanProperty(false);
   private final StringProperty filePathSting = new SimpleStringProperty(null);
 
-  private final ObjectProperty<Receipt> scannedReceipt = new SimpleObjectProperty<Receipt>(new Receipt("", "", 0));
-private final BooleanProperty scanning = new SimpleBooleanProperty(false); 
-  private final ListProperty<ReceiptsValuesTableRow> tableRows = new SimpleListProperty<ReceiptsValuesTableRow>(FXCollections.observableArrayList());
-   private final BooleanProperty tableRowsListEmty = new SimpleBooleanProperty();
-  private final ListProperty<Receipt> receiptsList = new SimpleListProperty<Receipt>(FXCollections.observableArrayList() );
-private final BooleanProperty receiptsListEmty = new SimpleBooleanProperty(true);
+  private final ObjectProperty<Receipt> scannedReceipt = new SimpleObjectProperty<Receipt>(new Receipt("", "", ""));
+  private final BooleanProperty scanning = new SimpleBooleanProperty(false);
+  private final BooleanProperty showChangeValuesDialog = new SimpleBooleanProperty(false);
+  private final ListProperty<ReceiptsValuesTableRow> tableRows = new SimpleListProperty<ReceiptsValuesTableRow>(
+      FXCollections.observableArrayList());
+  private final BooleanProperty tableRowsListEmty = new SimpleBooleanProperty();
+  private final ListProperty<Receipt> receiptsList = new SimpleListProperty<Receipt>(
+      FXCollections.observableArrayList());
+  private final BooleanProperty receiptsListEmty = new SimpleBooleanProperty(true);
   private final ObjectProperty<File> outputDirectory = new SimpleObjectProperty<>(null);
   private final ObjectProperty<File> ecxelFile = new SimpleObjectProperty<File>(null);
   private final BooleanProperty ecxelFileSet = new SimpleBooleanProperty(false);
 
- 
-
-// inputFile
+  // inputFile
   public File getInputFile() {
     return inputFile.get();
   }
@@ -88,16 +89,25 @@ private final BooleanProperty receiptsListEmty = new SimpleBooleanProperty(true)
   }
 
   // scanning
-  public boolean isSanning(){
+  public boolean isSanning() {
     return this.scanning.get();
   }
 
-  public BooleanProperty scanningProperty(){
+  public BooleanProperty scanningProperty() {
     return this.scanning;
   }
 
-  public void setScanning(boolean isScanning){
+  public void setScanning(boolean isScanning) {
     this.scanning.set(isScanning);
+  }
+
+  // showChangeValuesDialog
+  public boolean isShowChangesValueDialog(){
+    return showChangeValuesDialog.get();
+  }
+
+  public BooleanProperty showChangeValuesDialogProperty (){
+    return showChangeValuesDialog;
   }
 
   // tableRows
@@ -141,28 +151,28 @@ private final BooleanProperty receiptsListEmty = new SimpleBooleanProperty(true)
   }
 
   // receiptsListEmty
-  public boolean isReceiptsListEmpty(){
+  public boolean isReceiptsListEmpty() {
     return this.receiptsListEmty.get();
   }
 
-  public  BooleanProperty receiptsListEmptyProperty(){
+  public BooleanProperty receiptsListEmptyProperty() {
     return this.receiptsListEmty;
   }
 
-  public void setReceiptsListEmpty(boolean empty){
+  public void setReceiptsListEmpty(boolean empty) {
     this.receiptsListEmty.set(empty);
   }
 
   // outputDirectory
-  public File getOutputDirectory(){
+  public File getOutputDirectory() {
     return this.outputDirectory.get();
   }
 
-  public ObjectProperty<File> outputDirectoryProperty(){
+  public ObjectProperty<File> outputDirectoryProperty() {
     return this.outputDirectory;
   }
 
-  public void setOutputDirectory(File directory){
+  public void setOutputDirectory(File directory) {
     this.outputDirectory.set(directory);
   }
 
@@ -191,9 +201,5 @@ private final BooleanProperty receiptsListEmty = new SimpleBooleanProperty(true)
   public void setEcxelFIleSet(Boolean isSet) {
     ecxelFileSet.set(isSet);
   }
-
-
-
-
 
 }

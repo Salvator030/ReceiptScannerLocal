@@ -25,7 +25,7 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
         this.date = receipt.getDate();
         this.shopName = receipt.getShopName();
         this.purpose = purpose;
-        this.summ = Double.toString(receipt.getSumm());
+        this.summ =receipt.getSumm() ;
     }
 
     public ReceiptsValuesTableRow(String date) {

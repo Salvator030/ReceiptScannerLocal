@@ -26,7 +26,7 @@ public class ReceiptScanner {
         System.out.println("scannReceipt");
         String date = null;
         String name = null;
-        Double summ = null;
+        String summ = null;
 
         String[] resultArray = result.split("\n");
         for (String resultString : resultArray) {
@@ -43,8 +43,7 @@ public class ReceiptScanner {
 
         }
 
-        Receipt receipt = new Receipt(date != null ? date : "nicht erkannt", name != null ? name : "nicht erkannt",
-                summ != null ? summ : 0);
+        Receipt receipt = new Receipt(date, name, summ);
         return receipt;
     }
 

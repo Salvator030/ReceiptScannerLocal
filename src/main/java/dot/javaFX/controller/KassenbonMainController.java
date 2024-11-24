@@ -4,21 +4,27 @@ import java.io.IOException;
 import dot.javaFX.models.MainViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.DialogPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class KassenbonMainController {
 
      private Stage stage;
 
-     private MainViewModel mainViewModel = new MainViewModel();
-     private MainInteractor mainInteractor = new MainInteractor(mainViewModel, stage);
-    
      private VBox tableViewNode;
      private VBox fileChooserNode;
      private StackPane scannBtnNode;
      private VBox saveBtnNode;
+     private DialogPane changeValuesDialogNode;
+     private Stage changeValuesDialogStage;
+
+      private MainViewModel mainViewModel = new MainViewModel();
+     private MainInteractor mainInteractor = new MainInteractor(mainViewModel, stage);
 
      @FXML
      private VBox tableViewContainer = null;
@@ -36,6 +42,7 @@ public class KassenbonMainController {
      private FileChooserViewControler fileChooserViewController;
      private ScannReceiptBtnController scannReceiptBtnController;
      private SaveBtnController saveBtnController;
+     private DialogChancheValuesController chancheValuesController;
 
      public void setStage(Stage stage) {
           this.stage = stage;
@@ -54,7 +61,7 @@ public class KassenbonMainController {
                fileChooserContainer.getChildren().add(fileChooserNode);
                fileChooserViewController.setInteractor(mainInteractor);
                fileChooserViewController.getFilePathText().textProperty().bind(mainViewModel.filePathStringProperty());
-         
+
           } catch (IOException e) {
                // TODO Auto-generated catch block
                e.printStackTrace();
@@ -70,8 +77,10 @@ public class KassenbonMainController {
                scannReceiptBtnContainer.getChildren().add(scannBtnNode);
                scannBtnNode.disableProperty().bind(mainViewModel.inputFileSetProperty().not());
                scannReceiptBtnController.getProgressIndicator().disableProperty().set(false);
-               scannReceiptBtnController.getProgressIndicator().visibleProperty().bind(mainViewModel.scanningProperty());
-               scannReceiptBtnController.getScannReceiptBtn().visibleProperty().bind(mainViewModel.scanningProperty().not());
+               scannReceiptBtnController.getProgressIndicator().visibleProperty()
+                         .bind(mainViewModel.scanningProperty());
+               scannReceiptBtnController.getScannReceiptBtn().visibleProperty()
+                         .bind(mainViewModel.scanningProperty().not());
                scannReceiptBtnController.setMainInteractor(mainInteractor);
 
           } catch (IOException e) {
@@ -86,7 +95,8 @@ public class KassenbonMainController {
                tableViewNode = tableViewLoader.load();
                tableViewController = tableViewLoader.getController();
                tableViewContainer.getChildren().add(tableViewNode);
-               tableViewController.getReceiptsTable().itemsProperty().bind(mainViewModel.tableRowsProperty());;
+               tableViewController.getReceiptsTable().itemsProperty().bind(mainViewModel.tableRowsProperty());
+               ;
                tableViewNode.disableProperty().bind(mainViewModel.tableRowListEmptyProperty());
           } catch (IOException e) {
                e.printStackTrace();
@@ -95,6 +105,7 @@ public class KassenbonMainController {
 
      private void initSaveBtnView() {
           try {
+               System.out.println(getClass().getResource("../fxml/SaveBtn.fxml"));
                FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/SaveBtn.fxml"));
                saveBtnNode = loader.load();
                saveBtnController = loader.getController();
@@ -112,35 +123,38 @@ public class KassenbonMainController {
           initFileChooserContorller();
           initScannReceiptBtnController();
           initSaveBtnView();
+
      }
 
      // public void toggleScannReceiptBtnViewDisable() {
-     //      scannBtnNode.setDisable(!scannBtnNode.isDisable());
+     // scannBtnNode.setDisable(!scannBtnNode.isDisable());
      // }
 
      // public void toggleTableViewDisable() {
-     //      if(!receipts.isEmpty()){
-     //           tableViewNode.setDisable(false);
-     //      }else{
-     //      tableViewNode.setDisable(!tableViewNode.isDisable());}
+     // if(!receipts.isEmpty()){
+     // tableViewNode.setDisable(false);
+     // }else{
+     // tableViewNode.setDisable(!tableViewNode.isDisable());}
      // }
 
      // public void toggleSaveBtnDisable() {
-     //      saveBtnNode.setDisable(!saveBtnNode.isDisable());
+     // saveBtnNode.setDisable(!saveBtnNode.isDisable());
      // }
 
      // public void clearFilePathText() {
-     //      fileChooserViewController.clearFilePathText();
+     // fileChooserViewController.clearFilePathText();
      // }
 
      // public void addReceiptInTable(Receipt receipt) {
-     //      System.out.println("addReceiptInTable");
-     //      tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(), receipt, "null"));
+     // System.out.println("addReceiptInTable");
+     // tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(),
+     // receipt, "null"));
      // }
 
-     // public void writeReceiptsToExcel() throws NumberFormatException, IOException, ParseException {
+     // public void writeReceiptsToExcel() throws NumberFormatException, IOException,
+     // ParseException {
 
-     //      excelHelper.writeReceiptsToExcelFiles(tableViewController.getRowList());
+     // excelHelper.writeReceiptsToExcelFiles(tableViewController.getRowList());
 
      // }
 }
