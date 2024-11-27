@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+
+import dot.asserts.EPurpose;
 import dot.business.excel.FastexcelHelper;
 import dot.business.handler.FileHandler;
 import dot.business.receipt.Receipt;
@@ -114,7 +116,7 @@ public class MainInteractor {
         return missedAtributs;
     }
 
-    private void setDefaultValues(Receipt receipt) {
+    private void setDefaulReceipttValues(Receipt receipt) {
         if (receipt.getDate() == null) {
             receipt.setDate("nicht lesbar");
         }
@@ -123,6 +125,10 @@ public class MainInteractor {
         }
         if (receipt.getSumm() == null) {
             receipt.setSumm("nicht lesbar");
+        }
+
+        if(receipt.getPurpose() == null){
+            receipt.setPurpose(EPurpose.SONSTIGES);
         }
     }
 
@@ -163,7 +169,7 @@ public class MainInteractor {
     protected void addScannenReciptTotableRows() {
         mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
         ReceiptsValuesTableRow row = new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
-                mainViewModel.getScannedReceipt(), "");
+                mainViewModel.getScannedReceipt(), null);
         mainViewModel.addTablesRows(row);
         Collections.sort(mainViewModel.getTableRows());
     }
@@ -178,7 +184,9 @@ public class MainInteractor {
 
                     mainViewModel.setScanning(true);
                     Receipt receipt = scannInputFile();
+                  
                     Platform.runLater(() -> {
+                          setDefaulReceipttValues(receipt);
                         mainViewModel.setScannendReceipt(receipt);
                        
 
@@ -225,7 +233,7 @@ public class MainInteractor {
         System.out.println("handleChangeValuesOklBtn");
         mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
         ReceiptsValuesTableRow row = new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
-                mainViewModel.getScannedReceipt(), "");
+                mainViewModel.getScannedReceipt());
         mainViewModel.addTablesRows(row);
         Collections.sort(mainViewModel.getTableRows());
         mainViewModel.setScannendReceipt(null);

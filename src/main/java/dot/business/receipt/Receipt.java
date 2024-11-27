@@ -1,7 +1,9 @@
 package dot.business.receipt;
 
+import dot.asserts.EPurpose;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -10,13 +12,13 @@ public class Receipt {
     private SimpleStringProperty shopName;
     private SimpleStringProperty summ;
     private SimpleStringProperty date;
-    private SimpleStringProperty purpose;
+    private SimpleObjectProperty<EPurpose> purpose;
 
-    public Receipt(String date, String shopName, String summ, String purpose) {
+    public Receipt(String date, String shopName, String summ, EPurpose purpose) {
         this.shopName = new SimpleStringProperty(shopName);
         this.date = new SimpleStringProperty(date);
         this.summ = new SimpleStringProperty(summ);
-        this.purpose = new SimpleStringProperty(purpose);
+        this.purpose = new SimpleObjectProperty<EPurpose>(purpose);
 
     };
 
@@ -24,9 +26,8 @@ public class Receipt {
         this.shopName = new SimpleStringProperty(shopName);
         this.date = new SimpleStringProperty(date);
         this.summ = new SimpleStringProperty(summ);
-        this.purpose = new SimpleStringProperty("nicht gesetz");
-
-    }
+        this.purpose = new SimpleObjectProperty<EPurpose>();
+      }
 
     public String getShopName() {
         return shopName.get();
@@ -63,15 +64,15 @@ public class Receipt {
         this.date.set(date);
     }
 
-    public String getPurpose() {
+    public EPurpose getPurpose() {
         return purpose.get();
     }
 
-    public SimpleStringProperty purposeProperty(){
+    public SimpleObjectProperty<EPurpose> purposeProperty(){
         return this.purpose;
     }
 
-    public void setPurpose(String purpose) {
+    public void setPurpose(EPurpose purpose) {
         this.purpose.set(purpose);
     }
 

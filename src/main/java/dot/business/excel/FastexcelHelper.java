@@ -82,7 +82,7 @@ public class FastexcelHelper {
         List<ReceiptsValuesTableRow> receiptsList = new ArrayList<>();
         for (int i = 1; i <= lastRecepitIndex; i++) {
             receiptsList.add(new ReceiptsValuesTableRow(receiptsList.size() + 1, data.get(keySet[i]).get(0),
-                    data.get(keySet[i]).get(1), "null", Double.parseDouble(data.get(keySet[i]).get(2))));
+                    data.get(keySet[i]).get(1), null, Double.parseDouble(data.get(keySet[i]).get(2))));
         }
 
         return receiptsList;
@@ -120,7 +120,7 @@ public class FastexcelHelper {
             List<ReceiptsValuesTableRow> sourceList) {
         for (ReceiptsValuesTableRow row : targetList) {
             sourceList.removeIf(r -> r.getDate().equalsIgnoreCase(row.getDate())
-                    && r.getPurpose().equalsIgnoreCase(row.getPurpose())
+                    && r.getPurpose().equals(row.getPurpose())
                     && r.getShopName().equalsIgnoreCase(row.getShopName())
                     && r.getSumm().equalsIgnoreCase(row.getSumm()));
 
