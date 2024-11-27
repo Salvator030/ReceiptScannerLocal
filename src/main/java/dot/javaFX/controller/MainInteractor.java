@@ -94,7 +94,6 @@ public class MainInteractor {
     private Receipt scannInputFile() {
         receiptScanner.setReceiptImage(mainViewModel.getInputFile());
         mainViewModel.setInputFile(null);
-        System.out.println("scann");
         return receiptScanner.scannReceipt(receiptScanner.scanImage());
     }
 
@@ -175,8 +174,7 @@ public class MainInteractor {
     }
 
     protected void handelScannReceiptBtn() {
-        System.out.println("start");
-
+       
         Task<Void> task1 = new Task<Void>() { // create Task
             @Override
             protected Void call() throws Exception {
@@ -230,8 +228,7 @@ public class MainInteractor {
     }
 
     public void handleChangeValuesOklBtn() {
-        System.out.println("handleChangeValuesOklBtn");
-        mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
+           mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
         ReceiptsValuesTableRow row = new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
                 mainViewModel.getScannedReceipt());
         mainViewModel.addTablesRows(row);
@@ -242,8 +239,7 @@ public class MainInteractor {
     }
 
     public void handleChangeValuesCancelBtn() {
-        System.out.println("handleChangeValuesCancelBtn");
-        closeDialog();
+                closeDialog();
     }
 
 }

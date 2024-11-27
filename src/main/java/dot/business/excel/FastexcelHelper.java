@@ -90,7 +90,6 @@ public class FastexcelHelper {
 
     private void createTableBody(Worksheet ws, List<ReceiptsValuesTableRow> receiptsList)
             throws NumberFormatException, ParseException {
-        System.out.println("createTableBody");
 
         int rowNumber = 2;
         for (ReceiptsValuesTableRow r : receiptsList) {
@@ -190,13 +189,8 @@ public class FastexcelHelper {
     public void writeReceiptsToExcelFiles(List<ReceiptsValuesTableRow> receiptList)
 
             throws IOException, NumberFormatException, ParseException {
-        System.out.println("writeReceiptsToExcelFiles");
-        System.out.println("\tspliReceiptRowsListByDate");
-        System.out.println("size: " + receiptList.size());
         HashMap<String, List<ReceiptsValuesTableRow>> receiptRowsForMonthMap = spliReceiptRowsListByDate(receiptList);
-        System.out.println("\treceiptRowsForMonthMap");
         Set<String> keys = receiptRowsForMonthMap.keySet();
-        System.out.println("\tgetExcelFilesPathesToReadIn");
         HashMap<String, Path> pathMap = fileHandler.getExcelFilesPathesToReadIn(keys);
         HashMap<String, List<ReceiptsValuesTableRow>> dateRowsMap = fetchTableRowsFromFilesWhenExist(keys, pathMap);
         mergeMapOfSomeMonth(receiptRowsForMonthMap, dateRowsMap, keys);

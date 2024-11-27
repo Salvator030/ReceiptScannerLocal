@@ -4,12 +4,9 @@ import java.io.IOException;
 import dot.javaFX.models.MainViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class KassenbonMainController {
@@ -105,7 +102,6 @@ public class KassenbonMainController {
 
      private void initSaveBtnView() {
           try {
-               System.out.println(getClass().getResource("../fxml/SaveBtn.fxml"));
                FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/SaveBtn.fxml"));
                saveBtnNode = loader.load();
                saveBtnController = loader.getController();
@@ -126,35 +122,4 @@ public class KassenbonMainController {
 
      }
 
-     // public void toggleScannReceiptBtnViewDisable() {
-     // scannBtnNode.setDisable(!scannBtnNode.isDisable());
-     // }
-
-     // public void toggleTableViewDisable() {
-     // if(!receipts.isEmpty()){
-     // tableViewNode.setDisable(false);
-     // }else{
-     // tableViewNode.setDisable(!tableViewNode.isDisable());}
-     // }
-
-     // public void toggleSaveBtnDisable() {
-     // saveBtnNode.setDisable(!saveBtnNode.isDisable());
-     // }
-
-     // public void clearFilePathText() {
-     // fileChooserViewController.clearFilePathText();
-     // }
-
-     // public void addReceiptInTable(Receipt receipt) {
-     // System.out.println("addReceiptInTable");
-     // tableViewController.addRow(new ReceiptsValuesTableRow(receipts.size(),
-     // receipt, "null"));
-     // }
-
-     // public void writeReceiptsToExcel() throws NumberFormatException, IOException,
-     // ParseException {
-
-     // excelHelper.writeReceiptsToExcelFiles(tableViewController.getRowList());
-
-     // }
 }

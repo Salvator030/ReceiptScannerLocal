@@ -1,11 +1,8 @@
 package dot.business.receipt;
 
 import dot.asserts.EPurpose;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public class Receipt {
 
@@ -78,16 +75,4 @@ public class Receipt {
 
 }
 
-// private String checkDate(String date) {
-// System.out.println(date);
-// if (date.length() == 8) {
-// String[] temp = date.split("[.]");
-// System.out.println(temp.length);
-// System.out.println(temp[0]);
-// System.out.println(temp[1]);
-// System.out.println(temp[2]);
-// return temp[0] + "." + temp[1] + ".20" + temp[2];
 
-// }
-// return date;
-// }

@@ -2,22 +2,15 @@ package dot.javaFX.controller;
 
 import dot.asserts.EPurpose;
 import dot.business.receipt.Receipt;
-import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class DialogChancheValuesController {
 
@@ -43,7 +36,6 @@ public class DialogChancheValuesController {
     private Button changeValuesCancelBtn = null;
 
     private MainInteractor mainInteractor;
-    private Receipt receipt;
     private ObjectProperty<ObservableList<EPurpose>> purposes = new SimpleObjectProperty<ObservableList<EPurpose>>(
             FXCollections.observableArrayList(EPurpose.values()));
 
@@ -52,7 +44,6 @@ public class DialogChancheValuesController {
     }
 
     public void setReceipt(Receipt receipt) {
-        this.receipt = receipt;
         dateValue.textProperty().bindBidirectional(receipt.dateProperty());
         nameValue.textProperty().bindBidirectional(receipt.shopNameProperty());
         summValue.textProperty().bindBidirectional(receipt.summProperty());
@@ -61,13 +52,11 @@ public class DialogChancheValuesController {
 
     @FXML
     public void handleChangeValuesOklBtn() {
-        System.out.println("OklBtn");
         this.mainInteractor.handleChangeValuesOklBtn();
     }
 
     @FXML
     public void handleChangeValueCancleBtn() {
-        System.out.println("CancelBtn");
         this.mainInteractor.handleChangeValuesCancelBtn();
     }
 
