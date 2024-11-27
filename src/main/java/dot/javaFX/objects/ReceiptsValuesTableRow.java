@@ -2,6 +2,8 @@ package dot.javaFX.objects;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import dot.asserts.EPurpose;
 import dot.business.receipt.Receipt;
 
 public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow> {
@@ -9,10 +11,10 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
     private String number;
     private String date;
     private String shopName;
-    private String purpose;
+    private EPurpose purpose;
     private String summ;
 
-    public ReceiptsValuesTableRow(int number, String date, String shopName, String purpose, Double summ) {
+    public ReceiptsValuesTableRow(int number, String date, String shopName, EPurpose purpose, Double summ) {
         this.number = Integer.toString(number);
         this.date = date;
         this.shopName = shopName;
@@ -20,12 +22,20 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
         this.summ = "" + summ;
     }
 
-    public ReceiptsValuesTableRow(int number, Receipt receipt, String purpose) {
+    public ReceiptsValuesTableRow(int number, Receipt receipt, EPurpose purpose) {
         this.number = Integer.toString(number);
         this.date = receipt.getDate();
         this.shopName = receipt.getShopName();
         this.purpose = purpose;
-        this.summ = Double.toString(receipt.getSumm());
+        this.summ =receipt.getSumm() ;
+    }
+
+    public ReceiptsValuesTableRow(int number, Receipt receipt) {
+        this.number = Integer.toString(number);
+        this.date = receipt.getDate();
+        this.shopName = receipt.getShopName();
+        this.purpose = receipt.getPurpose();
+        this.summ =receipt.getSumm() ;
     }
 
     public ReceiptsValuesTableRow(String date) {
@@ -33,7 +43,7 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
 
         this.date = date;
         this.shopName = "";
-        this.purpose = "";
+        this.purpose = null;
         this.summ = "";
     }
 
@@ -42,8 +52,7 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
     }
 
     public void setNumber(String number) {
-        System.out.println(number);
-        this.number = number;
+            this.number = number;
     }
 
     public String getDate() {
@@ -62,11 +71,11 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
         this.shopName = shopName;
     }
 
-    public String getPurpose() {
+    public EPurpose getPurpose() {
         return purpose;
     }
 
-    public void setPurpose(String purpose) {
+    public void setPurpose(EPurpose purpose) {
         this.purpose = purpose;
     }
 
@@ -88,8 +97,7 @@ public class ReceiptsValuesTableRow implements Comparable<ReceiptsValuesTableRow
         else if(tempDate.equals("nicht erkannt")){
             tempDate = "01.01.2100";
         }
-        System.out.println(rowDate);
-        if (rowDate.matches("\\d{2}.\\d{4}")) {
+         if (rowDate.matches("\\d{2}.\\d{4}")) {
             rowDate = "01." + rowDate;
         }
         else if(rowDate.equals("nicht erkannt")){

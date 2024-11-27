@@ -77,7 +77,6 @@ public class FileHandler {
 
     public boolean checkExistFile(Path path) {
         if (!Files.exists(path)) {
-            System.out.println("create File");
           File file=  new File(path.toString());
           try {
             file.createNewFile();

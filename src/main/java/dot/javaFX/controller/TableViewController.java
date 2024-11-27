@@ -1,5 +1,6 @@
 package dot.javaFX.controller;
 
+import dot.asserts.EPurpose;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,10 +27,8 @@ public class TableViewController {
    @FXML
    private TableColumn<ReceiptsValuesTableRow, String> summColumn = null;
 
-   private ObservableList<String> purposeOptions = FXCollections.observableArrayList("Büromaterial", "Lebensmittel",
-         "Sachmittel",
-         "null");
-   ComboBoxTableCell<ReceiptsValuesTableRow, String> comboBoxTableCell = new ComboBoxTableCell<>(purposeOptions);
+   private ObservableList<EPurpose> purposeOptions = FXCollections.observableArrayList(EPurpose.values());
+   ComboBoxTableCell<ReceiptsValuesTableRow, EPurpose> comboBoxTableCell = new ComboBoxTableCell<>(purposeOptions);
 
    
 
@@ -59,11 +58,11 @@ public class TableViewController {
    }
 
    private void initPurposeColumn() {
-      purposeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(purposeOptions));
+      purposeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(purposeOptions.toString()));
       purposeColumn.setOnEditCommit(event -> {
          final String value = event.getNewValue() != null ? event.getNewValue() : event.getOldValue();
          ((ReceiptsValuesTableRow) event.getTableView().getItems()
-               .get(event.getTablePosition().getRow())).setPurpose(value);
+               .get(event.getTablePosition().getRow())).setPurpose(EPurpose.valueOf(value));
          receiptsTable.refresh();
       });
    }

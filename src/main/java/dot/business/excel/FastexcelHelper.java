@@ -20,6 +20,8 @@ import org.dhatim.fastexcel.Worksheet;
 import org.dhatim.fastexcel.reader.Cell;
 import org.dhatim.fastexcel.reader.Sheet;
 import java.text.ParseException;
+
+import dot.asserts.EPurpose;
 import dot.business.handler.FileHandler;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
 
@@ -54,17 +56,19 @@ public class FastexcelHelper {
         ws.width(0, 15);
         ws.width(1, 25);
         ws.width(2, 15);
+        ws.width(3, 15);
 
-        ws.range(0, 0, 0, 2).style().fontName("Arial").fontSize(16).bold().fillColor("3366FF").set();
+        ws.range(0, 0, 0, 3).style().fontName("Arial").fontSize(16).bold().fillColor("3366FF").set();
         ws.value(0, 0, "Datum");
         ws.value(0, 1, "Laden");
-        ws.value(0, 2, "Summe");
+        ws.value(0, 2, "Verwendung");
+        ws.value(0, 3,"Summe");
     }
 
     private void createSummRow(Worksheet ws, int rowNumber, double summ) {
         ws.range(rowNumber, 0, rowNumber, 2).style().fontSize(14).bold().set();
         ws.value(rowNumber, 0, "Gesammt:");
-        ws.value(rowNumber, 2, summ);
+        ws.value(rowNumber, 3, summ);
     }
 
     private double getTotalSumm(List<ReceiptsValuesTableRow> receipts) {
@@ -82,7 +86,7 @@ public class FastexcelHelper {
         List<ReceiptsValuesTableRow> receiptsList = new ArrayList<>();
         for (int i = 1; i <= lastRecepitIndex; i++) {
             receiptsList.add(new ReceiptsValuesTableRow(receiptsList.size() + 1, data.get(keySet[i]).get(0),
-                    data.get(keySet[i]).get(1), "null", Double.parseDouble(data.get(keySet[i]).get(2))));
+                    data.get(keySet[i]).get(1), EPurpose.valueOf(data.get(keySet[i]).get(2)), Double.parseDouble(data.get(keySet[i]).get(3))));
         }
 
         return receiptsList;
@@ -90,14 +94,14 @@ public class FastexcelHelper {
 
     private void createTableBody(Worksheet ws, List<ReceiptsValuesTableRow> receiptsList)
             throws NumberFormatException, ParseException {
-        System.out.println("createTableBody");
 
         int rowNumber = 2;
         for (ReceiptsValuesTableRow r : receiptsList) {
             ws.range(rowNumber, 0, rowNumber, 2).style().wrapText(true).set();
             ws.value(rowNumber, 0, r.getDate());
             ws.value(rowNumber, 1, r.getShopName());
-            ws.value(rowNumber, 2, r.getSumm());
+            ws.value(rowNumber, 2, r.getPurpose().toString());
+            ws.value(rowNumber, 3, r.getSumm());
             ++rowNumber;
         }
         ++rowNumber;
@@ -120,7 +124,7 @@ public class FastexcelHelper {
             List<ReceiptsValuesTableRow> sourceList) {
         for (ReceiptsValuesTableRow row : targetList) {
             sourceList.removeIf(r -> r.getDate().equalsIgnoreCase(row.getDate())
-                    && r.getPurpose().equalsIgnoreCase(row.getPurpose())
+                    && r.getPurpose().equals(row.getPurpose())
                     && r.getShopName().equalsIgnoreCase(row.getShopName())
                     && r.getSumm().equalsIgnoreCase(row.getSumm()));
 
@@ -190,13 +194,8 @@ public class FastexcelHelper {
     public void writeReceiptsToExcelFiles(List<ReceiptsValuesTableRow> receiptList)
 
             throws IOException, NumberFormatException, ParseException {
-        System.out.println("writeReceiptsToExcelFiles");
-        System.out.println("\tspliReceiptRowsListByDate");
-        System.out.println("size: " + receiptList.size());
         HashMap<String, List<ReceiptsValuesTableRow>> receiptRowsForMonthMap = spliReceiptRowsListByDate(receiptList);
-        System.out.println("\treceiptRowsForMonthMap");
         Set<String> keys = receiptRowsForMonthMap.keySet();
-        System.out.println("\tgetExcelFilesPathesToReadIn");
         HashMap<String, Path> pathMap = fileHandler.getExcelFilesPathesToReadIn(keys);
         HashMap<String, List<ReceiptsValuesTableRow>> dateRowsMap = fetchTableRowsFromFilesWhenExist(keys, pathMap);
         mergeMapOfSomeMonth(receiptRowsForMonthMap, dateRowsMap, keys);

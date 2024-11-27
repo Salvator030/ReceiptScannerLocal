@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+
+import dot.asserts.EPurpose;
 import dot.business.excel.FastexcelHelper;
 import dot.business.handler.FileHandler;
 import dot.business.receipt.Receipt;
@@ -15,8 +17,12 @@ import dot.javaFX.objects.ReceiptsValuesTableRow;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.DialogPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainInteractor {
@@ -26,9 +32,11 @@ public class MainInteractor {
     ReceiptScanner receiptScanner;
     FileHandler fileHandler;
     FastexcelHelper excelHelper;
+    Stage dialogStage;
 
     public MainInteractor(MainViewModel mainViewModel, Stage stage) {
         this.mainViewModel = mainViewModel;
+        this.stage = stage;
         this.receiptScanner = new ReceiptScanner();
         fileHandler = new FileHandler();
         this.excelHelper = new FastexcelHelper();
@@ -86,11 +94,68 @@ public class MainInteractor {
     private Receipt scannInputFile() {
         receiptScanner.setReceiptImage(mainViewModel.getInputFile());
         mainViewModel.setInputFile(null);
-        System.out.println("scann");
         return receiptScanner.scannReceipt(receiptScanner.scanImage());
     }
 
-     
+    private enum MissedAtributes {
+        DATE, SHOPNAME, SUMM
+    };
+
+    private ArrayList<Enum<MissedAtributes>> getMissedAtriebutsList(Receipt receipt) {
+        ArrayList<Enum<MissedAtributes>> missedAtributs = new ArrayList<>();
+        if (receipt.getDate() == null) {
+            missedAtributs.add(MissedAtributes.DATE);
+        }
+        if (receipt.getShopName() == null) {
+            missedAtributs.add(MissedAtributes.SHOPNAME);
+        }
+        if (receipt.getSumm() == null) {
+            missedAtributs.add(MissedAtributes.SUMM);
+        }
+        return missedAtributs;
+    }
+
+    private void setDefaulReceipttValues(Receipt receipt) {
+        if (receipt.getDate() == null) {
+            receipt.setDate("nicht lesbar");
+        }
+        if (receipt.getShopName() == null) {
+            receipt.setShopName("nicht lesbar");
+        }
+        if (receipt.getSumm() == null) {
+            receipt.setSumm("nicht lesbar");
+        }
+
+        if(receipt.getPurpose() == null){
+            receipt.setPurpose(EPurpose.SONSTIGES);
+        }
+    }
+
+    private void openModalDialog() {
+        try {
+            FXMLLoader dialogChanchValuesLoader = new FXMLLoader(
+                    getClass().getResource("/dot/javaFX/fxml/DialogChangeValues.fxml"));
+
+            DialogPane dialogPane = dialogChanchValuesLoader.load();
+            DialogChancheValuesController controller = dialogChanchValuesLoader.getController();
+            controller.setReceipt(mainViewModel.getScannedReceipt());
+            controller.setMainInteractor(this);
+            dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(dialogPane));
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    private void closeDialog() {
+        dialogStage.close();
+        mainViewModel.setScannendReceipt(null);
+        dialogStage = null;
+    }
 
     protected void handelChooseInputFileBtn() {
 
@@ -100,9 +165,16 @@ public class MainInteractor {
         }
     }
 
-    protected void handelScannReceiptBtn() {
-        System.out.println("start");
+    protected void addScannenReciptTotableRows() {
+        mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
+        ReceiptsValuesTableRow row = new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
+                mainViewModel.getScannedReceipt(), null);
+        mainViewModel.addTablesRows(row);
+        Collections.sort(mainViewModel.getTableRows());
+    }
 
+    protected void handelScannReceiptBtn() {
+       
         Task<Void> task1 = new Task<Void>() { // create Task
             @Override
             protected Void call() throws Exception {
@@ -110,34 +182,36 @@ public class MainInteractor {
 
                     mainViewModel.setScanning(true);
                     Receipt receipt = scannInputFile();
+                  
                     Platform.runLater(() -> {
+                          setDefaulReceipttValues(receipt);
                         mainViewModel.setScannendReceipt(receipt);
-                        System.out.println(mainViewModel.getTableRows().size());
-                        mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
-                        ReceiptsValuesTableRow row = new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
-                        mainViewModel.getScannedReceipt(), "");
-                        mainViewModel.addTablesRows(row);
-                         Collections.sort(mainViewModel.getTableRows()); 
+                       
 
- 
-                });} catch (Exception e) {
+                    });
+
+                } catch (Exception e) {
 
                     for (StackTraceElement s : e.getStackTrace()) {
                         System.err.println(s);
                     }
                 }
+
                 return null;
 
             }
 
             @Override
             protected void succeeded() {
-                Platform.runLater(() -> mainViewModel.setScanning(false));
+                Platform.runLater(() ->{ mainViewModel.setScanning(false);   openModalDialog();}
+                );
             }
         };
 
         Thread thread1 = new Thread(task1); // assign Task into thread
         thread1.start();
+     
+
     }
 
     public void handelSafeBtn() {
@@ -151,6 +225,21 @@ public class MainInteractor {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    public void handleChangeValuesOklBtn() {
+           mainViewModel.addReceiptsList(mainViewModel.getScannedReceipt());
+        ReceiptsValuesTableRow row = new ReceiptsValuesTableRow(mainViewModel.getTableRows().size(),
+                mainViewModel.getScannedReceipt());
+        mainViewModel.addTablesRows(row);
+        Collections.sort(mainViewModel.getTableRows());
+        mainViewModel.setScannendReceipt(null);
+        dialogStage.close();
+        dialogStage = null;
+    }
+
+    public void handleChangeValuesCancelBtn() {
+                closeDialog();
     }
 
 }

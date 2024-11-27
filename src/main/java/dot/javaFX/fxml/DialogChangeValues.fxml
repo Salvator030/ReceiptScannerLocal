@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<DialogPane fx:id="changeValuesDialog" depthTest="ENABLE" maxWidth="1.7976931348623157E308" prefHeight="280.0" prefWidth="160.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dot.javaFX.controller.DialogChancheValuesController">
+
+    <header>
+        <AnchorPane>
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="150.0" text="Bitte ergebnis prüfen!" />
+            </children>
+        </AnchorPane>
+    </header>
+    <content>
+        <AnchorPane maxWidth="200.0" minHeight="0.0" minWidth="0.0" prefWidth="150.0">
+            <VBox alignment="TOP_CENTER" depthTest="DISABLE" prefHeight="256.0" prefWidth="160.0">
+                <Label alignment="CENTER" minWidth="-Infinity" text="Datum">
+                    <VBox.margin>
+                        <Insets left="16.0" />
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="dateValue" maxWidth="76.0">
+                    <VBox.margin>
+                        <Insets left="16.0" />
+                    </VBox.margin>
+                </TextField>
+                <Label alignment="CENTER" text="Name">
+                    <VBox.margin>
+                        <Insets left="16.0" />
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="nameValue" maxWidth="76.0">
+                    <VBox.margin>
+                        <Insets left="16.0" />
+                    </VBox.margin>
+                </TextField>
+                <Label alignment="CENTER" text="Summe">
+                    <VBox.margin>
+                        <Insets left="16.0" />
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="summValue" maxWidth="76.0">
+                    <VBox.margin>
+                        <Insets left="16.0" />
+                    </VBox.margin>
+                </TextField>
+                <Label alignment="CENTER" text="Verwendung">
+                    <VBox.margin>
+                        <Insets left="16.0" />
+                    </VBox.margin>
+                </Label>
+                <ChoiceBox fx:id="usesValue" maxWidth="76.0">
+                    <VBox.margin>
+                        <Insets left="16.0" />
+                    </VBox.margin>
+                </ChoiceBox>
+                <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+                
+                        <Button fx:id="changValuesOkBtn" maxWidth="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#handleChangeValuesOklBtn" text="OK">
+                  <HBox.margin>
+                     <Insets right="16.0" />
+                  </HBox.margin></Button>
+                        <Button fx:id="changeValuesCancelBtn" maxWidth="50.0" mnemonicParsing="false" onAction="#handleChangeValueCancleBtn" text="NEIN">
+                  <HBox.margin>
+                     <Insets left="16.0" />
+                  </HBox.margin></Button>
+                 
+                    <VBox.margin>
+                        <Insets top="32.0" />
+                    </VBox.margin>
+                </HBox>
+                <padding>
+                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                </padding>
+            </VBox>
+        </AnchorPane>
+    </content>
+    
+</DialogPane>
