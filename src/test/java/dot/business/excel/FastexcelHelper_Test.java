@@ -3,7 +3,6 @@ package dot.business.excel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
@@ -15,12 +14,8 @@ import java.util.List;
 import java.util.Set;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.*;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.ls.LSParserFilter;
-
+import dot.asserts.EPurpose;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
 // import static dot.business.excel.FastexcelHelper.mergeDataOfSameMonth;
 
@@ -71,7 +66,7 @@ public class FastexcelHelper_Test {
 
         HashMap<String,List<ReceiptsValuesTableRow>> exceptetMap = new HashMap<>();
         exceptetMap.put("082024",new ArrayList<ReceiptsValuesTableRow>());
-        exceptetMap.get("082024").add(new ReceiptsValuesTableRow(0, "08.2024", "blume2000 se", "null", 11.28));
+        exceptetMap.get("082024").add(new ReceiptsValuesTableRow(0, "08.2024", "blume2000 se", EPurpose.SACHMITTEL, 11.28));
         
         HashMap<String,Path> pathMap = new HashMap<String,Path>();
                  
@@ -97,12 +92,12 @@ public class FastexcelHelper_Test {
          List<ReceiptsValuesTableRow> inputList = new ArrayList<>(Arrays.asList(
 
  
-         new ReceiptsValuesTableRow(0,"02.01.2024","Edeka","",2.10),
-         new ReceiptsValuesTableRow(0,"04.01.2024","Netto","",5.09),
-         new ReceiptsValuesTableRow(0,"01.08.2024","Edeka","",2.10),
-         new ReceiptsValuesTableRow(0,"02.08.2024","Netto","",5.09),
-         new ReceiptsValuesTableRow(0,"05.08.2024","Aldi","",20.01),
-         new ReceiptsValuesTableRow(0,"01.01.2025","Netto","",5.09)));
+         new ReceiptsValuesTableRow(0,"02.01.2024","Edeka",EPurpose.LEBENSMITTEL,2.10),
+         new ReceiptsValuesTableRow(0,"04.01.2024","Netto",EPurpose.LEBENSMITTEL,5.09),
+         new ReceiptsValuesTableRow(0,"01.08.2024","Edeka",EPurpose.LEBENSMITTEL,2.10),
+         new ReceiptsValuesTableRow(0,"02.08.2024","Netto",EPurpose.LEBENSMITTEL,5.09),
+         new ReceiptsValuesTableRow(0,"05.08.2024","Aldi",EPurpose.LEBENSMITTEL,20.01),
+         new ReceiptsValuesTableRow(0,"01.01.2025","Netto",EPurpose.LEBENSMITTEL,5.09)));
 
          String path1 =  System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Kassenbons-Abrechnung-012024.xlsx";
          String path2 =  System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Kassenbons-Abrechnung-082024.xlsx";
