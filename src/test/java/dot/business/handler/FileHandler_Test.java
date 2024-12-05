@@ -23,6 +23,7 @@ public class FileHandler_Test {
 
     @Test
     public void getFullOutputFilePath_withefaultValues(){
-        assertEquals(Path.of("C:\\Users\\Admin\\Documents\\Kassenbons-Abrechnung.xlsx"), fileHandler.getFullOuputFilePath());
+        fileHandler.setOutputFolder(new File("C:\\Users\\Admin\\Documents\\"));
+        assertEquals(Path.of("C:\\Users\\Admin\\Documents\\Kassenbons-Abrechnung-012000.xlsx"), fileHandler.getFullOuputFilePath("01.2000"));
     }
 }

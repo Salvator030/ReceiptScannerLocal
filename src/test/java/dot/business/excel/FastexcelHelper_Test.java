@@ -16,12 +16,13 @@ import java.io.File;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import dot.asserts.EPurpose;
+import dot.business.handler.FileHandler;
 import dot.javaFX.objects.ReceiptsValuesTableRow;
 // import static dot.business.excel.FastexcelHelper.mergeDataOfSameMonth;
 
 public class FastexcelHelper_Test {
 
-    FastexcelHelper fastexcelHelper = new FastexcelHelper();
+    FastexcelHelper fastexcelHelper = new FastexcelHelper(new FileHandler());
 
     HashMap<String, ArrayList<ReceiptsValuesTableRow>> map = new HashMap<String, ArrayList<ReceiptsValuesTableRow>>();
 

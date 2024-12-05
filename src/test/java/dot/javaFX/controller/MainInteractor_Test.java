@@ -1,90 +1,77 @@
 package dot.javaFX.controller;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.parallel.Execution;
-
-import org.mockito.junit.MockitoJUnitRunner;
-import org.testfx.framework.junit5.ApplicationTest;
-
-import static org.junit.jupiter.api.Assertions.assertAll;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
-
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import javafx.fxml.FXMLLoader;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javafx.stage.Stage;
-import dot.Main;
 import dot.asserts.EPurpose;
 import dot.business.receipt.ExampleReceiptStrings;
 import dot.business.receipt.Receipt;
 import dot.javaFX.models.MainViewModel;
+import dot.javaFX.objects.ReceiptsValuesTableRow;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class MainInteractor_Test  {
+@ExtendWith(MockitoExtension.class)
+public class MainInteractor_Test {
 
-    private final File bon1 = new File("../../../../../resources/testBon4.jpg");
-    private MainViewModel model = new MainViewModel();
-    
-   
-    MainViewModel mainViewModel = new MainViewModel();
+    private MainInteractor mainInteractor;
 
-    @Mock
+    private MainViewModel mainViewModel;
+
     Stage stage;
 
- 
-     MainInteractor mainInteractor ;
- 
-    @BeforeAll
-    public  void  initMocks() {
+    @BeforeEach
+    public void setUp() throws Exception {
+        mainViewModel = new MainViewModel();
         mainInteractor = new MainInteractor(mainViewModel, stage);
     }
 
+    //TOTDO TEst schlägt fehl wegen falsch erkanten werten
     @Test
-    public void addScannenReciptTotableRows_Test(){
-        mainViewModel.setScannendReceipt(new Receipt("01.01.2000", "Da", "20,00", EPurpose.LEBENSMITTEL));
-        mainInteractor.addScannenReciptTotableRows();
-        assertEquals(mainViewModel.getTableRows().size(), 1);
-        mainViewModel.getTableRows().clear();
-    }
-
-    @Test
-    public void hanndelScannReceiptBtn_Test(){
+    void scannReceipt_test() throws Exception {
         mainViewModel.setInputFile(ExampleReceiptStrings.getExampleReceiptString3_File());
-        mainInteractor.handelScannReceiptBtn();
-        String[] scannendReceiptValues = {mainViewModel.getScannedReceipt().getDate(),mainViewModel.getScannedReceipt().getShopName(),mainViewModel.getScannedReceipt().getPurpose().toString(), mainViewModel.getScannedReceipt().getSumm()};
-        String[] ecxeptetValues = {ExampleReceiptStrings.getExampleReceiptString3_date(),ExampleReceiptStrings.getExampleReceiptString3_name(),} 
-        // ass(mainViewModel.getScannedReceipt()., ExampleReceiptStrings.getExampleReceiptString3_Receipt());
-        
-        
-
+        // Execute the method
+        CountDownLatch latch = new CountDownLatch(1);
+        mainInteractor.scannReceipt();
+        latch.countDown();
+        latch.await(10, TimeUnit.SECONDS);
+        // Verify the result
+        assertEquals(ExampleReceiptStrings.getExampleReceiptString3_Receipt().toString(), mainViewModel.getScannedReceipt().toString());
     }
-    
-  
 
-    // @Override
-    // public void start(Stage stage) throws Exception {
-    //     new Main().start(stage);
-        // mainInteractor = new MainInteractor(model, stage);
-    // }
+    @Test
+    void addScannenReciptTotableRows_test(){
+        mainViewModel.setScannendReceipt(ExampleReceiptStrings.getExampleReceiptString3_Receipt());
+        mainInteractor.addScannenReciptTotableRows();
+        assertEquals(1, mainViewModel.getTableRows().size());
+     
+    }
 
-    // @Test
+    @Test
+    void setReceiptValues_test() throws Exception {
+        Receipt r = new Receipt(null, null, null);
+        mainInteractor.setReceiptValues(r);
+        assertEquals(r, mainViewModel.getScannedReceipt());
+    }
 
-    // public void handelScannReceiptBtnTest_giveCorectReceiptImage_corectOutput() throws InterruptedException {
+    @Test
+    void saveExcelInDirectory_test(){
+            mainViewModel.addTablesRows(new ReceiptsValuesTableRow(1,"03.01.2000","edeka",EPurpose.LEBENSMITTEL,10.00));
+        mainViewModel.addTablesRows(new ReceiptsValuesTableRow(1,"01.01.2000","aldi",EPurpose.LEBENSMITTEL,20.00));
+        
+        String directory = "D:/Develop/Repositorys/java_ocr_test/src/test/resources/";
+         String fileName = "Kassenbons-Abrechnung-012000.xlsx";
+        File testFile = new File(directory+fileName);
+              assertEquals(false, testFile.exists());
+        mainInteractor.saveExcelInDirectory(new File(directory));
+        assertEquals(true, testFile.exists());
+        testFile.delete();
+      
+    }
 
-    //     assertEquals(0, model.getTableRows().size());
-    //     model.setInputFile(bon1);
-    //     mainInteractor.handelScannReceiptBtn();
-    //     Thread.sleep(30000);
-
-    //     assertEquals(1, model.getTableRows().size());
-    //     ;
-
-    // }
 }
