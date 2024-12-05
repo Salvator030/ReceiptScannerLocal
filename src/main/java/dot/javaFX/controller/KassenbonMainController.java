@@ -4,41 +4,34 @@ import java.io.IOException;
 import dot.javaFX.models.MainViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.DialogPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class KassenbonMainController {
 
-     private Stage stage;
+     Stage stage;
 
      private VBox tableViewNode;
      private VBox fileChooserNode;
      private StackPane scannBtnNode;
      private VBox saveBtnNode;
-     private DialogPane changeValuesDialogNode;
-     private Stage changeValuesDialogStage;
-
+    
       private MainViewModel mainViewModel = new MainViewModel();
      private MainInteractor mainInteractor = new MainInteractor(mainViewModel, stage);
 
-     @FXML
-     private VBox tableViewContainer = null;
+     @FXML VBox tableViewContainer = null;
 
-     @FXML
-     private VBox fileChooserContainer = null;
+     @FXML VBox fileChooserContainer = null;
 
-     @FXML
-     private StackPane scannReceiptBtnContainer = null;
+     @FXML StackPane scannReceiptBtnContainer = null;
 
-     @FXML
-     private VBox saveBtnContainer = null;
+     @FXML VBox saveBtnContainer = null;
 
-     private TableViewController tableViewController;
-     private FileChooserViewControler fileChooserViewController;
-     private ScannReceiptBtnController scannReceiptBtnController;
-     private SaveBtnController saveBtnController;
+     TableViewController tableViewController;
+     FileChooserViewControler fileChooserViewController;
+     ScannReceiptBtnController scannReceiptBtnController;
+     SaveBtnController saveBtnController;
      private DialogChancheValuesController chancheValuesController;
 
      public void setStage(Stage stage) {
@@ -107,14 +100,14 @@ public class KassenbonMainController {
                saveBtnController = loader.getController();
                saveBtnContainer.getChildren().add(saveBtnNode);
                saveBtnController.setMainInteractor(mainInteractor);
+               saveBtnController.setStage(stage);
                saveBtnNode.disableProperty().bind(mainViewModel.receiptsListEmptyProperty());
           } catch (IOException e) {
                e.printStackTrace();
           }
      }
 
-     @FXML
-     private void initialize() {
+     @FXML void initialize() {
           initTableViewConroller();
           initFileChooserContorller();
           initScannReceiptBtnController();
