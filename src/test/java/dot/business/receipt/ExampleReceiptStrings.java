@@ -232,7 +232,7 @@ public class ExampleReceiptStrings {
     }
 
     public static File getExampleReceiptString3_File() {
-        return new File("../../../resources/testBon4.jpg");
+        return new File("D:/Develop/Repositorys/java_ocr_test/src/main/resources/testBon4.jpg");
     }
 
     public static Receipt  getExampleReceiptString3_Receipt(){

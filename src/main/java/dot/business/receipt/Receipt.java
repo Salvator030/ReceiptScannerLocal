@@ -81,6 +81,10 @@ public class Receipt {
         this.purpose.set(purpose);
     }
 
+    @Override
+    public String toString(){
+        return "date: " + date.get() + "\tname: " + shopName.get() + "\tsumm: " + summ.get();
+    }
 }
 
 

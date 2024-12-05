@@ -1,3 +1,4 @@
+
 package dot.business.handler;
 
 import java.io.File;
@@ -8,16 +9,28 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class FileHandler {
-    private File inputFile;
+
     private final String defaultFileName = "Kassenbons-Abrechnung";
-    private String outputFileName = defaultFileName;
-    private String outputFileDate;
     private final String outputFileType = ".xlsx";
     private final String tessDataPath = "src/main/resources/tessdata";
     private final File documentsDirectory = new File(
             System.getProperty("user.home") + File.separator + "Documents" + File.separator);
-    private File inputFolder = documentsDirectory;
-    private File outputFolder = documentsDirectory;
+   
+            private File inputFile;
+    private String outputFileName;
+    private String outputFileDate;
+
+    private File inputFolder;
+    private File outputFolder;
+
+    public FileHandler() {
+        inputFile = null;
+        inputFolder = documentsDirectory;
+        outputFileName = defaultFileName;
+        outputFolder = null;
+        outputFileDate = null;
+
+    }
 
     public void setInputFile(String filePath) {
         this.inputFile = new File(filePath);
@@ -27,9 +40,12 @@ public class FileHandler {
         this.inputFile = inputFile;
     }
 
-    public void setOutputFolder(File outputFolder) {
-        if (outputFolder != null) {
-            this.outputFolder = outputFolder;
+    public void setOutputFolder(File folder) {
+        if (folder != null) {
+            this.outputFolder = folder;
+            System.out.println(outputFolder);
+        } else {
+            this.outputFolder = documentsDirectory;
         }
     }
 
@@ -65,8 +81,8 @@ public class FileHandler {
         this.outputFileDate = outputFileDate;
     }
 
-    public Path getFullOuputFilePath() {
-        Path path = Path.of(outputFolder.toString(), outputFileName + outputFileType);
+    public Path getFullOuputFilePath(String date) {
+        Path path = Path.of( this.outputFolder.toString(), outputFileName + "-" + date.replace(".", "") + outputFileType);
         return path;
     }
 
@@ -77,13 +93,13 @@ public class FileHandler {
 
     public boolean checkExistFile(Path path) {
         if (!Files.exists(path)) {
-          File file=  new File(path.toString());
-          try {
-            file.createNewFile();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+            File file = new File(path.toString());
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             return false;
         }
         return true;
@@ -98,6 +114,14 @@ public class FileHandler {
         HashMap<String, Path> datePathMap = new HashMap<String, Path>();
         for (String date : datesKeys) {
             datePathMap.put(date, getFullInputFilePath(date));
+        }
+        return datePathMap;
+    }
+
+    public HashMap<String, Path> getExcelFilesPathesToWriteOut(Set<String> datesKeys) {
+        HashMap<String, Path> datePathMap = new HashMap<String, Path>();
+        for (String date : datesKeys) {
+            datePathMap.put(date, getFullOuputFilePath(date));
         }
         return datePathMap;
     }
