@@ -89,7 +89,7 @@ public class MainViewModel {
   }
 
   // scanning
-  public boolean isSanning() {
+  public boolean isScanning() {
     return this.scanning.get();
   }
 
