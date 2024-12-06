@@ -64,7 +64,7 @@ public class MainInteractor_Test {
             mainViewModel.addTablesRows(new ReceiptsValuesTableRow(1,"03.01.2000","edeka",EPurpose.LEBENSMITTEL,10.00));
         mainViewModel.addTablesRows(new ReceiptsValuesTableRow(1,"01.01.2000","aldi",EPurpose.LEBENSMITTEL,20.00));
         
-        String directory = "D:/Develop/Repositorys/java_ocr_test/src/test/resources/";
+        String directory = "src/test/resources/";
          String fileName = "Kassenbons-Abrechnung-012000.xlsx";
         File testFile = new File(directory+fileName);
               assertEquals(false, testFile.exists());

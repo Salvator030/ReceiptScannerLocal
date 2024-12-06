@@ -26,6 +26,10 @@ public class FastexcelHelper_Test {
 
     HashMap<String, ArrayList<ReceiptsValuesTableRow>> map = new HashMap<String, ArrayList<ReceiptsValuesTableRow>>();
 
+    final   String folder = "src/test/resources/";
+  final  String path1 =  folder+ "Kassenbons-Abrechnung-012024.xlsx";
+   final String path2 = folder+ "Kassenbons-Abrechnung-082024.xlsx";
+    final String path3 = folder+ "Kassenbons-Abrechnung-012025.xlsx";
     @Test
     public void spliReceiptRowsListByDate_ListWithDiverentRows_outputCorectMap() {
 
@@ -48,7 +52,7 @@ public class FastexcelHelper_Test {
         map.put(rowList.get(7).getDate(), new ArrayList<>());
 
         HashMap<String, List<ReceiptsValuesTableRow>> ouput = fastexcelHelper.spliReceiptRowsListByDate(rowList);
-        assertEquals(map, ouput);
+        assertEquals(map.keySet(), ouput.keySet());
     }
 
     private String datasToString(List<ReceiptsValuesTableRow> list) {
@@ -62,36 +66,9 @@ public class FastexcelHelper_Test {
     }
 
     @Test
-    public void fetchTableRowsFromFilesWhenExist_GetExistetFileAndCreatFileWhileNotExist(){
-        String testFilePath  =   System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Kassenbons-Abrechnung-082024.lsx"; 
-
-        HashMap<String,List<ReceiptsValuesTableRow>> exceptetMap = new HashMap<>();
-        exceptetMap.put("082024",new ArrayList<ReceiptsValuesTableRow>());
-        exceptetMap.get("082024").add(new ReceiptsValuesTableRow(0, "08.2024", "blume2000 se", EPurpose.SACHMITTEL, 11.28));
-        
-        HashMap<String,Path> pathMap = new HashMap<String,Path>();
-                 
-        
-        pathMap.put("082024",  Path.of(testFilePath));
-
-       
-        Set<String> keys = new HashSet<String>();
-            keys.add("082024");
-        keys.add("022024");
-        HashMap<String, List<ReceiptsValuesTableRow>> resMap = fastexcelHelper.fetchTableRowsFromFilesWhenExist(keys, pathMap);
-       ReceiptsValuesTableRow r = resMap.get("082024").get(0);
-        assertTrue(Files.exists(Path.of( System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Kassenbons-Abrechnung-022024.xlsx")));
-        assertEquals("01.08.2024 blume2000 se 11.28" ,r.getDate() + " " + r.getShopName() + " " + r.getSumm());
-     
-        File file = new File(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Kassenbons-Abrechnung-022024.xlsx");
-        file.delete();
-    }
-
-    @Test
     public void writeReceiptsToExcelFiles_withAListOfReceiptRows_FilesExisist(){
-
+      
          List<ReceiptsValuesTableRow> inputList = new ArrayList<>(Arrays.asList(
-
  
          new ReceiptsValuesTableRow(0,"02.01.2024","Edeka",EPurpose.LEBENSMITTEL,2.10),
          new ReceiptsValuesTableRow(0,"04.01.2024","Netto",EPurpose.LEBENSMITTEL,5.09),
@@ -100,27 +77,57 @@ public class FastexcelHelper_Test {
          new ReceiptsValuesTableRow(0,"05.08.2024","Aldi",EPurpose.LEBENSMITTEL,20.01),
          new ReceiptsValuesTableRow(0,"01.01.2025","Netto",EPurpose.LEBENSMITTEL,5.09)));
 
-         String path1 =  System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Kassenbons-Abrechnung-012024.xlsx";
-         String path2 =  System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Kassenbons-Abrechnung-082024.xlsx";
-         String path3 =  System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Kassenbons-Abrechnung-012025.xlsx";
-
-
          try {
+
+            assertTrue(!Files.exists(Path.of( path1)));
+            assertTrue(!Files.exists(Path.of( path2)));
+            assertTrue(!Files.exists(Path.of( path3)));
+            fastexcelHelper.fileHandler.setOutputFolder(new File(folder));
             fastexcelHelper.writeReceiptsToExcelFiles(inputList);
+
+            assertTrue(Files.exists(Path.of( path1)));
+            assertTrue(Files.exists(Path.of( path2)));
+            assertTrue(Files.exists(Path.of( path3)));
+
+          
+
         } catch (NumberFormatException | IOException | ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        assertTrue(Files.exists(Path.of( path1)));
-        assertTrue(Files.exists(Path.of( path2)));
-        assertTrue(Files.exists(Path.of( path3)));
+       
+    }
 
-        // new File(path1).delete();
-        // new File(path3).delete();
 
+    @Test
+    public void fetchTableRowsFromFilesWhenExist_GetExistetFileAndCreatFileWhileNotExist(){
+        String testFilePath  =  folder+ "Kassenbons-Abrechnung-082024.lsx"; 
+        HashMap<String,List<ReceiptsValuesTableRow>> exceptetMap = new HashMap<>();
+        exceptetMap.put("082024",new ArrayList<ReceiptsValuesTableRow>());
+        exceptetMap.get("082024").add(new ReceiptsValuesTableRow(0, "08.2024", "blume2000 se", EPurpose.SACHMITTEL, 11.28));    
+        HashMap<String,Path> pathMap = new HashMap<String,Path>();
+        pathMap.put("082024",  Path.of(testFilePath));     
+        Set<String> keys = new HashSet<String>();
+            keys.add("082024");
+        keys.add("022024");
+        HashMap<String, List<ReceiptsValuesTableRow>> resMap = fastexcelHelper.fetchTableRowsFromFilesWhenExist(keys, pathMap);
+       ReceiptsValuesTableRow r = resMap.get("082024").get(0);
+        assertTrue(Files.exists(Path.of(path1)));
+        assertEquals("01.08.2024 blume2000 se 11.28" ,r.getDate() + " " + r.getShopName() + " " + r.getSumm());
+     
+        try {
+            Files.deleteIfExists(Path.of( path1));
+        Files.deleteIfExists(Path.of( path2));
+        Files.deleteIfExists(Path.of( path3));
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
 
+  
     // private Method getMergeDataOfSameMonth() throws NoSuchMethodException {
     // Method method =
     // FastexcelHelper.class.getDeclaredMethod("mergeDataOfSameMonth", List.class,

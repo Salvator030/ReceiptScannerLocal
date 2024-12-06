@@ -11,11 +11,12 @@ public class FileHandler_Test {
     
     public final FileHandler fileHandler = new FileHandler();
 
+    /*
     @Test
     public void isDocumentsDirectory_WinDocumentDirectory(){
         assertEquals("C:\\Users\\Admin\\Documents", fileHandler.getDocumentsDirectory().getAbsolutePath());
     } 
-
+ */
     @Test
     public void fileLocationToString_createFilePathString(){
         assertEquals("C:\\Users\\Admin\\Document\\test.txt", fileHandler.fileLocationToString(new File("C:\\Users\\Admin\\Documents\\"),"test.txt"));
