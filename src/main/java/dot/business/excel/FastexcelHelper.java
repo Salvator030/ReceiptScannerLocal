@@ -171,7 +171,7 @@ public class FastexcelHelper {
 
     public HashMap<String, List<ReceiptsValuesTableRow>> fetchTableRowsFromFilesWhenExist(Set<String> keys,
             HashMap<String, Path> datePathMap) {
-        datePathMap = fileHandler.getExcelFilesPathesToReadIn(keys);
+        // datePathMap = fileHandler.getExcelFilesPathesToReadIn(keys);
         HashMap<String, List<ReceiptsValuesTableRow>> dateRowsMap = new HashMap<>();
         for (String key : keys) {
             if (fileHandler.checkExistFile(datePathMap.get(key))) {
@@ -204,10 +204,9 @@ public class FastexcelHelper {
             throws IOException, NumberFormatException, ParseException {
         HashMap<String, List<ReceiptsValuesTableRow>> receiptRowsForMonthMap = spliReceiptRowsListByDate(receiptList);
         Set<String> keys = receiptRowsForMonthMap.keySet();
-        HashMap<String, Path> pathMap = fileHandler.getExcelFilesPathesToReadIn(keys);
+        HashMap<String, Path> pathMap = fileHandler.getExcelFilesPathesToWriteOut(keys);
         HashMap<String, List<ReceiptsValuesTableRow>> dateRowsMap = fetchTableRowsFromFilesWhenExist(keys, pathMap);
-        mergeMapOfSomeMonth(receiptRowsForMonthMap, dateRowsMap, keys);
-        pathMap = fileHandler.getExcelFilesPathesToWriteOut(keys);
+        mergeMapOfSomeMonth(receiptRowsForMonthMap, dateRowsMap, keys);      
         writeReceiptMapToExcelFiles(receiptRowsForMonthMap, pathMap, keys);
 
     }
