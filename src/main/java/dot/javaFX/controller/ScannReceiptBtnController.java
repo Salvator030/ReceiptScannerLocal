@@ -42,7 +42,7 @@ public class ScannReceiptBtnController {
         this.mainInteractor = mainInteractor;
     }
 
-    private void openModalDialog() {
+    void openModalDialog() {
         try {
             FXMLLoader dialogChanchValuesLoader = new FXMLLoader(
                     getClass().getResource("/dot/javaFX/fxml/DialogChangeValues.fxml"));
