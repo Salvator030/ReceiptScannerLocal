@@ -10,26 +10,26 @@ public class ItemScanner_Test {
     public void getTotalSumm_diverntSting_matchCorectOuput() {
 
         String[] array = { "Summe", "Gesamtsumme", "Zu zahlen", "Gesamtbetrag", "gesamt", "Betrag", "EUR" };
-        String summ = " 33.03";
+        String summ = "33.03";
 
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[0] + " " + summ + " €"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[1] + " " + summ + " €"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[2] + " " + summ + " €"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[3] + " " + summ + " €"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[4] + " " + summ + "€"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[5] + " " + summ + "€"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[6] + " " + summ + "€"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[0] + " " + summ + " €"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[1] + " " + summ + " €"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[2] + " " + summ + " €"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[3] + " " + summ + " €"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[4] + " " + summ + "€"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[5] + " " + summ + "€"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[6] + " " + summ + "€"));
 
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[0] + ":\t" + summ + "\t€"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[1] + ":\t" + summ + "\t€"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[2] + "\t" + summ + "\t€"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[3] + "\t" + summ + "\t€"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[4] + ":" + summ + "€"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[5] + " " + summ + "\t€"));
-        assertEquals(Double.parseDouble(summ), itemScanner.getTotalSumm(array[6] + " " + summ + "\t €"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[0] + ":\t" + summ + "\t€"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[1] + ":\t" + summ + "\t€"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[2] + "\t" + summ + "\t€"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[3] + "\t" + summ + "\t€"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[4] + ": " + summ + "€"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[5] + " " + summ + "\t€"));
+        assertEquals((summ), itemScanner.getTotalSumm(array[6] + " " + summ + "\t €"));
 
 
-        assertEquals(ExampleReceiptStrings.getExampleReceiptString1_summ(), itemScanner.getTotalSumm("Betrag EUR 11,28\n"));
+        assertEquals(ExampleReceiptStrings.getExampleReceiptString1_summ()+"", itemScanner.getTotalSumm("Betrag EUR 11,28\n"));
     }
 
     @Test
