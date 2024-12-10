@@ -19,6 +19,14 @@ public class Receipt {
 
     };
 
+    public Receipt(String date, String shopName, double summ, EPurpose purpose) {
+        this.shopName = new SimpleStringProperty(shopName);
+        this.date = new SimpleStringProperty(date);
+        this.summ = new SimpleStringProperty(summ +"");
+        this.purpose = new SimpleObjectProperty<EPurpose>(purpose);
+
+    };
+
     public Receipt(String date, String shopName, String summ) {
         this.shopName = new SimpleStringProperty(shopName);
         this.date = new SimpleStringProperty(date);
@@ -73,6 +81,10 @@ public class Receipt {
         this.purpose.set(purpose);
     }
 
+    @Override
+    public String toString(){
+        return "date: " + date.get() + "\tname: " + shopName.get() + "\tsumm: " + summ.get();
+    }
 }
 
 

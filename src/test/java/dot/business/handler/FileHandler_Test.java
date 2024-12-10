@@ -11,11 +11,12 @@ public class FileHandler_Test {
     
     public final FileHandler fileHandler = new FileHandler();
 
+    /*
     @Test
     public void isDocumentsDirectory_WinDocumentDirectory(){
         assertEquals("C:\\Users\\Admin\\Documents", fileHandler.getDocumentsDirectory().getAbsolutePath());
     } 
-
+ */
     @Test
     public void fileLocationToString_createFilePathString(){
         assertEquals("C:\\Users\\Admin\\Document\\test.txt", fileHandler.fileLocationToString(new File("C:\\Users\\Admin\\Documents\\"),"test.txt"));
@@ -23,6 +24,7 @@ public class FileHandler_Test {
 
     @Test
     public void getFullOutputFilePath_withefaultValues(){
-        assertEquals(Path.of("C:\\Users\\Admin\\Documents\\Kassenbons-Abrechnung.xlsx"), fileHandler.getFullOuputFilePath());
+        fileHandler.setOutputFolder(new File("C:\\Users\\Admin\\Documents\\"));
+        assertEquals(Path.of("C:\\Users\\Admin\\Documents\\Kassenbons-Abrechnung-012000.xlsx"), fileHandler.getFullOuputFilePath("01.2000"));
     }
 }

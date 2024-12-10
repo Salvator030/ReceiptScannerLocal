@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class DialogChancheValuesController {
 
@@ -35,12 +36,33 @@ public class DialogChancheValuesController {
     @FXML
     private Button changeValuesCancelBtn = null;
 
+    private Stage dialogStage;
     private MainInteractor mainInteractor;
     private ObjectProperty<ObservableList<EPurpose>> purposes = new SimpleObjectProperty<ObservableList<EPurpose>>(
             FXCollections.observableArrayList(EPurpose.values()));
 
-    public void setMainInteractor(MainInteractor interactor) {
-        this.mainInteractor = interactor;
+    public ChoiceBox<EPurpose> getUsesValue() {
+        return usesValue;
+    }
+
+    public TextField getDateValue() {
+        return dateValue;
+    }
+
+    public TextField getNameValue() {
+        return nameValue;
+    }
+
+    public TextField getSummValue() {
+        return summValue;
+    }
+
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+
+    public void setMainInteractor(MainInteractor mainInteractor) {
+        this.mainInteractor = mainInteractor;
     }
 
     public void setReceipt(Receipt receipt) {
@@ -52,18 +74,19 @@ public class DialogChancheValuesController {
 
     @FXML
     public void handleChangeValuesOklBtn() {
-        this.mainInteractor.handleChangeValuesOklBtn();
+        this.mainInteractor.addScannenReciptTotableRows();
+        this.dialogStage.close();
     }
 
     @FXML
     public void handleChangeValueCancleBtn() {
-        this.mainInteractor.handleChangeValuesCancelBtn();
+        this.dialogStage.close();
     }
 
     @FXML
-    private void initialize() {
-
+    void initialize() {
+        usesValue.getItems().clear();
         usesValue.getItems().addAll(purposes.get());
-    }
 
+    }
 }

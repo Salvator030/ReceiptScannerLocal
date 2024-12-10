@@ -1,14 +1,12 @@
 package dot.javaFX.objects;
 
-import dot.business.receipt.Receipt;
+import dot.asserts.EPurpose;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class ReceiptsValuesTableRow_Test {
@@ -22,13 +20,13 @@ public class ReceiptsValuesTableRow_Test {
             ReceiptsValuesTableRow r1, r2, r3, r4, r5;
 
             r1 = new ReceiptsValuesTableRow(1,
-                    new Receipt((dates[0]), "Aldi", 10.00), "Lebensmittel");
+                   dates[0], "Aldi", EPurpose.LEBENSMITTEL,10.00);
             r2 = new ReceiptsValuesTableRow(2, (dates[1]), "Edeka",
-                    "Lebensmittel", 20.25);
+                    EPurpose.LEBENSMITTEL, 20.25);
             r3 = new ReceiptsValuesTableRow(3, (dates[2]), "McPaper",
-                    "Buromaterial", 5.95);
+                    EPurpose.BÜROMATERIAL, 5.95);
             r4 = new ReceiptsValuesTableRow(4,(dates[3]), "Saturn",
-                    "Sachmittel", 99.99);
+                    EPurpose.SACHMITTEL, 99.99);
             r5 = new ReceiptsValuesTableRow(dates[4]);
             receipList.add(r1);
             receipList.add(r2);

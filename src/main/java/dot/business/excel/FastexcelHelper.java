@@ -27,7 +27,13 @@ import dot.javaFX.objects.ReceiptsValuesTableRow;
 
 public class FastexcelHelper {
 
-    FileHandler fileHandler = new FileHandler();
+    FileHandler fileHandler;
+
+    
+
+    public FastexcelHelper(FileHandler fileHandler) {
+        this.fileHandler = fileHandler;
+    }
 
     public Map<Integer, List<String>> readExcel(String fileLocation) {
         Map<Integer, List<String>> data = new HashMap<>();
@@ -100,7 +106,9 @@ public class FastexcelHelper {
             ws.range(rowNumber, 0, rowNumber, 2).style().wrapText(true).set();
             ws.value(rowNumber, 0, r.getDate());
             ws.value(rowNumber, 1, r.getShopName());
-            ws.value(rowNumber, 2, r.getPurpose().toString());
+            if(r.getPurpose() != null ){
+                 ws.value(rowNumber, 2, r.getPurpose().toString());
+            }
             ws.value(rowNumber, 3, r.getSumm());
             ++rowNumber;
         }
@@ -163,7 +171,7 @@ public class FastexcelHelper {
 
     public HashMap<String, List<ReceiptsValuesTableRow>> fetchTableRowsFromFilesWhenExist(Set<String> keys,
             HashMap<String, Path> datePathMap) {
-        datePathMap = fileHandler.getExcelFilesPathesToReadIn(keys);
+        // datePathMap = fileHandler.getExcelFilesPathesToReadIn(keys);
         HashMap<String, List<ReceiptsValuesTableRow>> dateRowsMap = new HashMap<>();
         for (String key : keys) {
             if (fileHandler.checkExistFile(datePathMap.get(key))) {
@@ -196,9 +204,9 @@ public class FastexcelHelper {
             throws IOException, NumberFormatException, ParseException {
         HashMap<String, List<ReceiptsValuesTableRow>> receiptRowsForMonthMap = spliReceiptRowsListByDate(receiptList);
         Set<String> keys = receiptRowsForMonthMap.keySet();
-        HashMap<String, Path> pathMap = fileHandler.getExcelFilesPathesToReadIn(keys);
+        HashMap<String, Path> pathMap = fileHandler.getExcelFilesPathesToWriteOut(keys);
         HashMap<String, List<ReceiptsValuesTableRow>> dateRowsMap = fetchTableRowsFromFilesWhenExist(keys, pathMap);
-        mergeMapOfSomeMonth(receiptRowsForMonthMap, dateRowsMap, keys);
+        mergeMapOfSomeMonth(receiptRowsForMonthMap, dateRowsMap, keys);      
         writeReceiptMapToExcelFiles(receiptRowsForMonthMap, pathMap, keys);
 
     }
