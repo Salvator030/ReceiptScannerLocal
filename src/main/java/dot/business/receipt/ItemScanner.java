@@ -25,8 +25,11 @@ public class ItemScanner {
             Matcher m = Pattern.compile(regex).matcher(result);
             for (String s : SYNONYMS_FOR_SUMM) {
                 if (result.toLowerCase().contains(s)) {
+                    System.out.println("SYNONYMS_FOR_SUMM: " + s);
                     if (m.matches()) {
-                                              summ = m.group(1).replace(",", ".");
+
+                        summ = m.group(1).replace(",", ".");
+
                     }
 
                 }
